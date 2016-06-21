@@ -14,15 +14,3 @@
 - C programming
 - is terminal output/input a kind of file?
 
----
-
-# [Plugin] GitHub Locker
-- print claimers
-- make sure plugin is updated frequently
-- distinguish between instances of RadiatorView
-
-# [Plugin] Meta Dashboard
-
-
-# [Task] Recommender System
-
