@@ -30,10 +30,15 @@ restricting the branch (but it is an upcoming feature).
 - make sure the plugin updates frequently (and posts on change)
 
 # Strategies
-
+Choosen: Meta Job.
 ### GitHub API: Services
 Webhook in GitHub --> Jenkins --> check Radiator Status --> Send status
 'failed'/'access' back.
 ### cURL to restrict branch
+Need secure communitcation with _TOKEN_s.
 ### Auto-revert commits
+### Meta Job
+A job in jenkins that sends a status to GitHub depending on the status of
+`RadiatorView`.
+- read on how to make status check
 
