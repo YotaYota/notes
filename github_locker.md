@@ -21,6 +21,12 @@ restricting the branch (but it is an upcoming feature).
 # TODO:
 - post claimers
 - install on EdgeWare Jenkins
+- fix imports
+- create a job that succeeds/fails according to `RadiatorView` status
+- look into extension points. Might be that extension points remove the need
+  for a job implementing the plugin.
+- look into adding radiator status as an API point.
+  (https://wiki.jenkins-ci.org/display/JENKINS/Exposing+data+to+the+remote+API)
 
 # Questions
 - get status from `RadiatorView`
