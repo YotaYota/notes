@@ -24,3 +24,11 @@ to start with.
 ideas, write them down on paper for later consideration).
 5. When I reach some kind of end point of the choosen approach, evaluate the
 conclusions and save them.
+
+# 
+
+- Work become more granulary, and it feels less
+heavy.
+- It is easier to find a comfortable pace.
+- Gets you more mentally involved and increases understanding of what I'm
+  acutally trying to solve.
