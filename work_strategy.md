@@ -25,6 +25,9 @@ ideas, write them down on paper for later consideration).
 5. When I reach some kind of end point of the choosen approach, evaluate the
 conclusions and save them.
 
+When working on one approach, set all others aside. If I get a new idea while
+doing an approach: write it down and save for later.
+
 # 
 
 - Work become more granulary, and it feels less

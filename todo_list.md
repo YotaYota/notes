@@ -14,4 +14,5 @@
 - C programming
 - is terminal output/input a kind of file?
 - what is SCM?
+- show logs in realtime
 
