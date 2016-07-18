@@ -3,6 +3,7 @@ Base url:
 
 ```https://api.github.com```
 
+- endpoints like ```/repos/user``` are added to this url.
 
 # User access
 1. ```-u user:password```
