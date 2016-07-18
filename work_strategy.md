@@ -11,6 +11,9 @@ unsuccesseful because this wastes time and creates a stand still.
 - Even if an approach doesn't solve the problem, I want to be clear on
 what sub-goals and conclusions I can get from the approach.
 
+# Strategy
+### Divide the problem.
+Try to divide the problem into isolated parts that can be solved individually.
 
 # Procedure
 
