@@ -37,7 +37,9 @@ Must use `Accept` header `application/vnd.github.loki-preview+json`.
   /repos/:owner/:repo/branches/:branch/protection/required_status_checks/contexts`
 - Remove required status checks contexts of potected branch `DELETE
   /repos/:owner/:repo/branches/:branch/protection/required_status_checks/contexts`
+
 ### `restrictions` only available for organization-owned repositories.
+
 - Get restrictions of protected branch `GET
   /repos/:owner/:repo/branches/:branch/protection/restrictions`
 - Remove restrictions of protected branch `DELETE
