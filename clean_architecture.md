@@ -1,5 +1,7 @@
 # Clean Architecture
 
+## Chapter 1: Design and Architecture
+
 When software design done right, the maintaing phase is identified by:
 
 - Requires a fraction of the human resources.
@@ -84,15 +86,79 @@ policies are independent of modules that contain low-level details. The
 low-level details are regulated to plugin modules that can be deployed and and
 developed independently from the modules that contain high-level policies.
 
-## Functional Programming
+### Functional Programming
 
 Variables in functional languages do not vary.
 
 Immutability means no problems with race conditions, deadlock conditions or
 concurrent update problems.
 
+#### Segregation of Mutability
+
 A common practice is to segregate the application into immutable and mutable
 components. Mutable components needs to be safeguarded from concurrency by
 transactions. It is wise to push as much processing as possible into the
 immutable components, and use as little as possible in the mutable components.
+
+#### Event Sourcing
+
+Store the transactions, not the state.
+
+## Design Principles
+
+### SOLID Principles
+
+- SRP: The Single Responsibility Principle
+- OCP: The Open-Closed Principle
+- LSP: The Liskov Substitution Principle
+- ISP: The Interface Segregation Principle
+- DIP: The Dependency Inversion Principle
+
+The goal of the principles is the creation of mid-level software structures that
+
+- tolerate change,
+- are easy to understand,
+- are the basis of components that can be used in many software systems.
+
+#### SRP: The Single Responsibility Principle
+
+Each software module should have one, and only one, reason to change. Or more accurate
+
+_A module should be responsible to one, and only one, actor._
+
+Here, a _module_ can be thought of as a source file.
+
+An _actor_ can be thought of as a common group of stakeholders.
+
+The SRP comes at play, for example, when different modules uses the same
+algorithm. SRP then states that the modules should _not_ be merged, because at a
+later time one part using the algorithm might need a change but not the other.
+
+[In this scenarion, SRP actually promotes duplication.]
+
+The SRP appears at three different levels
+
+- Functions and classes
+- Components (_Common Closure Principle_)
+- Architectural (_Axis of Change_)
+
+#### OCP: The Open-Closed Principle
+
+For software systems to be easy to change, they must be designed to allow the
+behaviour of those systems to be changed by adding new code, rather than
+changing existing code.
+
+#### LSP: The Liskov Substitution Principle
+
+To build a system from interchangeable parts, those parts must adhere to to a
+contract that allows those parts to be substituted one for another.
+
+#### ISP: The Interface Segregation Principle
+
+Avoid depending on things that you don't use.
+
+#### DIP: The Dependency Inversion Principle
+
+Code that implements high-level policy should not depend on the code that
+implements low-level details. Rather, details should depend on policies.
 
