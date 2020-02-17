@@ -134,7 +134,7 @@ The SRP comes at play, for example, when different modules uses the same
 algorithm. SRP then states that the modules should _not_ be merged, because at a
 later time one part using the algorithm might need a change but not the other.
 
-[In this scenarion, SRP actually promotes duplication.]
+[In this scenario, SRP actually promotes duplication of code.]
 
 The SRP appears at three different levels
 
@@ -147,6 +147,14 @@ The SRP appears at three different levels
 For software systems to be easy to change, they must be designed to allow the
 behaviour of those systems to be changed by adding new code, rather than
 changing existing code.
+
+If component A should be protected from changes in component B, then component B
+should depend on component A.
+
+The goal is to make the system easy to extend without incurring a high impact of
+change. This goal is acomplished by by partitioning the system into components,
+and arranging those components into a dependency hierarchy that protects
+higher-level components from changes in lower-level components.
 
 #### LSP: The Liskov Substitution Principle
 
