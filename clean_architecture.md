@@ -161,12 +161,38 @@ higher-level components from changes in lower-level components.
 To build a system from interchangeable parts, those parts must adhere to to a
 contract that allows those parts to be substituted one for another.
 
+Barbara Liskov defined subtypes in terms of a substitution property:
+
+```definition
+If for each object o1 of type S, there is an object o2 of type T such that for
+all programs P defined in terms of T, the behaviour of P is unchanged when o1 is
+substituted for o2, then S is a subtype of T.
+```
+
 #### ISP: The Interface Segregation Principle
 
-Avoid depending on things that you don't use.
+In general it is harmful to depend on things that contain more than you need. A
+change in such a module would require changes in modules that should not be
+affected by the change.
 
 #### DIP: The Dependency Inversion Principle
 
 Code that implements high-level policy should not depend on the code that
 implements low-level details. Rather, details should depend on policies.
+
+The most flexible systems are those in which source code refers only to
+abstractions, not to concretions.
+
+- Don't refer to volatile concrete classes. (Refer to abstract interfaces
+instead, creation of objects should in general use _Abstract Factories_).
+- Don't derive from volatile concrete classes.
+- Don't override concrete functions.
+- Never mention the name of anything concrete and volatile.
+
+DIP violations cannot be entirely removed, but they can be gathered into a small
+number of concrete components and kept separate from the rest of the system.
+
+## Components
+
+Components are the units of deployment.
 
