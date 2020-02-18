@@ -57,10 +57,10 @@ These three paradigms impose dicipline in different ways
 
 These diciplines are linked to architecture
 
-- We use polymorphism as the mechanism to cross architectural boundaries.
-- We use functional programming tp impose dicipline on the location of and
-access to data.
 - We use structured programming as the algorithmic foundation of our modules.
+- We use polymorphism as the mechanism to cross architectural boundaries.
+- We use functional programming to impose dicipline on the location of and
+access to data.
 
 ### Structured Programming
 
@@ -116,9 +116,9 @@ Store the transactions, not the state.
 
 The goal of the principles is the creation of mid-level software structures that
 
-- tolerate change,
-- are easy to understand,
-- are the basis of components that can be used in many software systems.
+- Tolerate change
+- Are easy to understand
+- Are the basis of components that can be used in many software systems
 
 #### SRP: The Single Responsibility Principle
 
@@ -152,7 +152,7 @@ If component A should be protected from changes in component B, then component B
 should depend on component A.
 
 The goal is to make the system easy to extend without incurring a high impact of
-change. This goal is acomplished by by partitioning the system into components,
+change. This goal is acomplished by partitioning the system into components,
 and arranging those components into a dependency hierarchy that protects
 higher-level components from changes in lower-level components.
 
@@ -194,5 +194,6 @@ number of concrete components and kept separate from the rest of the system.
 
 ## Components
 
-Components are the units of deployment.
+Components are the units of deployment. Well designed components always retain
+the ability to be independently deployable, and therefore also independently developable.
 
