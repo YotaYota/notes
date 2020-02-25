@@ -1,8 +1,8 @@
 # Clean Architecture
 
-## Chapter 1: Design and Architecture
+## Design and Architecture
 
-When software design done right, the maintaing phase is identified by:
+When software design done right, the maintaining phase is identified by:
 
 - Requires a fraction of the human resources.
 - Changes are simple and rapid.
@@ -10,7 +10,7 @@ When software design done right, the maintaing phase is identified by:
 - Effort is minimized.
 - Functionality and flexibility are maximized.
 
-## Definition
+### Definition
 
 ```emph
 The goal of software architecture is to minimize the human resources required to
@@ -25,16 +25,16 @@ To build a system with a design and an architecture that minimize effort and
 maximize productivity, you need to know which attributes of system architecture
 lead to that end.
 
-## Behaviour and Structure
+### Behaviour and Structure
 
 Behaviour and structure are two values that needs to remain high.
 
 A change must be easy to make.
 
-The difficulty of a change should only be proprtional to the scope of the change,
+The difficulty of a change should only be proportional to the scope of the change,
 and not the shape of the change.
 
-If the difficulty of change _is_ proprtional to the shape of the change, then
+If the difficulty of change _is_ proportional to the shape of the change, then
 the cost of development will increase over time.
 
 It's a quality of the architecture that it might prefer a certain shape over
@@ -71,7 +71,7 @@ enough for our purposes.
 
 ### Object-oriented Programming
 
-_Dependency inversion_: the code use using another, does not need to name it.
+_Dependency inversion_: the code using another, does not need to name it.
 
 Since OO languages provide safe and convinient polymorphism means that any
 source code dependency, no matter where it is, can be inverted (by using interfaces).
@@ -83,7 +83,7 @@ OO is the ability, through the use of polymorphism, to gain absolute control
 over every source code dependency in the system. It allows the architect to
 create a plugin architecture, in which modules that that contain high-level
 policies are independent of modules that contain low-level details. The
-low-level details are regulated to plugin modules that can be deployed and and
+low-level details are regulated to plugin modules that can be deployed and
 developed independently from the modules that contain high-level policies.
 
 ### Functional Programming
@@ -196,4 +196,57 @@ number of concrete components and kept separate from the rest of the system.
 
 Components are the units of deployment. Well designed components always retain
 the ability to be independently deployable, and therefore also independently developable.
+
+### Component Cohesion
+
+- REP: The Reuse/Release Equivalence Principle
+- CCP: The Common Closure Principle
+- CRP: The Common Reuse Principle
+
+#### The Reuse/Release Equivalence Principle
+
+_The granule of reuse is the granule of release._
+
+Classes and and modules that are formed into a component must belong to a
+cohesive group. Classes and modules that are grouped together into a component
+should be _releaseable_ together. I.e. if classes and modules are release under
+the same version, it should make sense that they are also released.
+
+#### The Common Closure Principle
+
+_Gather into components those classes that change for the same reasons and at
+the same times. Separate into different components those classes that change at
+different times and for different reasons._
+
+A component should not have multiple reasons to change (see SRP).
+
+If changes are confined to a single component, then we need only to redeploy the
+changed component, which in turn lowers to effort of change.
+
+Group into components that are likely to change for the same reasons and are
+closed to the same type of changes.
+
+#### The Common Reuse Principle
+
+_Don't force users of a component to depend on things they don't need._
+
+Classes and modules that tend to change together belong in the same component,
+and vice verca.
+
+Classes in a component should be inseparable.
+
+#### REP, CCP and CRP Interplay
+
+REP and CCP are _inclusive_ driving components to be larger. CRP is _exclusive_,
+driving components to be smaller.
+
+REP: group for reuse.
+CCP: Group for maintenance.
+CRP: Split to avoid unneeded releases.
+
+- REP and CRP: Too many components are impacted when simple changes are made.
+- CCP and REP: Too many unneeded releases to be generated.
+- CRP and CCP: Hard to reuse.
+
+### Component Coupling
 
