@@ -209,8 +209,8 @@ _The granule of reuse is the granule of release._
 
 Classes and and modules that are formed into a component must belong to a
 cohesive group. Classes and modules that are grouped together into a component
-should be _releaseable_ together. I.e. if classes and modules are release under
-the same version, it should make sense that they are also released.
+should be _releaseable_ together. I.e. if classes and modules are released under
+the same version, it should make sense.
 
 #### The Common Closure Principle
 
