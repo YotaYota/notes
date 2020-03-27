@@ -15,6 +15,8 @@ Inject the store in order to be able to gain access to the global state.
 
 `@Injectible(...)`
 
+- use `providedIn` to declare module `name-provider.ts` that provides it
+
 ## Template
 
 - directive
