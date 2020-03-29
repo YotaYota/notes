@@ -11,6 +11,49 @@ Single Page Application (SPA).
 
 Inject the store in order to be able to gain access to the global state.
 
+### Interaction
+
+- `@Input()`
+- `@Output()`
+- `ngOnChanges()`
+
+#### `@Input()`
+
+Either a variable
+
+```js
+@Input() aVariable: string;
+...
+[aVariable]="value"
+```
+
+or a setter function
+
+```js
+aVariable: string;
+@Input()
+set aVariable(inputVar: string) {...}
+...
+[aVariable]="value"
+```
+
+#### `@Output()`
+
+#### `ngOnChanges()`
+
+### Lifecyle Component/Directive Hook Methods
+
+- `ngOnChanges()`
+- `ngOnInit()` once
+- `ngDoCheck()`
+- `ngAfterContentInit()` once
+- `ngAfterContentChecked()`
+- `ngAfterViewInit()` once
+- `ngAfterViewChecked()`
+- `ngOnDestroy()` once
+
+Angular only calls a directive/component hook method if it is defined.
+
 ## Service
 
 `@Injectible(...)`
@@ -57,8 +100,10 @@ Declares compilation contex for a set of modules.
 
 `async`
 
+- `.map`
 - `.switchMap`
-- `switchMapTo`
+- `.switchMapTo`
+- `.combineLatest`
 - ...
 
 ### Observable
@@ -67,6 +112,9 @@ Declares compilation contex for a set of modules.
 
 - `.pipe(...)`
 - `.subscribe(...)`
+
+**Note**: subscribing via an `async` pipe will automatically unsubscribe. When manually subscribing,
+unsubscribe has to be called to prevent memory leaks (e.g. in `ngOnDestroy()`).
 
 ## NgRx store
 
