@@ -7,7 +7,6 @@ Single Page Application (SPA).
 `@Component(...)`
 
 - Define Views.
-- Can use a Service.
 
 Inject the store in order to be able to gain access to the global state.
 
@@ -39,7 +38,13 @@ set aVariable(inputVar: string) {...}
 
 #### `@Output()`
 
+Emit event.
+
 #### `ngOnChanges()`
+
+By changing the `changeDetection` property, you will change when the component is re-rendered.
+
+ngOnChanges can listen to update handling.
 
 ### Lifecyle Component/Directive Hook Methods
 
@@ -70,6 +75,7 @@ Angular only calls a directive/component hook method if it is defined.
 
 - `<ng-template>`
 - `<ng-container>` is not rendered
+- `<ng-content>` input HTML rendered here
 
 ## Module
 
@@ -100,6 +106,10 @@ Declares compilation contex for a set of modules.
 
 `async`
 
+### Operators
+
+Operators can be used in `.pipe(...)`.
+
 - `.map`
 - `.switchMap`
 - `.switchMapTo`
@@ -108,7 +118,9 @@ Declares compilation contex for a set of modules.
 
 ### Observable
 
-`varName$`
+Naming convention `varName$`.
+
+Is like a Promise.
 
 - `.pipe(...)`
 - `.subscribe(...)`
@@ -116,11 +128,13 @@ Declares compilation contex for a set of modules.
 **Note**: subscribing via an `async` pipe will automatically unsubscribe. When manually subscribing,
 unsubscribe has to be called to prevent memory leaks (e.g. in `ngOnDestroy()`).
 
+### Subjects
+
 ## NgRx store
 
 Global state.
 
-`store.dispatch(Action)` updates state.
+`store.dispatch(Action)` to update state.
 
 ### Reducer
 
@@ -138,6 +152,7 @@ Move as much logic as possible here from component.
 
 ### Effect
 
-- Listen on `.ofType(Action)` and produces new Action.
+- Listen on `.ofType(Action)` and produces new Action
+- Must return a new Action
 - async
 
