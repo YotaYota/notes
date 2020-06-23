@@ -93,9 +93,18 @@ Declares compilation contex for a set of modules.
 
 ## Resolver
 
-- In Routing module
+Implements `Resolve` interface from `@angular/router` module.
+
+```
+interface Resolve<T> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
+  : Observable<T> | Promise<T> | T
+}
+```
+
 - Connected to a path
-- Run before anything is showed and gives data to the component on the path
+- Run before anything is showed and gives ready data to the component on the
+path. This means observables will be resolved properly.
 
 ## Guard
 
