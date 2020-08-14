@@ -250,3 +250,72 @@ CRP: Split to avoid unneeded releases.
 
 ### Component Coupling
 
+Component dependency diagrams have very little to do with describing the
+function of the application. Rather, they're a build of the _buildability_ and
+_maintainability_ of the application. Hence, they are not designed at the
+beginning of the project.
+
+#### The Acyclic Dependencies Principle
+
+The component dependency graph must be a _DAG_ (Directed Acyclic Graph).
+
+For solving non-DAG structures, either
+
+- apply DIP, or
+- create a new component that both depend on.
+
+#### The Stable Dependency Principle (SDP)
+
+Depend in the direction of stability.
+
+An instability metric:
+
+```
+I = Fan out / (Fan in + Fan out)
+```
+
+The metric I should decrease in the direction of dependency.
+
+#### The Stable Abstractions Principle (SAP)
+
+A component should be as abstract as it is stable.
+
+Software that encapsulated high-level policies should be placed in stable
+components (I = 0). Unstable components (I = 0) should contain onlt the software
+that is volatile, that we want to be easy to change.
+
+An abstractness metric:
+
+```
+A = no. classes in component / (no. abstract classes + no. interfaces)
+```
+
+#### Relation Between Instability and Abstraction
+
+Instability and abstraction is inversly corrolated.
+
+_The Main Sequence_ 
+```
+A + I = 1
+```
+
+_Zone of Pain_ is where A and I are both close to 0 (e.g. databases). Volatile
+components in this zone is problematic.
+
+_Zone of Uselessness_ is where A and I are both close to 1.
+
+Distance from the main sequence
+```
+D = |A + I - 1|
+```
+
+any component that has a D metric that is not near zero should be restructured.
+
+##### SAP + SDP = DIP for components
+
+SDP: dependencies should run in the direction of stability.
+
+SAP: stability implies abstraction.
+
+Thus: dependencies shold run in the direction of abstraction.
+
