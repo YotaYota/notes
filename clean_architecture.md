@@ -203,7 +203,7 @@ the ability to be independently deployable, and therefore also independently dev
 - CCP: The Common Closure Principle
 - CRP: The Common Reuse Principle
 
-#### The Reuse/Release Equivalence Principle
+#### REP: The Reuse/Release Equivalence Principle
 
 _The granule of reuse is the granule of release._
 
@@ -212,7 +212,7 @@ cohesive group. Classes and modules that are grouped together into a component
 should be _releaseable_ together. I.e. if classes and modules are released under
 the same version, it should make sense.
 
-#### The Common Closure Principle
+#### CCP: The Common Closure Principle
 
 _Gather into components those classes that change for the same reasons and at
 the same times. Separate into different components those classes that change at
@@ -226,7 +226,7 @@ changed component, which in turn lowers to effort of change.
 Group into components that are likely to change for the same reasons and are
 closed to the same type of changes.
 
-#### The Common Reuse Principle
+#### CRP: The Common Reuse Principle
 
 _Don't force users of a component to depend on things they don't need._
 
@@ -255,7 +255,7 @@ function of the application. Rather, they're a build of the _buildability_ and
 _maintainability_ of the application. Hence, they are not designed at the
 beginning of the project.
 
-#### The Acyclic Dependencies Principle
+#### ADP: The Acyclic Dependencies Principle
 
 The component dependency graph must be a _DAG_ (Directed Acyclic Graph).
 
@@ -264,7 +264,7 @@ For solving non-DAG structures, either
 - apply DIP, or
 - create a new component that both depend on.
 
-#### The Stable Dependency Principle (SDP)
+#### SDP: The Stable Dependency Principle
 
 Depend in the direction of stability.
 
@@ -276,7 +276,7 @@ I = Fan out / (Fan in + Fan out)
 
 The metric I should decrease in the direction of dependency.
 
-#### The Stable Abstractions Principle (SAP)
+#### SAP: The Stable Abstractions Principle
 
 A component should be as abstract as it is stable.
 
@@ -289,6 +289,14 @@ An abstractness metric:
 ```
 A = no. classes in component / (no. abstract classes + no. interfaces)
 ```
+
+#### SAP + SDP = DIP for Components
+
+SDP: dependencies should run in the direction of stability.
+
+SAP: stability implies abstraction.
+
+Thus: dependencies shold run in the direction of abstraction.
 
 #### Relation Between Instability and Abstraction
 
@@ -311,11 +319,42 @@ D = |A + I - 1|
 
 any component that has a D metric that is not near zero should be restructured.
 
-##### SAP + SDP = DIP for components
+## Architecture
 
-SDP: dependencies should run in the direction of stability.
+Systems architecture is the shape of the system:
+- The division of that system into components,
+- The arrangement of the components,
+- The ways in which the components communicate with each other.
 
-SAP: stability implies abstraction.
+The ultimate purpose of the architecture is to
+- Minimize the lifetime cost of the system,
+- Maximize the programmer productivity.
 
-Thus: dependencies shold run in the direction of abstraction.
+This is done by considering how the architecture:
+- Facilitates the development,
+- Facilitates the deployment,
+- Facilitates the operation,
+- Facilitates the maintenance.
+
+Good architecture are systems that are:
+- Easy to understand,
+- Easy to develop,
+- Easy to maintain,
+- Easy to develop.
+
+### Keeping Options Open
+
+Software systems can be divided into two components: _Policy_ and _Details_.
+
+Policy: embodies all the business rules and procedures.
+
+Details: things that are necessary to enable communicate with the policy, but
+does not impact the policy.
+
+Leave as many options open as possible, for as long as possible; the options
+that are to be kept open are the details. This leaves room for making more
+informed decisions.
+
+Architecture should make policy the most essential part of the system while
+making the details irrelevant to that policy.
 
