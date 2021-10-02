@@ -1,0 +1,18 @@
+
+First statement is always `FROM`. Determines which base image to use.
+
+_volume_: map a folder on your machine accessible from within the Docker image.
+```
+docker run -v /home/jje/shared-dir:/app alpine
+```
+
+`-it` is short for `--interactive` and `--tty`.
+
+`-e` environment variable
+```
+docker run -e NAME=World node:latest node -e "console.log('Hello ' + process.env.NAME)"
+```
+
+
+`--rm` automatically removes container when it stops.
+
