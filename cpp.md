@@ -1,3 +1,48 @@
+# Pass By
+
+## Pass by Value
+
+```
+void pbv(int x);
+```
+
+Pass by value copies parameter. Can be `const`.
+
+- prevents side effects
+- can be heavvy on performance
+- preffered with fundamental types
+
+## Pass by Reference
+
+```
+void pbr(int& x);
+```
+
+Allows the function to modify the parameter.
+
+Avoid _out parameters_.
+
+
+## Pass by const Reference
+
+```
+void pbcr(const int& x);
+```
+
+Cannot change parameter (as when passed by value), but the value is not copied,
+which saves performance.
+
+## Pass by Address
+
+```
+void pba(int* x);
+```
+
+```
+void pbca(const int* x);
+```
+
+
 # Pointers and References
 
 References are pointers under the hood.
