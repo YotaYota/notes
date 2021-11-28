@@ -1,1 +1,9 @@
 site_name: Notes
+theme:
+    name: material
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - rust
+    palette:
+         scheme: slate
