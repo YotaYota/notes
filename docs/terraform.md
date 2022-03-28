@@ -225,3 +225,5 @@ terraform workspace list
 terraform workspace select <environment>
 ```
 
+Terraform workspace name is accessible with `terraform.workspace`.
+

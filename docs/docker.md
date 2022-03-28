@@ -28,3 +28,16 @@ Run bash inside docker image
 docker exec -it <image name> bash
 ```
 
+## Remove
+
+Clean up all dangling resources:
+
+```bash
+docker system prune
+```
+
+Also remove any stopped containers and all unused images
+
+```bash
+docker system prune -a
+```
