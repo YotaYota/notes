@@ -336,6 +336,22 @@ if condition {
 
 must cover all arms.
 
+### `if let`
+
+Shorthand for covering on only one arm.
+
+```rust
+if let Ok(i) = h() 
+  // ...
+}
+```
+
+### `while let`
+
+### `?`
+
+Shorthand for match or throw error.
+
 ### Loops
 
 `loop`, `while` and `for`.
@@ -387,6 +403,18 @@ turned into a statement.
 An enumeration is a type that can have a fixed set of values. Those values are
 called _variants_.
 
+### `Option` enum
+
+`Option<T>` has variants `Some(T)` or `None`.
+
+- Unwrap in a `match` statement.
+- `.map()`
+- `.and()`
+- `.and_then()`
+- `.or()`
+- `.or_else()`
+- `.ok_or()`
+
 ### `Result` enum
 
 Rust does not have any exceptions, they are instead encoded in return types.
@@ -397,6 +425,8 @@ Rust does not have any exceptions, they are instead encoded in return types.
 - `.expect`: assert success with `expect`, or panic
 - `?`: shortcut for `match` with return in error arm
 - `.unwrap`: shortcut for `match` with `panic!` in error arm
+
+**Best practice**: Use an enum for error type.
 
 ### `Ordering` enum
 
