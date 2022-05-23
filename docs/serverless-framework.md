@@ -37,6 +37,20 @@ Framework as an **Event**
 - You can overwrite or extend the functionality of the Framework using
 **Plugins**
 
+## Permissions
+
+- `provider.profile`: framework user permissions for creation ( lookup in *~/.aws/credentials*)
+- `provider.iam.deploymentRole`: deployment role after creation
+- `provider.iam.role.statements`: lambda permissions
+
+### Deployer Role
+
+- Fetch configuration data required to synthesise a new CloudFormation template.
+(eg SSM)
+- Create S3 Bucket for storing deplyment artifact
+- Validating CloudFormation template
+- Deploy CloudFormation template
+
 ## Plugins
 
 Install the plugin then configure `serverless.yml` file

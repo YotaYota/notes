@@ -56,6 +56,9 @@ resouces "<resource type>" "<resource name>" {
 
 ## State
 
+Terraform uses the state to keep track of the resources it manages. The state
+needs to be up to date.
+
 File `terraform.tfstate`.
 
 ```
@@ -65,6 +68,69 @@ terraform show
 ```
 terraform state list
 ```
+
+**Note**: state stores in plain text, so it contains sensitive information.
+
+### Backend - Remote State
+
+Define where terraform's state snapshots are stored.
+
+### S3
+
+```
+resource "aws_s3_bucket" "<backend name>" {
+  bucket = "<globally unique bucket name>"
+
+  lifecycle {
+    prevent_destroy = true // prevents terraform to delete
+  }
+
+  versioning {
+    enabled = true // allows us to see what the state was at a previous moment in time
+  }
+
+  server_side_encryption_configuration { // enable encryption of state file
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+}
+```
+
+Use DynamoDB to enable locking of state in order to prevent more than one user
+to edit the state at the same time.
+
+```
+resource "aws_dynamodb_table" "<terraform lock>" {
+  name = "<dynamodb name>"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+}
+```
+
+Define state to use
+
+```
+terraform {
+  backend "s3" {
+    bucket = "<bucket name>"
+    key = "global/s3/terraform.tfstate" // Folder path in bucket to store state file
+    region = "<aws region>"
+    dynamodb_table = "<dynamodb name>"
+    encrypt = true
+  }
+}
+```
+
+**Remark**: The target backend needs to exist in order for terraform to be able
+to use it.
 
 ## Variables
 
@@ -195,10 +261,10 @@ Two methods:
 │   ├── terraform.tfstate
 │   └── terraform.tfvars
 └── dev
-   ├── main.tf
-   ├── variables.tf
-   ├── terraform.tfstate
-   └── terraform.tfvars
+    ├── main.tf
+    ├── variables.tf
+    ├── terraform.tfstate
+    └── terraform.tfvars
 ```
 
 #### Workspaces
