@@ -1,19 +1,83 @@
 # AWS
 
-## IAM
+## AWS CLI
 
-An **IAM permission** contains three elements
+```
+aws configure
+```
 
-- _Effect_: ("Allow" | "Deny")
-- _Action_: what action `<service namespace>:<action>`
-- _Resource_: ARN(s)
+*AWS Access Key ID* and *AWS Secret Access Key* are stored in
+`~/.aws/credentials`. These are associated with an IAM user or role.
 
-(it may also optionally include _Condition_.)
+All other configuration is stored in `~/.aws/config`.
 
-**IAM permissions** are attached to *users* or *roles*.
 
-**Note**: IAM roles do not have long term credentials, ie no password access.
-They are assumed to be used by trusted entities.
+## IAM - Identity and Access Management
+
+Default access is "Deny".
+
+### IAM Identities
+
+There are 3 types of IAM identities:
+
+- IAM user
+- IAM user group
+- IAM role
+
+Note that IAM identities live inside an AWS Account, which is a boundary - by
+default, no access is given to identities outside the account (but can be
+allowed).
+
+#### IAM User
+
+An **IAM user** represents a the person or service that interacts with AWS. IAM
+users have long-term credentials.
+
+#### IAM Role
+
+An **IAM role** is not associated with an identity, and has no long-term access
+keys (as users do). IAM roles are *assumed* by trusted entities, which gives
+that entity the permissions of the role temporarily (assumed role expires).
+
+**Note**: Assuming a role gives credentials that last between 15 minutes and 36
+hours.
+
+#### IAM Group
+
+An **IAM group** is a collection of users.
+
+---
+
+**Best practice**: Prefer roles over users when possible.
+
+**Best practice**: Prefer attaching a user to a group over giving credentials
+directly to the user.
+
+### IAM Policy (EPARC)
+
+Policies are attached to IAM identities (users, groups and roles).
+
+Required parts are
+
+- **Effect**: statement result; "Allow" or "Deny"
+- **Action**: activity or call the statement covers
+- **Resource**: object or objects (by ARN) the statement covers
+
+```
+{
+  "Version" "2012-10-17"
+  "Statement": {
+    "Effect": "Allow",            # Allow or Deny
+    "Action": "ec2:RunInstances", # Describes the specific Action
+    "Resource": "*"               # ARN it applies to (here: all EC2 instances) 
+  }
+}
+```
+
+Optional parts are
+
+- **Principal**: Specifies the principal that is allowed to access a resource.
+- **Condition**: Specifies conditions for when a policy is in effect.
 
 ## Compute
 
