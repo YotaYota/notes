@@ -32,7 +32,6 @@ serverless remove
 - **Resources** are AWS infrastructure components which your Functions use
 - Anything that triggers an AWS Lambda Function to execute is regarded by the
 Framework as an **Event**
-- **Resources** are AWS infrastructure components which your Functions
 - A **Service** is the Framework's unit of organization
 - You can overwrite or extend the functionality of the Framework using
 **Plugins**

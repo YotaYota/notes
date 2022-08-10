@@ -24,9 +24,12 @@ There are 3 types of IAM identities:
 - IAM user group
 - IAM role
 
-Note that IAM identities live inside an AWS Account, which is a boundary - by
+**Note**: IAM identities live inside an AWS Account, which is a boundary - by
 default, no access is given to identities outside the account (but can be
 allowed).
+
+**Note**: The **root** user has access to everything and cannot be limited by
+IAM policies.
 
 #### IAM User
 
@@ -53,7 +56,7 @@ An **IAM group** is a collection of users.
 **Best practice**: Prefer attaching a user to a group over giving credentials
 directly to the user.
 
-### IAM Policy (EPARC)
+### IAM Policy (E-PARC)
 
 Policies are attached to IAM identities (users, groups and roles).
 
@@ -69,15 +72,40 @@ Required parts are
   "Statement": {
     "Effect": "Allow",            # Allow or Deny
     "Action": "ec2:RunInstances", # Describes the specific Action
-    "Resource": "*"               # ARN it applies to (here: all EC2 instances) 
+    "Resource": "*"               # ARN it applies to (here: all EC2 instances)
   }
 }
 ```
+
+**Note**: *Action* and *Resource* accepts wildcards.
 
 Optional parts are
 
 - **Principal**: Specifies the principal that is allowed to access a resource.
 - **Condition**: Specifies conditions for when a policy is in effect.
+
+#### Policy Types
+
+- Identity based policies (attached to an identity)
+- Resource based policies (attached to a resource)
+
+Resource based policies are used to attach permissions to the **Principal**.
+Identity based policies do **not** make use of the Principal element.
+
+**Example**: IAM Policy that allows all Principals, but ony from certail IP
+addresses
+
+```
+"Principal": "*"`,
+"Condition": { "IpAddress": { "aws:SourceIp": ["<IP ADDRESS>"]}}
+```
+
+### IAM Evaluation Logic
+
+1. Is the user the root user   -> **Allow**
+2. Is there a specific "Deny"? -> **Deny**
+3. Is there a specific "Allow" -> **Allow**
+4. -> **Deny**
 
 ## Compute
 
