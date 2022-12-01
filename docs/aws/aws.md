@@ -1,16 +1,5 @@
 # AWS
 
-## AWS CLI
-
-```
-aws configure
-```
-
-*AWS Access Key ID* and *AWS Secret Access Key* are stored in
-`~/.aws/credentials`. These are associated with an IAM user or role.
-
-All other configuration is stored in `~/.aws/config`.
-
 ## Cognito
 
 - User Pools
