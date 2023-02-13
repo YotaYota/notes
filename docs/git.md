@@ -7,7 +7,7 @@
 
 `git init --bare` create only the **repository**.
 
----
+## Key
 
 Verify connection
 
@@ -33,7 +33,7 @@ Add key
 ssh-add <id_ed25519 file>
 ```
 
-## Workspaces
+## Worktrees
 
 ```
 git clone <REPOSITORY> --bare
