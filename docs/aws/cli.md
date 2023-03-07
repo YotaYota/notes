@@ -61,13 +61,13 @@ aws s3 ls --profile profile_name
 Add 
 
 ```
-[profile_name]
+[profile profile_name]
 ```
 
 to *~/.aws/config*, and
 
 ```
-[profile profile_name]
+[profile_name]
 ```
 
 to *~/.aws/credentials*.
