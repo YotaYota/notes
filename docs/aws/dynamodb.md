@@ -69,8 +69,14 @@ Retrieves all items in a table.
 
 More costly than a query.
 
+Scans can be supplied with the `--max-items <NUMBER>` flag.
+
 **Note**: filters will happen *after* a scan is complete, so it will **not**
 make the scan more efficient.
+
+**Note**: Scans only returns data up to a limit (by default 1MB).
+
+**Note**: Scans are by default paginated.
 
 ## Secondary Index
 
@@ -78,6 +84,14 @@ Basically creates a copy of the table with an alternate key schema.
 
 - *Local secondary index*, allows to create an alternate sort key
 - *Global secondary index*, allows to create an alternate partition and sort key
+
+## `BatchGetItem` & `BatchWriteItem`
+
+Each write in `BatchWriteItem` is atomic, but the command as whole is **not**.
+
+`BatchGetItem` is *eventually consistent* by default.
+
+**Note**: You will be provided with a list of unprocessed items.
 
 ## AWS CLI
 
