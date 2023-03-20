@@ -86,6 +86,21 @@ addresses
 "Condition": { "IpAddress": { "aws:SourceIp": ["<IP ADDRESS>"]}}
 ```
 
+### Managed Policy vs Inline Policy
+
+Both *managed policies* and *inline policies* can be attached to user, groups,
+and roles.
+
+- A *managed policy* is a standalone policy that can have its own ARN. It can
+have a 1-to-many relationship to users, groups, and roles.
+- An *identity policy* has a 1-to-1 relationship with a user, group or role. It
+is deleted when the related principal entity is deleted.
+
+Managed policy can be created with either `AWS::IAM:ManagedPolicy`, or
+`AWS::IAM:Policy` with `PolicyType: Managed`. The main difference is the former
+is standalone with its own ARN. The latter is embedded in the stack its created
+in.
+
 ## IAM Evaluation Logic
 
 1. Is the user the root user   -> **Allow**
