@@ -34,3 +34,14 @@ use {
 ```lua
 use "jose-elias-alvarez/null-ls.nvim"
 ```
+
+[Build-in Sources](https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md)
+
+To run built-in sources, the command specified below must be available on your
+`$PATH` and visible to Neovim. Eg, to check if `stylua` is available, run the
+following (Vim, not Lua) command:
+
+```vim
+" should echo 1 if available (and 0 if not)
+:echo executable("stylua")
+```
