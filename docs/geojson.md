@@ -82,3 +82,20 @@ features are contained by `FeatureCollection` objects.
   ]
 }
 ```
+
+## LineString
+
+```
+{
+  "type": "LineString",
+  "coordinates": [
+    [longitude1, latitude1],
+    [longitude2, latitude2],
+    [longitude3, latitude3],
+    ...
+  ],
+  "bbox": [west, south, east, north],
+  "properties": {...},
+  "id": "..."
+}
+```
