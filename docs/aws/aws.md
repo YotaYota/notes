@@ -48,20 +48,6 @@ For less than 15 minutes.
 - Public/private subnets
 - Elastic Load Balancer (ELB)
 
-### API Gateway
-
-- Websocket (Stateful)
-- HTTP
-- public REST API
-- private REST API
-
-#### Authentification and Authorization
-
-3 options for Authentification
-- IAM
-- Custom Lambda
-- Cognito
-
 ### VPC
 
 - Comes with a default customizable network access control list (ACL)
