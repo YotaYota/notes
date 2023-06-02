@@ -44,6 +44,19 @@ Extra keys are attributes.
 By default queries are only supported on partition and sort key. To support
 queries on other keys, secondary indexes are needed.
 
+### Item types
+
+- `S` – String
+- `N` – Number
+- `B` – Binary
+- `BOOL` – Boolean
+- `NULL` – Null
+- `M` – Map
+- `L` – List
+- `SS` – String Set
+- `NS` – Number Set
+- `BS` – Binary Set
+
 ## Item
 
 - Max size is 400 kB
