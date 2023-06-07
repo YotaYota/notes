@@ -13,3 +13,7 @@ Limitations:
 - cannot be in VPC
 - cannot be referenced with $LATEST$ or aliases; must use a version number
 - can only be triggered by certain CloudFront events
+    - Viewer request
+    - Origin request
+    - Origin response
+    - Viewer response
