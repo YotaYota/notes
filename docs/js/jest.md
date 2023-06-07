@@ -28,3 +28,9 @@ jest.doMock('./myModuke', 8) => ({
 const {Class} = require('./Class');
 )
 ```
+
+## Clear
+
+- `jest.clearAllMocks()` - clear all mock usage data
+- `jest.resetAllMocks()` - clear all mock usage data and also resets implementation with new `jest.fn()`
+- `jest.restoreAllMocks()` - restore mocks back to original implementation (**Note**: only applies for `jest.spyOn`!)
