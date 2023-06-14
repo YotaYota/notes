@@ -1,6 +1,7 @@
 site_name: Notes
 theme:
-    name: material
+    name: readthedocs
+    nav_style: dark
     highlightjs: true
     hljs_languages:
         - yaml
