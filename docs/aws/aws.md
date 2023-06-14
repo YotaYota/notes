@@ -1,12 +1,5 @@
 # AWS
 
-## Cognito
-
-- User Pools
-- Identity Pools
-
-Access Token is not the same as Identity Token.
-
 ## Compute
 
 ### ECS
