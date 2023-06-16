@@ -26,6 +26,25 @@ No cross table relationships
 - Column-based (eg Cassandra)
 - Document-based (eg MongoDB)
 
+## Design
+
+### Queries first
+
+Design of DynamoDB tables requires query patterns to be evaluated *first*.
+
+**Note**: DynamoDB does not support joins.
+
+In order to limit the number of round trips, the data must be ordered in a way
+to minimize the number of calls to the database.
+
+### Partitioning
+
+DynamoDB is designed to partition the underlying data into different storages.
+
+The partitioning is guided by the partition key, therefore it is very important
+to design the partition key so that the data is distributed equally. Otherwise
+you can get hot partitions that impede the performance. 
+
 ---
 
 ## Table
@@ -78,9 +97,7 @@ Find items based on
 aws dynamodb scan --table-name <TABLE>
 ```
 
-Retrieves all items in a table.
-
-More costly than a query.
+Retrieves all items in a table. More costly than a query.
 
 Scans can be supplied with the `--max-items <NUMBER>` flag.
 
