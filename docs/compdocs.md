@@ -1,3 +1,6 @@
+# Compdocs
+
+
 ### Screen control
 
 ```
@@ -64,4 +67,12 @@ dmesg | grep ath10k
 
 ```
 lspci -nnk | grep 0280 -A3
+```
+
+### APT
+
+- PPTs
+
+```
+grep -vhe ^# /etc/apt/sources.list /etc/apt/sources.list.d/*
 ```
