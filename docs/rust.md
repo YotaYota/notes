@@ -108,6 +108,9 @@ fn main() {
 }
 ```
 
+The _prelude_ is the list of things that Rust automatically imports into every
+Rust program. Eg `std::result::Result::{self, Ok, Err}`;
+
 ## Dependencies
 
 _Cargo.toml_: dependencies used by cargo.
@@ -388,7 +391,10 @@ _Note_: can use labels, eg
 
 ## Types
 
-`::` is used to access _associated functions_.
+Types not in the prelude can be brought into scope with a `use` statement.
+
+`::` is used to access _associated functions_, ie a function implemented on a
+type.
 
 ## Statements and Expressions
 
@@ -436,7 +442,7 @@ Rust does not have any exceptions, they are instead encoded in return types.
 - `Ordering::Greater`
 - `Ordering::Equal`
 
-### Style
+## Style
 
 - place source code under `src/`
 - Use 4 spaces
