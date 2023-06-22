@@ -192,6 +192,8 @@ instead, creation of objects should in general use _Abstract Factories_).
 DIP violations cannot be entirely removed, but they can be gathered into a small
 number of concrete components and kept separate from the rest of the system.
 
+**Note**: Dependency Injection is *one* way to achieve this.
+
 ## Components
 
 Components are the units of deployment. Well designed components always retain
