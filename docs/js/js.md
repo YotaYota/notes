@@ -2,7 +2,7 @@
 
 ## Static `import` declaration
 
-Used to import read-only *live bindings* from another module. The imported
+Used to import read-only _live bindings_ from another module. The imported
 module will be evaluated at load time.
 
 In order to use the `import` declaration in a source file, the file must be
@@ -21,3 +21,16 @@ There are 4 form of `import` decalarations
 - Namespace import `import * as name from "module-name";`
 - Side effect import `import "module-name";`
 
+## Promises
+
+`Promise.all()` returns a promise that waits for all of the promises in
+the array to resolve and then resolves to an array of the values that these
+promises produced (in the same order as the original array).
+If any promise is rejected, the result of Promise.all is itself rejected.
+
+`Promise.allSettled()` is same as above, but does not reject if any
+promises do.
+
+`Promise.race()` returns the first promise that settles (fulfilled or rejected).
+
+`Promise.any()` returns the first promise that settles (only fulfilled).
