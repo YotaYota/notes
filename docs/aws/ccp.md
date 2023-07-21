@@ -122,3 +122,10 @@ The host is an EC2 instance.
 on top of a Serverless compute platform. An alternative to running containers
 directly in an EC2 machine.
 
+---
+
+## Module 3: Global Infrastructure and Reliability
+
+### Regions
+
+Regions are totally isolated from one another without an explicit approve.
