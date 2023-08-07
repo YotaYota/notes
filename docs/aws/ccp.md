@@ -1,16 +1,27 @@
 # AWS Certified Cloud Practitioner Foundational (CLF-C01)
 
+## Order of Certificates
+
+1. AWS Certified Cloud Practitioner Foundational (CCP)
+2. AWS Certified Solutions Architect Associate (CSAA)
+   **most in demand**
+3. AWS Certified Developer Associate
+   **overlaps CSAA**
+4. AWS Sysops Administrator Associate
+
 ## Module 1: Intro
 
 Bird's eye view of AWS.
 
 4 domains:
+
 - 26% Domain 1: Cloud Concepts
 - 25% Domain 2: Security and Compliance
 - 33% Domain 3: Technology
 - 15% Domain 4: Billing and Pricing
 
 Exam:
+
 - Passing ~700/1000
 - 65 questions (50 scored, 15 unscored)
 - 1.5 hours
@@ -43,54 +54,58 @@ Supports vertical scaling.
 Instance family types to optimize either memory, cpu, storage or networking
 capacity.
 
-- *General purpose*, `M` and `T`
-- *Compute optimized* (eg batch processing), `C`
-- *Memory optimized*, `R` and `X`
-- *Accelerated computing* (utilize hardware accelerators; coprocessors), `P` and `G`
-- *Storage optimized* (> 10k IOPS), `I` and `D`
-- *HPC optimized*, `Hp`
+- _General purpose_, `M` and `T`
+- _Compute optimized_ (eg batch processing), `C`
+- _Memory optimized_, `R` and `X`
+- _Accelerated computing_ (utilize hardware accelerators; coprocessors), `P` and `G`
+- _Storage optimized_ (> 10k IOPS), `I` and `D`
+- _HPC optimized_, `Hp`
 
 #### Pricing
 
-- *On-demand* (per hour or per second)
-- *Savings plan* (usage above committed usage is charged on-demand prices. 1 or 3 year term)
-- *Reserved instances* (1 or 3 year term, for steady state workload)
-- *Spot instances* (can be reclaimed with 2 min warning, should be able to handle interruptions)
-- *Dedicated host* (no shared tenancy)
+- _On-demand_ (per hour or per second)
+- _Savings plan_ (usage above committed usage is charged on-demand prices. 1 or 3 year term)
+- _Reserved instances_ (1 or 3 year term, for steady state workload)
+- _Spot instances_ (can be reclaimed with 2 min warning, should be able to handle interruptions)
+- _Dedicated host_ (no shared tenancy)
 
 ### Scalability and Elasticity
 
 **Scaling**
 
-Vertical scaling: *scale up* / *scale down*
+Vertical scaling: _scale up_ / _scale down_
 
-Horizontal scaling: *scale in* / *scale out*.
+Horizontal scaling: _scale in_ / _scale out_.
 
-*Amazon EC2 Auto Scaling* provides automatic  horizontal scaling.
-- *Dynamic scaling* responds to changing demand
-- *Predictive scaling* schedule
+_Amazon EC2 Auto Scaling_ provides automatic horizontal scaling.
+
+- _Dynamic scaling_ responds to changing demand
+- _Predictive scaling_ schedule
 
 **Load Balancing**
 
-*Elastic Load Balancing, (ELB)*
+_Elastic Load Balancing, (ELB)_
+
 - Regional construct (highly available)
 - Distributes traffic across multiple resources
 - Scales automatically
 
 ### Messaging and Queueing
 
-If services communicate directly, that is a *Tightly Coupled Architecture*; errors
-in application B will propagate to application A. *Loosely Coupled Architecture*
+If services communicate directly, that is a _Tightly Coupled Architecture_; errors
+in application B will propagate to application A. _Loosely Coupled Architecture_
 means that single failures does not cause cascading failures. Queues and buffers
 solve this.
 
-*Simple Queue Service (SQS)*
+_Simple Queue Service (SQS)_
+
 - Send/Recieve
 - Store
 - Supports any volume
 - Scale automatically
 
-*Simple Notification Service (SNS)*
+_Simple Notification Service (SNS)_
+
 - Publish/Subscibe model (SNS Topic)
 
 #### Monoliths and Microservices
@@ -102,7 +117,7 @@ solve this.
 
 ### Additional Compute Services
 
-*Serverless*: You cannot see or access the underlying infrastructure.
+_Serverless_: You cannot see or access the underlying infrastructure.
 
 **Lambda**
 
@@ -113,12 +128,13 @@ solve this.
 **Container Orchestration Tools**
 
 Container (Docker) Services.
+
 - Elastic Container Service (ECS)
 - Elastic Kubernetes Service (EKS)
 
 The host is an EC2 instance.
 
-*Fargate*: Serverless compute platform for ECS or EKS, allows to run containers
+_Fargate_: Serverless compute platform for ECS or EKS, allows to run containers
 on top of a Serverless compute platform. An alternative to running containers
 directly in an EC2 machine.
 
@@ -126,6 +142,31 @@ directly in an EC2 machine.
 
 ## Module 3: Global Infrastructure and Reliability
 
-### Regions
+Edge Locations are not the same as Regions. Regions can push their content to
+several edge locations.
 
-Regions are totally isolated from one another without an explicit approve.
+### Regions and Availability Zones
+
+Regions are geographically isolated from one another without an explicit approve.
+
+Regions can be connected with high speed fiber network.
+
+_Availability Zone (AZ)_: One data center inside a region.
+
+**Best Practice**: Run across at least 2 AZs for mitigating effect of downtime.
+Any service marked with _Regionally scoped service_ are already doing this by default.
+
+Factors when deciding a region:
+
+- Compliance with data governance and legal requirements
+- Proximity
+- Feature availability
+- Pricing
+
+### Edge Locations
+
+_Content Delivery Network (CDN)_: Cache data close to client.
+
+_Amazon CloudFront_ is the CDN in AWS.
+
+_Route 53_: DNS server.
