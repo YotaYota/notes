@@ -9,6 +9,8 @@
    **overlaps CSAA**
 4. AWS Sysops Administrator Associate
 
+---
+
 ## Module 1: Intro
 
 Bird's eye view of AWS.
@@ -188,3 +190,39 @@ When interacting with AWS services, everything is an API call.
 **AWS Elastic Beanstalk**: Helps provision EC2 based environments.
 
 **AWS CloudFormation**: IaC tool.
+
+---
+
+## Module 4: Networking
+
+### VPC
+
+![overview](img/igw_sg.png)
+
+**Virtual Private Cloud (VPC)**: Provision logically isolated section.
+Resources in VPC can be public facing or private.
+
+**Subnets**: Chunks of IP adresses in the VPC that allows to group resources
+together. They can be **public** or **private**.
+
+Subnets plus networking rules control whether resources are publicly, or
+privately available.
+
+- For public traffic an **Internet Gateway (IGW)** must be attached to allow
+traffic in and out of VPC to the public internet.
+- For private traffic **Virtual Private Gateway** is attached using VPN
+(public encrypted traffic to VPC).
+- **AWS Direct Connect** physical private line to VPC.
+
+**Note:** A VPC can have many different gateways, but connected to different
+Subnets.
+
+Packages entering and leaving a VPC gets checked against a **Network access
+control list (Network ACL)**. Network ACL only checks if package can cross a
+subnet boundary, and not what it can reach inside the subnet.
+
+**Security Groups** blocks all incoming traffic to a group of resources (by
+default), but allows all outgoing traffic. Security groups are stateful in the
+sense that they allow responses regardless of SG rules.
+
+**Note:** Security Group is stateful, Network ACL is stateless.
