@@ -145,6 +145,8 @@ directly in an EC2 machine.
 Edge Locations are not the same as Regions. Regions can push their content to
 several edge locations.
 
+**AWS Local Zones**: for even more low-latency requirements.
+
 ### Regions and Availability Zones
 
 Regions are geographically isolated from one another without an explicit approve.
@@ -154,7 +156,8 @@ Regions can be connected with high speed fiber network.
 _Availability Zone (AZ)_: One data center inside a region.
 
 **Best Practice**: Run across at least 2 AZs for mitigating effect of downtime.
-Any service marked with _Regionally scoped service_ are already doing this by default.
+Any service marked with _Regionally scoped service_ are already doing this by
+default (eg ELB, SNS, SQS).
 
 Factors when deciding a region:
 
@@ -163,6 +166,8 @@ Factors when deciding a region:
 - Feature availability
 - Pricing
 
+**AWS Outposts**: Run AWS services locally.
+
 ### Edge Locations
 
 _Content Delivery Network (CDN)_: Cache data close to client.
@@ -170,3 +175,16 @@ _Content Delivery Network (CDN)_: Cache data close to client.
 _Amazon CloudFront_ is the CDN in AWS.
 
 _Route 53_: DNS server.
+
+### Provisioning
+
+When interacting with AWS services, everything is an API call.
+
+- AWS Management Console (Browser)
+- AWS Command Line Interface (CLI)
+- AWS Software Development Kits (SDK)
+- Other tools (eg CloudFormation, Elastic Beanstalk)
+
+**AWS Elastic Beanstalk**: Helps provision EC2 based environments.
+
+**AWS CloudFormation**: IaC tool.
