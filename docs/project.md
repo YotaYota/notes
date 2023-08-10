@@ -23,9 +23,16 @@ Repetition and pedagogical code is good.
 - Easy to scale backend
 - Don't skip documentation, assume I'm going to forget
 
+---
+
 ## Phases
 
-### Prototype
+### Design and Prototype
+
+- What data manipulation is needed?
+    - What are the CRUD operations?
+    - HTTP verbs map well to CRUD
+- DDD
 
 ### Development Phase
 
