@@ -134,9 +134,9 @@ allcoation.
 - Each value has a variable that's called its owner.
 - There can only be one owner at a time.
 - When the owner goes out of scope, the value will be dropped (the function
-`drop` is called).
+  `drop` is called).
 
-if another variable is assigned to its value,  the value is moved and the old
+if another variable is assigned to its value, the value is moved and the old
 variable is invalidated.
 
 ```rust
@@ -145,7 +145,7 @@ let s2 = s1; // s1 is invalidated here
 println!("{}", s1); // panic
 ```
 
-_Note_: For *stack* data, values are always copied, ie types with known size
+_Note_: For _stack_ data, values are always copied, ie types with known size
 at compile time.
 
 _Note_: If a type implements the `Copy` trait, an older variable is still
@@ -204,9 +204,9 @@ reference to the data does, ie no _dangling pointers_.
 
 `&mut`
 
-- There can only be *one* mutable borrow at a time.
+- There can only be _one_ mutable borrow at a time.
 - There cannot be a mutable borrow at the same time as there are immutable
-borrows.
+  borrows.
 
 ```rust
 fn main() {
@@ -236,14 +236,14 @@ _Note:_ `const` variables cannot be `mut`.
 
 ### Scalar types
 
-|Length |Signed |Unsigned|Floating|
-|:------|:------|:-------|:-------|
-|8-bit  |`i8`   |`u8`    |        |
-|16-bit |`i16`  |`u16`   |        |
-|32-bit |`i32`  |`u32`   |`f32`   |
-|64-bit |`i64`  |`u64`   |`f64`   |
-|128-bit|`i128` |`u128`  |        |
-|arch   |`isize`|`usize` |        |
+| Length  | Signed  | Unsigned | Floating |
+| :------ | :------ | :------- | :------- |
+| 8-bit   | `i8`    | `u8`     |          |
+| 16-bit  | `i16`   | `u16`    |          |
+| 32-bit  | `i32`   | `u32`    | `f32`    |
+| 64-bit  | `i64`   | `u64`    | `f64`    |
+| 128-bit | `i128`  | `u128`   |          |
+| arch    | `isize` | `usize`  |          |
 
 _Note:_ Literal integers default to `i32` or `f64` unless suffix is used.
 
@@ -441,6 +441,25 @@ Rust does not have any exceptions, they are instead encoded in return types.
 - `Ordering::Less`
 - `Ordering::Greater`
 - `Ordering::Equal`
+
+## Module System
+
+**crate**: is the smallest amount of code that the Rust compiler considers at a time.
+Either _binary_ (executable) or _library_ (no main function).
+
+The **crate root** is a source file that the Rust compiler starts from and makes up the root module of your crate.
+
+A **package** is a bundle of one or more crates that provides a set of functionality.
+A package contains a _Cargo.toml_ file that describes how to build those crates.
+
+**Note**: A package can contain as many binary crates as you like, but at most only one library crate.
+Additional binary crates are placed in the *src/bin* directory: each file will be a separate binary crate.
+
+**Note**: A package must contain at least one crate, whether that’s a library or binary crate.
+
+`use` keyword brings a path into scope.
+
+`pub` keyword make items public
 
 ## Style
 

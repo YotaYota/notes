@@ -1,7 +1,42 @@
+# Docker
+
+Contains:
+
+- Server
+- Docker client CLI
+- REST API for client server communication
+
+## Container
+
+_Containers_ are run from an _image_.
+
+Container types are
+
+- short-running tasks that exits when they are done
+- long-running jobs that are detached
+- interactive that stays alive while Docker client is connected
+
+## Image
+
+To build an image you need to provide _repository name_ and _path_.
+
+Convention for _repository name_ is `<user>/<application>`. If no `<user>/` it means that it is an official image.
+
+Docker client sends the content of the path to the server where it is stored in a working directory called the _build context_.
 
 ## Dockerfile
 
-First statement is always `FROM`. Determines which base image to use.
+- `FROM` Only required. Determines which base image to use
+- `RUN` Execute command
+- `ENV` Set environment variable
+- `COPY` Copy from build context into image
+- `EXPOSE` Expose ports
+- `VOLUME` Create directory in image that can be mapped to external storage
+- `CMD` Entrypoint when image is _run_
+
+**Note**: All but `CMD` instructions are build during `image build`
+
+**Note**: Each instruction runs a temporary container and saves a new image for caching.
 
 ## Podman
 
