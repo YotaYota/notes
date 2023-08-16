@@ -34,9 +34,14 @@ Docker client sends the content of the path to the server where it is stored in 
 - `VOLUME` Create directory in image that can be mapped to external storage
 - `CMD` Entrypoint when image is _run_
 
-**Note**: All but `CMD` instructions are build during `image build`
+**Note**: All but `CMD` instructions are build during `image build`.
 
 **Note**: Each instruction runs a temporary container and saves a new image for caching.
+
+### Layers
+
+`docker image history <id>` will give steps, `<missing>` means it's a step from the
+base image.
 
 ## Podman
 
