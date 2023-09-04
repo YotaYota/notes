@@ -33,7 +33,7 @@ Exam:
 
 ### Cloud Computing
 
-**Cloud Computing**: The on-demand delivery of IT resources iver the internet
+**Cloud Computing**: The on-demand delivery of IT resources over the internet
 with pay-as-you-go pricing.
 
 - Trade upfront expenses for variable expenses
@@ -209,9 +209,9 @@ Subnets plus networking rules control whether resources are publicly, or
 privately available.
 
 - For public traffic an **Internet Gateway (IGW)** must be attached to allow
-traffic in and out of VPC to the public internet.
+  traffic in and out of VPC to the public internet.
 - For private traffic **Virtual Private Gateway** is attached using VPN
-(public encrypted traffic to VPC).
+  (public encrypted traffic to VPC).
 - **AWS Direct Connect** physical private line to VPC.
 
 **Note:** A VPC can have many different gateways, but connected to different
@@ -226,3 +226,154 @@ default), but allows all outgoing traffic. Security groups are stateful in the
 sense that they allow responses regardless of SG rules.
 
 **Note:** Security Group is stateful, Network ACL is stateless.
+
+### Global Networking
+
+DNS **Route 53** routing policies:
+
+- Latency-based routing
+- Geolocation DNS
+- Geoproximity routing
+- Weighted round robin
+
+CDN **CloudFront** cache at an edge location.
+
+---
+
+## Module 5: Storage and Databases
+
+### Elastic Block Storage (EBS)
+
+Block level storage.
+
+EC2 machines might have local storage called _Instance Store Volumes_. When the
+image stops, that storage will be deleted (because Instance Store Volumes are
+specific to the host machine which might change).
+
+**Elastic Block Store (EBS)**. Written data is persisted between starts and
+stops of the EC2 instance. Incremental backups are supported (_snapshots_).
+
+- Attached to EC2
+- Scoped to an AZ
+
+### S3
+
+Object storage.
+
+- Stores data as objects. Each object consists of data, metadata, and a key.
+- 5 TB object size limit
+- Support versioning of objects
+- Support staging data between different tiers
+- Regionally distributed
+
+Types:
+
+- _S3 Standard_ stored in min 3 AZ
+- _S3 Standard-Infrequent Access (S3 Standard-IA)_ stored in min 3 AZ. Less frequent but rapid access. Lower storage price, higher retrieval price.
+- _S3 One Zone-Infrequent Access (S3 One Zone-IA)_ stored in 1 AZ but lower cost, used for reproducable data.
+- _S3 Intelligent-Tiering_ Automatically moves objects between IA and standard tiers.
+- _S3 Glacier Flexible Retrieval_ for less frequent access, slow retrieval.
+- _S3 Glacier Instant Retrieval_ same retrieval as S3 Standard.
+- _S3 Glacier Deep Archive_ lowest-cost storage, data retrieval from 12 to 48 hours. Objects replicated min three geographically dispersed AZs.
+- _S3 Outposts_ storage on-premises AWS Outposts environment
+
+_S3 Lifecycle management_: Move data automatically between tiers
+
+### EBS vs S3
+
+S3 is optimized for write once, ready many. Each object is immutable and
+changes needs to upload the whole object again. EBS is not as optimized for
+reading, but it supports delta changes to files.
+
+### Elastic File System (EFS)
+
+Managed Linux file system.
+
+Use case a large number of services and resources need to access the same data
+at the same time.
+
+- Multiple instances can access data in EFS at the same time.
+- Automatic scaling
+- Regional resource
+
+### Relational Database Service (RDS)
+
+Managed service. Supports
+
+- Automated patching
+- Backups
+- Redundancy
+- Failover
+- Disaster recovery
+- Encryption
+
+Six available database engines
+
+- Aurora 
+- MariaDB
+- MySQL
+- PostgreSQL
+- Oracle Database
+- Microsoft SQL Server
+
+Support _Lift and Shift Operation_ to move on premise DB to the cloud.
+
+#### Aurora
+
+- MySQL
+- PostgreSQL
+
+- Data replication
+- Up to 15 read replicas
+- Continuous backup to S3
+- Point in time recovery
+
+### Dynamo DB
+
+NoSQL, key-value.
+
+- Purpose built
+- Millisecond response time
+- Highly scalable
+- Fully managed
+
+### Redshift
+
+Data warehouse as a service.
+
+For historical analytics. Big data, allows to collect data from many sources.
+
+### Database Migration Service (DMS)
+
+Uses cases:
+
+- Migrating a database to EC2 or RDS
+- Database migratiom (Test against production data)
+- Database consolidation (Combining several DBs into one)
+- Continuous database replication (Sending ongoing copies of data to other sources)
+
+#### Homogenous
+
+Source can be:
+
+- on-premises
+- EC2
+- RDS
+
+Target can be:
+
+- EC2
+- RDS
+
+#### Hetrogenous
+
+First use AWS Schema Conversion Tool, then use DMS.
+
+### Additional Database Services
+
+- Netptune: Graph database
+- Quantum Ledger Database (QLDB): complete immutable history
+- Managed Blockchain: distributed ledger
+- ElastiCache: caching layer on top of DB. Supports Redis and Memcached
+- DynamoDB Accelerator (DAX): in-memory cache
+
