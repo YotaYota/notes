@@ -309,7 +309,7 @@ Managed service. Supports
 
 Six available database engines
 
-- Aurora 
+- Aurora
 - MariaDB
 - MySQL
 - PostgreSQL
@@ -376,4 +376,76 @@ First use AWS Schema Conversion Tool, then use DMS.
 - Managed Blockchain: distributed ledger
 - ElastiCache: caching layer on top of DB. Supports Redis and Memcached
 - DynamoDB Accelerator (DAX): in-memory cache
+
+---
+
+## Module 6: Security
+
+**AWS Shared Responsibility Model**: Customers are responsible for _security
+**in** the cloud_, AWS is responsible for _security **of** the cloud_.
+
+### Identity and Access Management (IAM)
+
+The user that creates an AWS account becomes the _root user_ and has access to everything.
+Should turn on MFA and use IAM Users instead.
+
+- _IAM Policy_: JSON object that explicitly allows or denies access to resources. EPARC.
+- _IAM User_: Identity, represents person or application that interacts with AWS
+  services and resources. Starts with no permissions.
+- _IAM Group_: Collection of IAM Users.
+- _IAM Role_: Temporal permissions assumable by a trusted entity.
+
+Best practice: Follow principle of least privilege. Use MFA.
+
+### AWS Organizations
+
+AWS Organizations automatically creates a **root**, which is the parent
+container for all the accounts in the organization.
+
+- Centralized management of accounts.
+- Consolidated billing
+
+**Organizational Units (OU)**: Groupings of accounts. Similar to IAM Groups.
+
+**Service Control Policies (SCPs)**: Apply permissions to root, member account or an OU.
+Allows to place restrictions on services, resource and API actions allowed.
+
+### Compliance
+
+- **AWS Artifacts** access to AWS security and compliance reports.
+- **AWS Compliance**
+
+### DDoS attacks
+
+Some types of attacks
+
+- **UDP Flood**
+  - Fake return address.
+  - _Solution_: Security Groups
+- **HTTP Level Attack**
+- **SlowLoris Attack**
+  - Faking a slow connection
+  - _Solution_: Elastic Load Balancer
+
+**AWS Shield**: Shields against DDoS attacks.
+
+- _Standard_: no cost, real time analysis of malicious traffic
+- _Advanced_: paid service, can handle more sophisticated attacks. Integrates with other services.
+  Integrates with _AWS WAF_.
+
+**AWS WAF**: Web Application Firewall. Allows monitoring of network requests. Works together with
+CloudFront and ELB. Uses a _web access control list (ACL)_ to block IP addresses.
+
+### Additional Security
+
+**AWS Key Management Service (AWS KMS)**: Create, use, and manage cryptographic keys.
+
+- _Encryption at rest_
+- _Encryption in transit_
+
+**AWS Inspector**: Automated security assessment. Checks applications for security vulnerabilities and deviations from security best practices.
+
+**AWS GuardDuty**: Threat detection by monitoring network activity and account behavior.
+
+---
 
