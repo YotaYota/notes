@@ -449,3 +449,6 @@ CloudFront and ELB. Uses a _web access control list (ACL)_ to block IP addresses
 
 ---
 
+## Module 7: Monitoring and Analytics
+
+_Monitoring_: Observing systems, collecting metrics, and then using data to make decisions.
