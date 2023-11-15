@@ -10,7 +10,14 @@
 **Note**: `.mockReturnValue()` etc are shorthand notation for
 `.mockImplementation(...)`, so they also replace the implementation.
 
+
 ## `jest.mock()` and `jest.doMock()`
+
+```
+import { A } from 'B';
+jest.mock('B'); // hoisted
+const mockA = A as jest.MockedFunction<typeof A>;
+```
 
 **Note**: `jest.mock()` is hoisted because module needs to be mocked _before_ it is imported.
 This means that it is **not** possible to use any variables in the mock.
