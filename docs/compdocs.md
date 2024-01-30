@@ -1,5 +1,17 @@
 # Compdocs
 
+### Power
+
+```
+upower --enumerate
+upower -i <entry>
+```
+
+```bash
+for dev in $(upower --enumerate);
+do upower -i $dev;
+done
+```
 
 ### Screen control
 
