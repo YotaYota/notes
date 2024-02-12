@@ -45,6 +45,8 @@ deactivate
 
 Virtual environments does not litter the global pip installs.
 
+**NOTE**: always use `python -m pip ...` for `pip` operations in a venv.
+
 ## Development Mode (a.k.a. “Editable Installs”)
 
 Setuptools instruct the Python interpreter and its import machinery to load the code under development
