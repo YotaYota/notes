@@ -83,16 +83,19 @@ Maintainer: noone <noone@nocomp.com>
 Build-Depends: debhelper-compat (= 12),
                dh-python,
                python3-all,
-               python3-setuptools
+               python3-setuptools,
+               pybuild-plugin-pyproject
 Standards-Version: 4.5.0
 X-Python3-Version: >= 3.10
 
-Package: foo
+Package: python3-foo
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends}, ${python3:Depends}
 Description: Dummy description
 ```
+
+**Note**: pybuild-plugin-pyproject is needed when using *pyproject.toml* file.
 
 - `debian/copyright`
 - `debian/rules`: a makefile
@@ -102,6 +105,7 @@ Description: Dummy description
 # You must remove unused comment lines for the released package.
 #export DH_VERBOSE = 1
 export PYBUILD_NAME = foo
+export PYBUILD_INTERPRETERS = python3.10
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
@@ -114,11 +118,29 @@ export PYBUILD_NAME = foo
 
 ### **Step 4**: Build the package
 
+#### debuild
+
 ```
 $ debuild -us -uc
 ```
 
 Reiterate until it works. The files will be found in parent directory `ls ..`.
+
+#### pbuilder
+
+```
+sudo apt install pbuilder debootstrap devscripts debian-archive-keyring
+```
+
+```
+sudo pbuilder create --distribution sid --mirror http://ftp.us.debian.org/debian/ --debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
+```
+
+```
+pdebuild
+```
+
+- [Pybuild](https://wiki.debian.org/Python/Pybuild)
 
 ### **Step 5**: Test the package
 
