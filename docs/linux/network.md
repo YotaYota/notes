@@ -22,5 +22,11 @@ systemd-resolved.service
 resolvectl status
 ```
 
+DHCP is to dynamically get an IP.
+
 If DHCP, then DNS server will be set automatically.
+
+```
+dhclient
+```
 

@@ -140,7 +140,18 @@ sudo pbuilder create --distribution sid --mirror http://ftp.us.debian.org/debian
 pdebuild
 ```
 
-- [Pybuild](https://wiki.debian.org/Python/Pybuild)
+```
+sudo pbuilder build ../<source file .dsc>
+```
+
+deb file will be under _/var/cache/pbuilder/result/_.
+
+Inspect contents of deb package with
+
+```
+dpkg -c <.deb>
+```
+
 
 ### **Step 5**: Test the package
 
@@ -151,3 +162,5 @@ sudo dpkg -i ../<source package name>_<version>_<architecture>.deb
 ## Source
 
 - [Debian packaging intro](https://wiki.debian.org/Packaging/Intro)
+- [Debian packaging learn](https://wiki.debian.org/Packaging/Learn)
+- [Pybuild](https://wiki.debian.org/Python/Pybuild)
