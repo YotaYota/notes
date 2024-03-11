@@ -4,6 +4,8 @@
 sudo apt install build-essential debhelper debmake devscripts
 ```
 
+Do not build as root.
+
 ---
 
 A Debian package is a collection of files that allow for applications or libraries to be distributed via the package management system.
@@ -159,8 +161,164 @@ dpkg -c <.deb>
 sudo dpkg -i ../<source package name>_<version>_<architecture>.deb
 ```
 
+
+## git-buildpackage
+
+Config file at _debian/gbp.conf_.
+
+- **debian-branch** (default = *master*)
+- **upstream-branch** (default = *upstream*)
+- **pristine-tar branch** (default = *pristine-tar*)
+- **patch-queue branch** (default eg *patch-queue/master*)
+
+[Suggested nameing](https://dep-team.pages.debian.net/deps/dep14/)
+
+- **debian-branch**
+    - *debian/latest* for the main packaging branch
+    - *debian/bookworm* for distribution release
+- **upstream-branch**
+    - *upstream/latest* for most recent upstream code 
+
+### Steps
+
+### Import upstream package
+
+#### Import dsc
+
+dsc file is metadata file that points at tarballs
+
+```
+gbp import-dsc --allow-unauthorized --create-missing-branches <dsc file>
+```
+
+**Note**: Omitting `--allow-unauthorized` requires checks against author's gpg keys. 
+
+#### Import orig
+
+```
+gbp import-orig -u 0.1 ../package-0.1.tar.gz
+```
+
+```
+git merge upstream
+```
+
+This breaks patches, so do
+
+```
+gbp pq rebase
+```
+
+resolve conflicts
+
+### Refresh patches
+
+Import patches, then exprt them. This makes diffs cleaner for later, since gbp uses sligthly different sytnax
+
+```
+gbp pq import
+```
+creates patch queue on a branch
+
+```
+gbp pq export
+```
+
+```
+git add -u && git commit -m "refresh patches"
+```
+
+Each patch is a single commit
+
+### Pick patch
+
+```
+git switch patch-queue/<...>
+```
+
+```
+git cherry-pick <HASH>
+```
+
+```
+gbp pq export
+```
+
+exports them to debian-branch.
+
+- debian/patches/ will have a new file for the changes
+- debian/patches/series will be modified for telling machinery how to apply in order
+
+```
+git add debian/ && git commit -m "upstream commit <hash>"
+```
+
+### Update changelog
+
+Use dch or gbp dch
+
+```
+dch -v 3.2-4build1+something
+```
+
+`gbp dch` generate debian/changelog automatically from previous git commit messages.
+
+- New version `gbp dch -a -N <new-version>`
+- Snapshot `gbp dch -a -S`
+- Release `gbp dch -a -R`
+
+- fill out changelog
+- modify UNRELEASED to our os release version
+
+```
+git add debian && git commit -m "finish changelog for 3.2-4build1+something" 
+```
+
+### Build package
+
+```
+gbp buildpackage -us -uc --git-pristine-tar --git-debian-branch=<branch name>
+```
+
+**Note**: `-us -uc` turns off gpg signing
+
+Try in Docker
+
+```
+docker run -v $PWD/../dist:/dist:ro --rm --it ubuntu:jammy bash
+```
+
+**Note**: Change `$PWD/../dist` to wherever deb packages gets put into
+
+Then do `apt update` and `apt install` on the deb package.
+
+### Build source package (for uploading)
+
+```
+gbp buildpackage --git-builder="debuild -S" --git-pristine-tar --git-debian-branch=<branch name>
+```
+
+Upload the `_source.changes` file to Launchpad
+
+```
+dput ppa:<name of ppa> *_source.changes
+```
+
+Launchpad infrastructure builds it fromt there.
+
+## Random
+
+- `quilt` is used for patching.
+- `sudo dpkg-buildpackage -r fakeroot -b -uc -us`, `-b` for binary, `-uc` for no crypt sign, `-us` for no source sign.
+- `sudo dpkg -i <deb>`
+- `sudo apt install -f` install missing dependencies for package
+- `/etc/apt/sources.list` uncomment src to be able to do `apt source <pkg>` to install source files
+- Go from Unstable (sid) -> Testing -> Stable
+
 ## Source
 
 - [Debian packaging intro](https://wiki.debian.org/Packaging/Intro)
 - [Debian packaging learn](https://wiki.debian.org/Packaging/Learn)
 - [Pybuild](https://wiki.debian.org/Python/Pybuild)
+- [Packaging with Git](https://wiki.debian.org/PackagingWithGit)
+- [Building Debian Packages with git-buildpackage](https://honk.sigxcpu.org/projects/git-buildpackage/manual-html/index.html)

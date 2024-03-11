@@ -52,6 +52,12 @@ Choose **Network source** to be **Bridge device**, and **Device name** is usuall
 
 DHCP speaks on port 67 and 68 (incoming and outcoming traffic), make sure they are not blocked bu the firewall.
 
+## Copy Paste
+
+```
+sudo apt install spice-vdagent
+```
+
 ## Sources
 
 - [kvm, qemu  & virt-manager](https://linux.how2shout.com/how-to-install-qemu-kvm-and-virt-manager-gui-on-ubuntu-20-04-lts/)
