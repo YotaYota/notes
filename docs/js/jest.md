@@ -5,6 +5,12 @@
   **Note**: still calls the original function unless other implementation is provided
 - `jest.mock()` - overrides whole existing module and provides its replacement
 
+## `jest.fn()`
+
+A function that records calls in the `.mock` property.
+
+- Can return values with `.mockReturnValue` or `.mockResolvedValue`
+
 ## `jest.spyOne()`
 
 **Note**: `.mockReturnValue()` etc are shorthand notation for
