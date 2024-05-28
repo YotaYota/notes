@@ -1,6 +1,6 @@
 # KVM
 
-KVM (Kernel Virtual Machine) is a type 1 hypervisor - a software layer that sits between the hardware and the VMs, managing resource allocation, scheduling, and communication.
+KVM (Kernel-based Virtual Machine) is a virtualization infractructure that turns the kernel into a type 1 hypervisor (native/bare-metal) - a software layer that sits between the hardware and the VMs, managing resource allocation, scheduling, and communication.
 
 Virtualization is the abstraction of computing resources from the hardware layer, allowing multiple virtual environments to run simultaneously on a single physical machine (the host) while ensuring full resource separation. These virtual environments, known as virtual machines (VMs) or guests, act as self-contained entities with their own operating systems, kernels and applications.
 

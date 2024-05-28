@@ -171,7 +171,7 @@ Config file at _debian/gbp.conf_.
 - **pristine-tar branch** (default = *pristine-tar*)
 - **patch-queue branch** (default eg *patch-queue/master*)
 
-[Suggested nameing](https://dep-team.pages.debian.net/deps/dep14/)
+[Suggested naming](https://dep-team.pages.debian.net/deps/dep14/)
 
 - **debian-branch**
     - *debian/latest* for the main packaging branch
@@ -210,6 +210,13 @@ gbp pq rebase
 ```
 
 resolve conflicts
+
+#### Import ref
+
+1. `git tag upstream/<version>` in upstream-branch
+2. `gbp import-ref -u <version>` in debian-branch
+3. `gbp dch -N <version>-<debian rev>` and commit debian/changelog
+4. `gbp buildpackage`
 
 ### Refresh patches
 
@@ -255,7 +262,7 @@ git add debian/ && git commit -m "upstream commit <hash>"
 
 ### Update changelog
 
-Use dch or gbp dch
+Use `dch` or `gbp dch`
 
 ```
 dch -v 3.2-4build1+something
@@ -263,9 +270,9 @@ dch -v 3.2-4build1+something
 
 `gbp dch` generate debian/changelog automatically from previous git commit messages.
 
-- New version `gbp dch -a -N <new-version>`
-- Snapshot `gbp dch -a -S`
-- Release `gbp dch -a -R`
+- New version `gbp dch -N <new-version>`
+- Snapshot `gbp dch -S`
+- Release `gbp dch -R`
 
 - fill out changelog
 - modify UNRELEASED to our os release version
@@ -314,6 +321,8 @@ Launchpad infrastructure builds it fromt there.
 - `sudo apt install -f` install missing dependencies for package
 - `/etc/apt/sources.list` uncomment src to be able to do `apt source <pkg>` to install source files
 - Go from Unstable (sid) -> Testing -> Stable
+- Many 3rd party packages install to /opt/PACKAGE, so that they don't have to think about clashing with other packages. If you're installing into /usr/ you do need to pay some attention to debian policy and other packages, to avoid conflicts.
+- generally: /usr/{share,lib,bin} belongs to the package managed system and /usr/local/ belongs to the local sysadmin, not apt. So apt install should *not* go into /usr/local/bin/.
 
 ## Source
 
