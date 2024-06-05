@@ -7,6 +7,21 @@
 
 Default gateway is know throught the word **via** in the output.
 
+## OSI
+
+|||
+|-|-|
+|**Userspace**||
+|Layer 7|Application|
+|Layer 6|Presentation|
+|Layer 5|Session|
+|**Kernel**||
+|Layer 4|Transport|
+|Layer 3|Network|
+|Layer 2|Data Link|
+|**Physical**||
+|Layer 1|Physical|
+
 ## Routing Table
 
 `ip rule list` lists the rules.
@@ -49,6 +64,8 @@ These IPs are reserved for private use ([RFC 1918](https://datatracker.ietf.org/
 ```
 
 Similar for IPv6 is [RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193).
+
+loopback 127.0.0.1 address is so that the system can talk to itself and do self diagnostics.
 
 ## Random commands
 
