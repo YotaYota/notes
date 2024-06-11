@@ -85,3 +85,42 @@ erb -P -x -T '-' example.erb | ruby -c
 - `-P` ignore lines starting with `%`
 - `-x` outputs template's Ruby script
 - `-T '-'` sets trim mode to be consistent with puppet's behavior.
+
+### ERB
+
+An ERB template has its own local scope, and its parent scope is set to the class or defined type that evaluates the template.
+
+All variables in the current scope (including global variables) are passed to templates as Ruby instance variables, which begin with “at” signs (`@`).
+
+- `<% expression %>` non-printing tag
+- `<%= expression %>` expression-printing tags
+- `<%# expression %>` comment tag
+
+**Note**: A hyphen in a tag (`-`) strips leading or trailing whitespace when printing the evaluated template.
+
+**Note**: Text outside a tag is treated as literal text, but is subject to any tagged Ruby code surrounding it.
+
+## Test locally
+
+```
+.
+├── manifests
+│   └── site.pp
+└── modules
+    └── mymod
+        ├── manifests
+        │   └── init.pp
+        └── templates
+            └── some_template.erb
+```
+
+```puppet
+# manifests/site.pp
+node default {
+  include mymod
+}
+```
+
+```sh
+puppet apply --modulepath=./modules manifests/site.pp
+```
