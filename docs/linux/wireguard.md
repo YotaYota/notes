@@ -54,6 +54,25 @@ Using this example, after running `wg-quick up wg0`, the host will have an netwo
 
 `wg showconf wg0` will show the current **ListenPort**. Running `ss -ulpn | grep <ListenPort>` will show that process. Note that lsof will not show anything since WireGuard is running in the kernel.
 
+### Custom Rouing
+
+`PostUp`: execute custom script when the interface is brought up.
+
+`PostDown`: execute custom script when the interface is brought down.
+
+```
+PostUp = /usr/local/bin/fw --wg-if %i --up
+PostDown = /usr/local/bin/fw --wg-if %i --down
+```
+
+- `%i` is replaced by interface name
+
+```
+Table = off
+```
+
+By default WireGuard adds routes to the system, but `Table = off` disables this feature. Routing needs to be managed by itself if this options is turned off.
+
 ## Flow
 
 Outgoing
