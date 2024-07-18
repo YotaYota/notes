@@ -1,5 +1,15 @@
 # Javascript
 
+## Operators
+
+- `&&` **Logical AND**. returns the value of the *first falsey operand* or the value of the last operand (if all are truthy).
+    - `true && "hello"` returns `hello`
+    - `0 && "hello"` returns `0`
+- `||` **Logical OR**. returns the value of the *first truthy operand* or the value of the last operand (if all are falsey).
+    - `42 || "hello"` returns `42`
+    - `0 || "hello"` returns `hello`
+    - `0 || false || "" ` returns `""`
+
 ## Static `import` declaration
 
 Used to import read-only _live bindings_ from another module. The imported
