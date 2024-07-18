@@ -1,5 +1,21 @@
 # React
 
+## Component Lifecycle
+
+1. **Triggering**: Happens because of
+    - it is the initial render, or
+    - the component’s (or one of its ancestors’) state has been updated. Ie, `set` function has been called.
+2. **Rendering**: React calls the component function. It's a recursive process in the sense that it also calls child components.
+    - initial: React will call the root component.
+    - re-render: React calls the function component whose state update triggered the render, and calculates the difference since previous render.
+3. **Committing**: React commit changes to the DOM.
+    - initial: React uses `appendChild()`
+    - re-render: React applies minimal nevessary operation calculated from *Rendering* phase.
+
+**Note**: React only changes the DOM nodes if there is a difference between renders.
+
+After these steps, the browser will repaint the screen.
+
 ## useEffect hook
 
 ```js
@@ -9,11 +25,17 @@ useEffect(() => {
 }, [<DEPENDENCIES>])
 ```
 
+- `useEffect(() => {...})` runs on every render
+- `useEffect(() => {...}, [])` runs on first render
+- `useEffect(() => {...}, [x, y])` runs when `x` or `y` renders with a new value
+
 ## useState hook
 
 ```js
-const [value, setValue] = useState(<INITIAL STATE>)
+const [something, setSomething] = useState(<INITIAL STATE>)
 ```
+
+**Note**: State variable `something` is not updated until next render. Ie, the new value is not directly present in the current snapshot of the component after `setSomething()`.
 
 ## ESLint and Prettier
 
@@ -38,7 +60,7 @@ npm install --save-dev --save-exact prettier
 }
 ```
 
-**Note:** *eslint.config.js* us used for eslint >=v8
+**Note:** *eslint.config.js* is used for eslint >= v8
 
 formatting
 ```
