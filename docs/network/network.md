@@ -7,6 +7,7 @@
 
 Default gateway is know throught the word **via** in the output.
 
+
 ## OSI
 
 |||
@@ -22,7 +23,11 @@ Default gateway is know throught the word **via** in the output.
 |**Physical**||
 |Layer 1|Physical|
 
+The 7 layer model is outdated, in preference of the 4 layer model. The only important legacy is the numbering system.
+
 ## Routing Table
+
+A list of every Layer 3 network the router knows about and how to get there.
 
 `ip rule list` lists the rules.
 
@@ -33,6 +38,8 @@ By default there are 3 tables: *main*, *local* and *default*. ip tool modifies m
 route tables are in */etc/iproute2/rt_tables*.
 
 `ip route get <ip>` shows kernel's routing for an ip.
+
+A router has a *Forwarding Information Base* (**FIB**) and a *Routing Information Base* (**RIB**). A router uses the RIB (in the *Control Plane*) to determine optimized, best routing rules, ie FIB.
 
 ### Example
 
@@ -110,10 +117,9 @@ If DHCP, then DNS server will be set automatically.
 dhclient
 ```
 
-### letencrypt and ACME
+### letsencrypt and ACME
 
-letencrypt uses ACME protocol ([RFC 8555](https://datatracker.ietf.org/doc/html/rfc8555)).
-
+letsencrypt uses ACME protocol ([RFC 8555](https://datatracker.ietf.org/doc/html/rfc8555)).
 
 ## Network Interface
 
@@ -130,3 +136,259 @@ The first of theese `lo` (loopback) represents the linux host itself.
 - UDP
 - ICMP
 - BGP for updating routing tables (Bird)
+
+---
+
+## CS144
+
+Biderectional, reliable byte stream.
+
+Byte Stream Model.
+
+HTTP document centric. Verbs and folder structure.
+
+Packets: data and header.
+
+4 layer model
+
+||||
+|-|-|-|
+|Application|Biderectional reliable byte stream between two applications|HTTP, SMTP, SSH, FTP|
+|Transport|Guarentees correct, in-order delivery of data end-to-end. Controls congestion|TCP, UDP, RTP|
+|Network|Delivers datagrams end-to-end. Best-effor - no guarantees|Must use IP|
+|Link|Delivers data over a single link|Ethernet. WiFi, DSL, 3G|
+
+A router uses a Forwarding Table.
+
+**Packet switching**: Independently for each arriving packet, pick its outgoing link. If the link is free, send it. Else hold the packet for later.
+
+**Flow**: A collection of datagrams belonging to the same end-to-end communication.
+
+**Connection**: ?
+
+#### Making the Network Layer Work
+
+1. The IP protocol
+    - Creation of IP datagrams
+    - hop-by-hop delivery from end to end
+2. Routing Tables
+    - Algorithm to populate forwarding tables
+3. ICMP
+    - Communicates network layer information between end hosts and routers
+    - Reports error conditions
+    - Helps in diagnosing problems
+
+### IP
+
+- Datagram
+- Unreliable
+- Best effort
+- Connectionless
+
+IP makes no guarantees; that is the concern of the transport layer.
+
+IP Service Model:
+
+1. Tries to prevent looping forever (TTL)
+2. Will fragments if they are too long
+3. Uses a header checksum to reduce chances od delivering datagram to wrong destination
+4. Allows for new versions of IP
+5. Allows for new options to be added to header
+
+```
+Bit 0
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |Version|  IHL  |Type of Service|          Total Length         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |         Identification        |Flags|      Fragment Offset    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Time to Live |    Protocol   |         Header Checksum       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                       Source Address                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                    Destination Address                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                   (Options)                   |   (Padding)   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+IPv4 Datagram
+
+IHL: Header Length
+```
+
+### Principle: Layering
+
+Is the name we give to the organization of the system into a number of functional components or "layers".
+Layers are hiearchial and communicate sequentially. Ie, each layer has only an interface to the layer directly above/below.
+
+Each layer provides a service and abstracts it in an interface for the layers above.
+
+Layering creates
+
+- enables modularity (breaks down into smaller more manageable modules)
+- well-defined service (provides interface towards layer above)
+- reuse (layers below can be reused)
+- separation of concerns (caring about its own job without caring how other layers do theirs)
+- continuous improvement
+
+### Principle: Encapsulation
+
+When combining layering and packet switching.
+
+### Endianess
+
+- **LSB** Least Significant Byte or Little-Endian
+- **MSB** Most Significant Byte or Big-Endian
+
+Network packets are Big-Endian.
+
+### Netmask
+
+Netmasks tells you witch IPs are local, or if packets needs to go through a router.
+
+**CIDR** Classless Inter-Domain Routing has powers of 2.
+
+IANA is responsible of giving out /8s to RIRs.
+
+### Router
+
+A router have many links. To devcide on which link to forward packets, it uses *Longest Prefix Match*.
+This is used to decide which link to take in a **Forwarding Table**. A Forwarding Table consists of two parts: a CIDR entry, and a *next-hop* for that CIDR entry.
+The *default* route is the least specific match.
+
+### ARP
+
+Hosts needs to keep a mapping between MAC address and IP address.
+
+### TCP
+
+3-way-handshake:
+
+1. SYN
+2. SYN + ACK
+3. ACK
+
+A stream of bytes are delivered using TCP segments.
+
+Teardown:
+
+1. A sends FIN to B
+2. B continues to send Data + ACK (if it needs to)
+3. B sends FIN
+4. A sends ACK
+
+|Property|Behavior|
+|-|-|
+|Stream of bytes|Reliable byte delivery service|
+|Reliable delivery| <ol><li>ACK indicate correct delivery<li>Checksums detect corrupted data<li>Sequence numbers detect missing data<li>Flow-control prevents overriding reciever</ol>|
+|In-sequence|Data delivered to application in sequence transmitted|
+|(Congestion Control)|Controls network congestion|
+
+```
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          Source Port          |       Destination Port        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                        Sequence Number                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Acknowledgment Number                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Data |       |C|E|U|A|P|R|S|F|                               |
+| Offset| Rsrvd |W|C|R|C|S|S|Y|I|            Window             |
+|       |       |R|E|G|K|H|T|N|N|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Checksum            |         Urgent Pointer        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           [Options]                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               :
+:                             Data                              :
+:                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+TCP packet
+```
+
+The 5-tuple: (src addr, src port, dst port, dps addr, protocol) is a globally unique identifier of the connection. There is however a small chance that it could overlap a previous connection that has lingered on the net (eg in a router's buffer), therefore TCP also sends an initial sequence number (ISN) to minimize the chance of an ID-overlap.
+
+### UDP
+
+```
+ 0      7 8     15 16    23 24    31
++--------+--------+--------+--------+
+|     Source      |   Destination   |
+|      Port       |      Port       |
++--------+--------+--------+--------+
+|                 |                 |
+|     Length      |    Checksum     |
++--------+--------+--------+--------+
+|
+|          data octets ...
++---------------- ...
+
+     User Datagram Header Format
+```
+
+UDP checksum includes pieces of information from the IP layer, thus violating the layering principle. The upshot is that that UDP protocol can detect if datagrams were delivered to the wrong destination.
+
+|Property|Behavior|
+|-|-|
+|Connectionless Datagram Service|No connection established. Packets may show up in any order.|
+|Self contained datagrams||
+|Unreliable delivery|<ol><li>no ACK<li>No mechanism to detect missing or mis-sequenced datagrams<li>No Flow-control</ol>|
+
+UDP prvides a simple datagram serice between processes. It is mostly used in cases where the datagram is self contained, eg DNS, NTP and DHCP.
+
+### ICMP
+
+Internet Control Message Protocol.
+
+Transport layer protocol.
+
+Used by ping and traceroute.
+
+|Property|Behavior|
+|-|-|
+|Reporting Message|Self-contained message reporting error|
+|Unreliable|Simple datagram service - no retries|
+
+#### Traceroute
+
+ICMP error message data takes the IP header and the first 8 bites of the IP payload. It then adds the headers Type and Code.
+
+Client sends an UDP message with TTL set to 1. The next hop will return an ICMP message with the IP headers and the first 8 bytes of the original message - this information is enough for the client to figure out which was the original UDP message.
+The client continues to do this with increasing TTL.
+When reaching the host the client has deliberately chosen a strange port, so that the host will return an ICMP message "port unreachable".
+
+### End-to-End Principle
+
+First described by Saltzer, Reed and Clark in 1984.
+Two principles: Weak and Strong.
+
+The weak principle says that the network can only provide extra features if it has information about what the endpoints wants to achieve. Eg security can only be done correctly if the end applications does it.
+
+The string principle says that nothing extra should be done in the network.
+"The network's job is to transmit datagrams as efficiently and flexibly as possible. Eerything else should be done at the fringes..." - RFC 1958
+
+The Strong End-to-End Principle makes extending network is easier (SOLID).
+
+### Error Detection: 3 schemes
+
+At a hight level, error detection bits are calculated over the payload data, and is then appended or prepended to the payload.
+
+Networks in general uses 3 different error detection algorithms:
+
+- Checksums adds up all the bytes (TCP and IP)
+    - fast and easy to compute
+    - not robust
+- CRC, Cyclic Recundancy Codes (Ethernet)
+    - A CRC of length c can detect any 2 bit errors, any burst of errors < c bits long, any odd number of errors.
+- MAC, Message Authentication Codes (TLS)
+    - combines the message with some secret information to generate a value
+    - robust to malicious modifications
+    - any 2 messages have 2^(-c) chance of having the same code
+    - Ceyptographically strong; not good for detection errors
+
+### Finite State Machine
+
