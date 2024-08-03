@@ -13,7 +13,7 @@ Supports bitwise operators on packets.
 Rules are processed from top to bottom until a match is found.
 If no match is found, the default policy is found (if not explicitly stated it is deny).
 
-Basic approach is to create a *table*, then a *chain*, then a *rule*.
+Basic approach is to create a *table*, then a *chain*, then a *rule*. There are no predefined tables or chains in nftables, they have to be created.
 
 Each command should include an *address family*, which are one of
 
