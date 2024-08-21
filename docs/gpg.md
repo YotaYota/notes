@@ -1,6 +1,8 @@
 # GnuPG
 
-List key ids
+GPG (PGP) follows a design of a smart card. This includes 3 sets of keys.
+
+List public key ids
 ```
 gpg -k
 ```
@@ -10,7 +12,7 @@ Export full key
 gpg --armor --export <KEY ID>
 ```
 
-Reload card
+Shows GPG keys
 ```
 gpg --card-status
 ```
