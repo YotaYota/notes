@@ -26,6 +26,8 @@ _Note_: A convenient way to copy you id to server
 ssh-copy-id user@ip
 ```
 
+The keys needs to be added to the key-agent with `ssh-add`.
+
 ## Server
 
 Set _.ssh/_ folder permissions to 700.
