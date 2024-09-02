@@ -27,6 +27,8 @@ iproute2 collection contains the following command-line utilities:
 
 `ip link show`: information about network interface device. Shows information on **OSI layer 2** ("data link layer").
 
+**Note**: `ip -d link show` shows extra information. Can also be combined with types, eg `ip -d l show type bridge`
+
 `ip address show`: Same information as `ip l` but also **OSI layer 3** ("network layer").
 
 `ip route show` the connection to other ip networks
