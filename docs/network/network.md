@@ -39,7 +39,9 @@ route tables are in */etc/iproute2/rt_tables*.
 
 `ip route get <ip>` shows kernel's routing for an ip.
 
-A router has a *Forwarding Information Base* (**FIB**) and a *Routing Information Base* (**RIB**). A router uses the RIB (in the *Control Plane*) to determine optimized, best routing rules, ie FIB.
+A router has a *Forwarding Information Base* (**FIB**) and a *Routing Information Base* (**RIB**). A router uses the RIB (in the *Control Plane*) to determine optimized, best routing rules.
+
+**Note**: FIB is not the same as routing table. A routing table maps IPs to a route - a FIB knows which headers to put on the packet.
 
 ### Example
 
@@ -390,5 +392,126 @@ Networks in general uses 3 different error detection algorithms:
     - any 2 messages have 2^(-c) chance of having the same code
     - Ceyptographically strong; not good for detection errors
 
-### Finite State Machine
+### Finite State Machine (FSM)
 
+Commonly used when specifying network protocols and systems.
+
+A **state** is a particular configuration of the system. The system can only be in 1 state.
+
+**Edges** define how to transition between states. It includes information about *events* causing state transition, and *actions* taken on state transition.
+
+![FSM for TCP Connection](img/fsm_tcp_connection.png)
+
+### Flow Control
+
+Don't send more packets than receiver can process. Receiver gives sender feedback.
+
+Two basic approaches:
+
+- Stop and wait
+- Sliding window
+
+#### Stop and Wait
+
+At most 1 packet in flight at any time.
+
+Reciever recieves data and sends ACK.
+Sender sends data, then waits for ACK until sending next. If no ACK is received until a timeout, it sends the packet again.
+
+A bad scenario is if the ACK get received after the timeout, which triggers both a resend, and a send of new data. If one of those messages gets lost, and only one ACK is received from those, this could result in duplicates.
+
+1-bit counter is an approach to handle this scenario, but it is only reliable if the network does not duplicate the package and packets are not delayed multiple timouts.
+
+#### Sliding Window
+
+- A generalization of stop-and-wait: allow multiple un-acked segments.
+- Bound on number of un-acked segments, called **window**.
+- Sliding Window can keep the pipe full, ie utilizing the receiver's full potential.
+- Uses *cumulative acknowledgments*.
+For sender:
+
+Every segment has a sequence number **SeqNo**.
+
+Sender maintains 3 variables:
+
+- **SWS**: Send Window Size
+- **LAR**: Last Acknowledgment Received
+- **LSS**: Last Segment Sent
+
+Sender maintains the invariant
+```
+(LSS - LAR) =< SWS
+```
+
+Sender advances LAR on new acknowledgment. It cannot send LSS greater than SWS + LAR.
+
+Receiver maintains 3 variables:
+
+- **RWS**: Received Window Size
+- **LAS**: Last Acceptable Segment
+- **LSR**: Last Segment Received
+
+Recceiver maintains the invariant
+```
+(LAS - LSR) =< RWS
+```
+
+If received packet is < LAS, send cumulative acknowledgment (ie not always the last received, but the cumulativevly last received).
+
+**Note**: TCP is a sliding window protocol, but ACKs are instead next expected data, ie LAS + 1
+
+### Retransmission Strategies
+
+Essentially 2 strategies:
+
+- **Go-back-N**: one loss will lead to entire window retransmitting (pessimistic)
+- **Selective Repeat**: one loss will lead to only that packet retransmitting (optimistic)
+
+### TCP Header
+
+Standard TCP header is 20 bytes long.
+
+*checksum*: includes part of the IP header.
+
+Flags:
+
+- CWR + ECE: used warn senders of congestion thereby avoiding packet drops and retransmissions.
+- URG: Urgent
+- ACK: Acknowldegment
+- PSH: Push
+- RST: Reset to sequence number
+- SYN: Synchronize sequence number
+- FIN: For teardown
+
+### TCP Setup and Teardown
+
+- 3-way-handshake
+- simultaneous open
+- TCP state machine
+
+Having state on both ends turns out to be more efficient.
+
+**3-way-handshake**
+
+1. Active opener sends a packet with the SYN bit set with a sequence number (often randomized).
+2. Passive opener responds with SYN with a sequence number, it also ACKs the openers sequence number.
+3. Active opener responds its sequence number + 1 and ACKs passive openers sequnce number.
+
+**Simultaneous open**
+
+Both clientes know each other's port number.
+
+1. Both sides send SYN and sequence number at the same time.
+2. Both sides ACKs the others sequence number
+
+**Note**: Simultaneous open takes 4 messages, rather than 3.
+
+**Teardown**
+
+FIN means the sender has no more data to send. But the connection is not closed until both sides has sent a FIN.
+
+1. FIN and ACKs prevoius data
+2. FIN and ACKs the fin
+3. ACKs the fin
+
+To avoid problems if either the final ACK gets lost or the same port pair is reused, the active closer goes into **TIME WAIT**. It keeps the socket for twice the "maximum segment lifetime".
