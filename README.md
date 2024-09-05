@@ -3,7 +3,7 @@
 ## Install
 
 ```sh
-sudo apt install mkdocs
+cargo install mdbook
 ```
 
 ## Serve
@@ -11,6 +11,6 @@ sudo apt install mkdocs
 Host docs at _localhost:8000_ with
 
 ```sh
-mkdocs serve
+mdbook serve --open
 ```
 

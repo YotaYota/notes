@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Debian Packaging - Notes</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../network/network.html"><strong aria-hidden="true">1.</strong> Network</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../network/letsencrypy.html"><strong aria-hidden="true">1.1.</strong> letsencrypt</a></li><li class="chapter-item expanded "><a href="../network/netconf_yang.html"><strong aria-hidden="true">1.2.</strong> NETConf YANG</a></li><li class="chapter-item expanded "><a href="../network/tls.html"><strong aria-hidden="true">1.3.</strong> tls</a></li></ol></li><li class="chapter-item expanded "><a href="../js/js.html"><strong aria-hidden="true">2.</strong> Javascript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../js/angular.html"><strong aria-hidden="true">2.1.</strong> angular</a></li><li class="chapter-item expanded "><a href="../js/jest.html"><strong aria-hidden="true">2.2.</strong> jest</a></li><li class="chapter-item expanded "><a href="../js/js.html"><strong aria-hidden="true">2.3.</strong> js</a></li><li class="chapter-item expanded "><a href="../js/react.html"><strong aria-hidden="true">2.4.</strong> react</a></li></ol></li><li class="chapter-item expanded "><a href="../python/main.html"><strong aria-hidden="true">3.</strong> Python</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../python/dist.html"><strong aria-hidden="true">3.1.</strong> dist</a></li></ol></li><li class="chapter-item expanded "><a href="../aws/aws.html"><strong aria-hidden="true">4.</strong> AWS</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../aws/api_gateway.html"><strong aria-hidden="true">4.1.</strong> API Gateway</a></li><li class="chapter-item expanded "><a href="../aws/ccp.html"><strong aria-hidden="true">4.2.</strong> CCP</a></li><li class="chapter-item expanded "><a href="../aws/cli.html"><strong aria-hidden="true">4.3.</strong> CLI</a></li><li class="chapter-item expanded "><a href="../aws/cognito.html"><strong aria-hidden="true">4.4.</strong> Cognito</a></li><li class="chapter-item expanded "><a href="../aws/dynamodb.html"><strong aria-hidden="true">4.5.</strong> DynamoDB</a></li><li class="chapter-item expanded "><a href="../aws/static_website.html"><strong aria-hidden="true">4.6.</strong> Static Website</a></li><li class="chapter-item expanded "><a href="../aws/iam.html"><strong aria-hidden="true">4.7.</strong> IAM</a></li><li class="chapter-item expanded "><a href="../aws/lambda.html"><strong aria-hidden="true">4.8.</strong> Lambda</a></li></ol></li><li class="chapter-item expanded "><a href="../linux/linux.html"><strong aria-hidden="true">5.</strong> Linux - Systemd</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../linux/systemd.html"><strong aria-hidden="true">5.1.</strong> systemd</a></li><li class="chapter-item expanded "><a href="../linux/users-groups.html"><strong aria-hidden="true">5.2.</strong> users-groups</a></li><li class="chapter-item expanded "><a href="../linux/deb_pkg.html" class="active"><strong aria-hidden="true">5.3.</strong> Debian Packaging</a></li><li class="chapter-item expanded "><a href="../linux/essential_tools.html"><strong aria-hidden="true">5.4.</strong> Essential Tools</a></li><li class="chapter-item expanded "><a href="../linux/iproute2.html"><strong aria-hidden="true">5.5.</strong> IProute2</a></li><li class="chapter-item expanded "><a href="../linux/wireguard.html"><strong aria-hidden="true">5.6.</strong> Wireguard</a></li><li class="chapter-item expanded "><a href="../linux/kvm.html"><strong aria-hidden="true">5.7.</strong> KVM</a></li><li class="chapter-item expanded "><a href="../linux/logging.html"><strong aria-hidden="true">5.8.</strong> Logging</a></li><li class="chapter-item expanded "><a href="../linux/lutris.html"><strong aria-hidden="true">5.9.</strong> Lutris</a></li><li class="chapter-item expanded "><a href="../linux/nftables.html"><strong aria-hidden="true">5.10.</strong> nftables</a></li><li class="chapter-item expanded "><a href="../linux/screen.html"><strong aria-hidden="true">5.11.</strong> screen</a></li><li class="chapter-item expanded "><a href="../linux/wine.html"><strong aria-hidden="true">5.12.</strong> Wine</a></li></ol></li><li class="chapter-item expanded "><a href="../rust/rust.html"><strong aria-hidden="true">6.</strong> rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/rust_web_app.html"><strong aria-hidden="true">6.1.</strong> Web App</a></li><li class="chapter-item expanded "><a href="../rust/bevy.html"><strong aria-hidden="true">6.2.</strong> Bevy</a></li></ol></li><li class="chapter-item expanded "><a href="../gpg.html"><strong aria-hidden="true">7.</strong> gpg</a></li><li class="chapter-item expanded "><a href="../ssh.html"><strong aria-hidden="true">8.</strong> ssh</a></li><li class="chapter-item expanded "><a href="../yubikey.html"><strong aria-hidden="true">9.</strong> yubikey</a></li><li class="chapter-item expanded "><a href="../git.html"><strong aria-hidden="true">10.</strong> git</a></li><li class="chapter-item expanded "><a href="../neovim.html"><strong aria-hidden="true">11.</strong> neovim</a></li><li class="chapter-item expanded "><a href="../compdocs.html"><strong aria-hidden="true">12.</strong> compdocs</a></li><li class="chapter-item expanded "><a href="../cpp.html"><strong aria-hidden="true">13.</strong> C++</a></li><li class="chapter-item expanded "><a href="../docker.html"><strong aria-hidden="true">14.</strong> Docker</a></li><li class="chapter-item expanded "><a href="../flatbuffers.html"><strong aria-hidden="true">15.</strong> flatbuffers</a></li><li class="chapter-item expanded "><a href="../protbuf.html"><strong aria-hidden="true">16.</strong> protbuf</a></li><li class="chapter-item expanded "><a href="../geojson.html"><strong aria-hidden="true">17.</strong> geojson</a></li><li class="chapter-item expanded "><a href="../java.html"><strong aria-hidden="true">18.</strong> Java</a></li><li class="chapter-item expanded "><a href="../jwt.html"><strong aria-hidden="true">19.</strong> JWT</a></li><li class="chapter-item expanded "><a href="../kubernetes.html"><strong aria-hidden="true">20.</strong> Kubernetes</a></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">21.</strong> Patterns</a></li><li class="chapter-item expanded "><a href="../puppet.html"><strong aria-hidden="true">22.</strong> puppet</a></li><li class="chapter-item expanded "><a href="../raid.html"><strong aria-hidden="true">23.</strong> RAID</a></li><li class="chapter-item expanded "><a href="../scrum.html"><strong aria-hidden="true">24.</strong> SCRUM</a></li><li class="chapter-item expanded "><a href="../serverless-framework.html"><strong aria-hidden="true">25.</strong> serverless-framework</a></li><li class="chapter-item expanded "><a href="../spring.html"><strong aria-hidden="true">26.</strong> Spring</a></li><li class="chapter-item expanded "><a href="../sql.html"><strong aria-hidden="true">27.</strong> SQL</a></li><li class="chapter-item expanded "><a href="../terraform.html"><strong aria-hidden="true">28.</strong> Terraform</a></li><li class="chapter-item expanded "><a href="../clean_architecture.html"><strong aria-hidden="true">29.</strong> Clean Architecture</a></li><li class="chapter-item expanded "><a href="../vocabulary.html"><strong aria-hidden="true">30.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../work_strategy.html"><strong aria-hidden="true">31.</strong> Work Stratrgy</a></li><li class="chapter-item expanded "><a href="../project.html"><strong aria-hidden="true">32.</strong> Project</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="debian-package"><a class="header" href="#debian-package">Debian Package</a></h1>
+<pre><code>sudo apt install build-essential debhelper debmake devscripts
+</code></pre>
+<p>Do not build as root.</p>
+<hr />
+<p>A Debian package is a collection of files that allow for applications or libraries to be distributed via the package management system.</p>
+<p>The aim of packaging is to allow the automation of installing, upgrading, configuring, and removing computer programs for Debian in a consistent manner.</p>
+<p>A package consists of one source package, and one or more binary packages.</p>
+<ul>
+<li>Binary packages contain executables, standard configuration files, other resources required for executables to run.</li>
+<li>Source packages contain the upstream source distribution, configuration for the package build system, list of runtime dependencies and conflicting packages, a machine-readable description of copyright and license information, initial configuration for the software, and more.</li>
+</ul>
+<p>The Debian Policy specifies the standard format for a package, which all packages must follow.</p>
+<p>The source package (.dsc) and binary packages (.deb) will be built for you by tools such as dpkg-buildpackage.</p>
+<hr />
+<ul>
+<li>upstream tarball: tar.gz containing software written by upstream developer.</li>
+<li>source package: built from upstream source.</li>
+<li>binary package: built from source package. Is distributed and installed.</li>
+</ul>
+<h2 id="source-package"><a class="header" href="#source-package">Source Package</a></h2>
+<p>The simplest source package consists of three files:</p>
+<ul>
+<li>The <strong>upstream tarball</strong>, renamed according to the naming convention</li>
+<li>A <strong>debian</strong> directory containing the changes made to upstream source, plus all the files required for the creation of a binary package.</li>
+<li>A <strong>description file</strong> (with .dsc extension), which contains metadata for the above two files.</li>
+</ul>
+<h2 id="the-packaging-workflow-manual"><a class="header" href="#the-packaging-workflow-manual">The packaging workflow (Manual)</a></h2>
+<h3 id="step-1-rename-the-upstream-tarball"><a class="header" href="#step-1-rename-the-upstream-tarball"><strong>Step 1</strong>: Rename the upstream tarball</a></h3>
+<p>Naming convention: <code>&lt;source package name&gt;_&lt;upstream version number&gt;.orig.tar.gz</code>.
+The source package name should be all lower case, and can contain letters, digits, and dashes.</p>
+<pre><code>mv foo-1.0.tar.gz foo_1.0.orig.tar.gz
+</code></pre>
+<h3 id="step-2-unpack-the-upstream-tarball"><a class="header" href="#step-2-unpack-the-upstream-tarball"><strong>Step 2</strong>: Unpack the upstream tarball</a></h3>
+<p>The source should unpack into a directory of the same name and upstream version with a hyphen in between (not an underscore),
+so the upstream tarball should unpack into a directory called <code>&lt;source package name&gt;-&lt;upstream version number&gt;</code></p>
+<pre><code>foo-1.0
+</code></pre>
+<h3 id="step-3-add-the-debiantargz-files"><a class="header" href="#step-3-add-the-debiantargz-files"><strong>Step 3</strong>: Add the debian.tar.gz files</a></h3>
+<p><strong>Note</strong>: Use</p>
+<pre><code>debmake
+</code></pre>
+<p>to create sensible template files. They need to be modified.</p>
+<hr />
+<p><code>cd</code> into extracted tarball and create <code>debian/</code> directory, then add the following files</p>
+<ul>
+<li><code>debian/changelog</code> This is the log of changes to the Debian package. It has a standard format, use the <code>dch</code> tool.
+<strong>Note</strong>: version can be eg <code>1.9.2-4</code>.</li>
+</ul>
+<pre><code>dch --create -v &lt;upstream version&gt;-&lt;Debian version&gt; --package &lt;source package name&gt;
+</code></pre>
+<ul>
+<li><code>debian/control</code>: describes the source and binary package, and gives some information about them.
+Eg</li>
+</ul>
+<pre><code>Source: foo
+Section: python
+Priority: optional
+Maintainer: noone &lt;noone@nocomp.com&gt;
+Build-Depends: debhelper-compat (= 12),
+               dh-python,
+               python3-all,
+               python3-setuptools,
+               pybuild-plugin-pyproject
+Standards-Version: 4.5.0
+X-Python3-Version: &gt;= 3.10
+
+Package: python3-foo
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${python3:Depends}
+Description: Dummy description
+</code></pre>
+<p><strong>Note</strong>: pybuild-plugin-pyproject is needed when using <em>pyproject.toml</em> file.</p>
+<ul>
+<li><code>debian/copyright</code></li>
+<li><code>debian/rules</code>: a makefile</li>
+</ul>
+<pre><code>#!/usr/bin/make -f
+# You must remove unused comment lines for the released package.
+#export DH_VERBOSE = 1
+export PYBUILD_NAME = foo
+export PYBUILD_INTERPRETERS = python3.10
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+</code></pre>
+<ul>
+<li><code>debian/source/format</code>: it should contain the version number for the format of the source package, eg</li>
+</ul>
+<pre><code>3.0 (quilt)
+</code></pre>
+<h3 id="step-4-build-the-package"><a class="header" href="#step-4-build-the-package"><strong>Step 4</strong>: Build the package</a></h3>
+<h4 id="debuild"><a class="header" href="#debuild">debuild</a></h4>
+<pre><code>$ debuild -us -uc
+</code></pre>
+<p>Reiterate until it works. The files will be found in parent directory <code>ls ..</code>.</p>
+<h4 id="pbuilder"><a class="header" href="#pbuilder">pbuilder</a></h4>
+<pre><code>sudo apt install pbuilder debootstrap devscripts debian-archive-keyring
+</code></pre>
+<pre><code>sudo pbuilder create --distribution sid --mirror http://ftp.us.debian.org/debian/ --debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
+</code></pre>
+<pre><code>pdebuild
+</code></pre>
+<pre><code>sudo pbuilder build ../&lt;source file .dsc&gt;
+</code></pre>
+<p>deb file will be under <em>/var/cache/pbuilder/result/</em>.</p>
+<p>Inspect contents of deb package with</p>
+<pre><code>dpkg -c &lt;.deb&gt;
+</code></pre>
+<h3 id="step-5-test-the-package"><a class="header" href="#step-5-test-the-package"><strong>Step 5</strong>: Test the package</a></h3>
+<pre><code>sudo dpkg -i ../&lt;source package name&gt;_&lt;version&gt;_&lt;architecture&gt;.deb
+</code></pre>
+<h2 id="git-buildpackage"><a class="header" href="#git-buildpackage">git-buildpackage</a></h2>
+<p>Config file at <em>debian/gbp.conf</em>.</p>
+<ul>
+<li><strong>debian-branch</strong> (default = <em>master</em>)</li>
+<li><strong>upstream-branch</strong> (default = <em>upstream</em>)</li>
+<li><strong>pristine-tar branch</strong> (default = <em>pristine-tar</em>)</li>
+<li><strong>patch-queue branch</strong> (default eg <em>patch-queue/master</em>)</li>
+</ul>
+<p><a href="https://dep-team.pages.debian.net/deps/dep14/">Suggested naming</a></p>
+<ul>
+<li><strong>debian-branch</strong>
+<ul>
+<li><em>debian/latest</em> for the main packaging branch</li>
+<li><em>debian/bookworm</em> for distribution release</li>
+</ul>
+</li>
+<li><strong>upstream-branch</strong>
+<ul>
+<li><em>upstream/latest</em> for most recent upstream code</li>
+</ul>
+</li>
+</ul>
+<h3 id="steps"><a class="header" href="#steps">Steps</a></h3>
+<h3 id="import-upstream-package"><a class="header" href="#import-upstream-package">Import upstream package</a></h3>
+<h4 id="import-dsc"><a class="header" href="#import-dsc">Import dsc</a></h4>
+<p>dsc file is metadata file that points at tarballs</p>
+<pre><code>gbp import-dsc --allow-unauthorized --create-missing-branches &lt;dsc file&gt;
+</code></pre>
+<p><strong>Note</strong>: Omitting <code>--allow-unauthorized</code> requires checks against author's gpg keys.</p>
+<h4 id="import-orig"><a class="header" href="#import-orig">Import orig</a></h4>
+<pre><code>gbp import-orig -u 0.1 ../package-0.1.tar.gz
+</code></pre>
+<pre><code>git merge upstream
+</code></pre>
+<p>This breaks patches, so do</p>
+<pre><code>gbp pq rebase
+</code></pre>
+<p>resolve conflicts</p>
+<h4 id="import-ref"><a class="header" href="#import-ref">Import ref</a></h4>
+<ol>
+<li><code>git tag upstream/&lt;version&gt;</code> in upstream-branch</li>
+<li><code>gbp import-ref -u &lt;version&gt;</code> in debian-branch</li>
+<li><code>gbp dch -N &lt;version&gt;-&lt;debian rev&gt;</code> and commit debian/changelog</li>
+<li><code>gbp buildpackage</code></li>
+</ol>
+<h3 id="refresh-patches"><a class="header" href="#refresh-patches">Refresh patches</a></h3>
+<p>Import patches, then exprt them. This makes diffs cleaner for later, since gbp uses sligthly different sytnax</p>
+<pre><code>gbp pq import
+</code></pre>
+<p>creates patch queue on a branch</p>
+<pre><code>gbp pq export
+</code></pre>
+<pre><code>git add -u &amp;&amp; git commit -m "refresh patches"
+</code></pre>
+<p>Each patch is a single commit</p>
+<h3 id="pick-patch"><a class="header" href="#pick-patch">Pick patch</a></h3>
+<pre><code>git switch patch-queue/&lt;...&gt;
+</code></pre>
+<pre><code>git cherry-pick &lt;HASH&gt;
+</code></pre>
+<pre><code>gbp pq export
+</code></pre>
+<p>exports them to debian-branch.</p>
+<ul>
+<li>debian/patches/ will have a new file for the changes</li>
+<li>debian/patches/series will be modified for telling machinery how to apply in order</li>
+</ul>
+<pre><code>git add debian/ &amp;&amp; git commit -m "upstream commit &lt;hash&gt;"
+</code></pre>
+<h3 id="update-changelog"><a class="header" href="#update-changelog">Update changelog</a></h3>
+<p>Use <code>dch</code> or <code>gbp dch</code></p>
+<pre><code>dch -v 3.2-4build1+something
+</code></pre>
+<p><code>gbp dch</code> generate debian/changelog automatically from previous git commit messages.</p>
+<ul>
+<li>
+<p>New version <code>gbp dch -N &lt;new-version&gt;</code></p>
+</li>
+<li>
+<p>Snapshot <code>gbp dch -S</code></p>
+</li>
+<li>
+<p>Release <code>gbp dch -R</code></p>
+</li>
+<li>
+<p>fill out changelog</p>
+</li>
+<li>
+<p>modify UNRELEASED to our os release version</p>
+</li>
+</ul>
+<pre><code>git add debian &amp;&amp; git commit -m "finish changelog for 3.2-4build1+something" 
+</code></pre>
+<h3 id="build-package"><a class="header" href="#build-package">Build package</a></h3>
+<pre><code>gbp buildpackage -us -uc --git-pristine-tar --git-debian-branch=&lt;branch name&gt;
+</code></pre>
+<p><strong>Note</strong>: <code>-us -uc</code> turns off gpg signing</p>
+<p>Try in Docker</p>
+<pre><code>docker run -v $PWD/../dist:/dist:ro --rm --it ubuntu:jammy bash
+</code></pre>
+<p><strong>Note</strong>: Change <code>$PWD/../dist</code> to wherever deb packages gets put into</p>
+<p>Then do <code>apt update</code> and <code>apt install</code> on the deb package.</p>
+<h3 id="build-source-package-for-uploading"><a class="header" href="#build-source-package-for-uploading">Build source package (for uploading)</a></h3>
+<pre><code>gbp buildpackage --git-builder="debuild -S" --git-pristine-tar --git-debian-branch=&lt;branch name&gt;
+</code></pre>
+<p>Upload the <code>_source.changes</code> file to Launchpad</p>
+<pre><code>dput ppa:&lt;name of ppa&gt; *_source.changes
+</code></pre>
+<p>Launchpad infrastructure builds it fromt there.</p>
+<h2 id="random"><a class="header" href="#random">Random</a></h2>
+<ul>
+<li><code>quilt</code> is used for patching.</li>
+<li><code>sudo dpkg-buildpackage -r fakeroot -b -uc -us</code>, <code>-b</code> for binary, <code>-uc</code> for no crypt sign, <code>-us</code> for no source sign.</li>
+<li><code>sudo dpkg -i &lt;deb&gt;</code></li>
+<li><code>sudo apt install -f</code> install missing dependencies for package</li>
+<li><code>/etc/apt/sources.list</code> uncomment src to be able to do <code>apt source &lt;pkg&gt;</code> to install source files</li>
+<li>Go from Unstable (sid) -&gt; Testing -&gt; Stable</li>
+<li>Many 3rd party packages install to /opt/PACKAGE, so that they don't have to think about clashing with other packages. If you're installing into /usr/ you do need to pay some attention to debian policy and other packages, to avoid conflicts.</li>
+<li>generally: /usr/{share,lib,bin} belongs to the package managed system and /usr/local/ belongs to the local sysadmin, not apt. So apt install should <em>not</em> go into /usr/local/bin/.</li>
+</ul>
+<h2 id="source"><a class="header" href="#source">Source</a></h2>
+<ul>
+<li><a href="https://wiki.debian.org/Packaging/Intro">Debian packaging intro</a></li>
+<li><a href="https://wiki.debian.org/Packaging/Learn">Debian packaging learn</a></li>
+<li><a href="https://wiki.debian.org/Python/Pybuild">Pybuild</a></li>
+<li><a href="https://wiki.debian.org/PackagingWithGit">Packaging with Git</a></li>
+<li><a href="https://honk.sigxcpu.org/projects/git-buildpackage/manual-html/index.html">Building Debian Packages with git-buildpackage</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../linux/users-groups.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../linux/essential_tools.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../linux/users-groups.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../linux/essential_tools.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
