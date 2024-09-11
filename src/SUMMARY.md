@@ -3,7 +3,7 @@
 - [Network](./network/network.md)
   - [letsencrypt](./network/letsencrypy.md)
   - [NETConf YANG](./network/netconf_yang.md)
-  - [tls](./network/tls.md)
+  - [SSL/TLS](./network/tls.md)
 - [Javascript](./js/js.md)
   - [angular](./js/angular.md)
   - [jest](./js/jest.md)
