@@ -38,3 +38,11 @@ default gateway and routes available on system.
 A default gateway needs to be on the same network.
 
 The lower the metric, the higher the priority for that network interface.
+
+## Output Options
+
+- `-br (--brief)`
+- `-o (--oneline)`
+- `-j (--json)`
+- `-p (--pretty)`
+
