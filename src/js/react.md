@@ -1,5 +1,16 @@
 # React
 
+## Folder Structure
+
+- *public/index.html*
+- *src.index.js*
+
+Only files in *src/* are processed by webpack.
+
+Only files in *public/* can be used from *public/index.html*.
+
+Other top-level directories will not be included in the production build.
+
 ## Component Lifecycle
 
 1. **Triggering**: Happens because of
@@ -29,6 +40,43 @@ useEffect(() => {
 - `useEffect(() => {...}, [])` runs on first render
 - `useEffect(() => {...}, [x, y])` runs when `x` or `y` renders with a new value
 
+### Example: Abort fetch request
+
+```js
+useEffect(() => {
+    const controller = new AbortController()
+    const signal = controller.signal
+
+    fetch('google.com', { signal })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data)
+        }).catch((err) => {
+            if(err.name === 'AbortError') {
+                console.log("cancelled request")
+            } else {
+                // Handle error
+            }
+        })
+
+    return () => {
+        controller.abort()
+    }
+}, [<DEPENDENCIES>])
+```
+
+### Example: Abort timer
+
+```js
+useEffect(() => {
+    const interval = setTimeout(() => {
+        console.log("hey ho!");
+    }, 5000);
+
+    return () => { clearTimeout(interval); }
+}, [<DEPENDENCIES>]);
+```
+
 ## useState hook
 
 ```js
@@ -36,6 +84,41 @@ const [something, setSomething] = useState(<INITIAL STATE>)
 ```
 
 **Note**: State variable `something` is not updated until next render. Ie, the new value is not directly present in the current snapshot of the component after `setSomething()`.
+
+## Context
+
+Contexts are global and have no JSX.
+
+1. `createContext`
+
+```js
+import { createContext } from 'react';
+
+export const MyContext = createContext("initialValue");
+```
+
+2. `useContext`
+
+```js
+import { useContext } from 'react';
+import { MyContext } from './MyContext';
+
+const MyContext = useContext(MyContext);
+```
+
+3. Provide context
+
+```jsx
+import { MyContext } from './MyContext';
+
+function MyComponent() {
+    return (
+        <MyContext.Provider value={...}>
+            {children}
+        </MyContext.Provider>
+    )
+}
+```
 
 ## ESLint and Prettier
 
