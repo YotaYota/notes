@@ -22,3 +22,15 @@ A **Blueprint** is a way to organize a group of related views and other code. Wh
 
 A **Template** is a file that contain static data as well as placeholders for dynamic data. Flask uses the Jinja. `g`, ` request` and `url_for()` is automatically available in templates.
 
+## Testing
+
+```
+db_fd, db_path = tempfile.mkstemp()
+
+app = create_app({
+    'TESTING': True,
+    'DATABASE': db_path,
+})
+```
+
+`'TESTING': True` tells Flask that the app is in test mode. Flask changes some internal behavior so it’s easier to test, and other extensions can also use the flag to make testing them easier.

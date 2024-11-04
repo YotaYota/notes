@@ -12,6 +12,7 @@
 - [Python](./python/main.md)
   - [dist](./python/dist.md)
   - [Flask](./python/flask.md)
+  - [pytest](./python/pytest.md)
 - [AWS](./aws/aws.md)
   - [API Gateway](./aws/api_gateway.md)
   - [CCP](./aws/ccp.md)
