@@ -22,8 +22,8 @@
   - [Static Website](./aws/static_website.md)
   - [IAM](./aws/iam.md)
   - [Lambda](./aws/lambda.md)
-- [Computer]{./comp/compdocs.md}
-  - [Computer Build]{./comp/compbuild.md}
+- [Computer](./comp/compdocs.md)
+  - [Computer Build](./comp/compbuild.md)
 - [Linux](./linux/linux.md)
   - [SystemD](./linux/systemd.md)
   - [Users and Groups](./linux/users-groups.md)
@@ -40,8 +40,6 @@
 - [rust](./rust/rust.md)
   - [Web App](./rust/rust_web_app.md)
   - [Bevy](./rust/bevy.md)
-- [Computer](./comp/main.md)
-    - [compdocs](./comp/compdocs.md)
 - [gpg](gpg.md)
 - [ssh](ssh.md)
 - [yubikey](yubikey.md)
