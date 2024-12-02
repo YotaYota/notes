@@ -120,6 +120,49 @@ function MyComponent() {
 }
 ```
 
+## Redux
+
+- Store `configureStore({...})`, `store.getState()`
+- Selector `createSelector` (memoized)
+- Dispatch `store.dispatch(action)`
+- Action `createAction()`, `{ type: domain/eventName, payload: data }`
+    - Action Creator
+- Thunk `createAsyncThunk`
+- Reducer `createReducer((state, action) => { ... return newState} )`, immutable, synchronous
+- Slice `createSlice()`, `combineSlices()`
+
+### Middleware
+
+Provides a third party extension point between dispatching and reaching the reducer.
+
+registered in `createStore`
+
+```
+const store = createStore(
+    myApp,
+    applyMiddleware(logger, crashReporter)
+)
+```
+
+A middleware returns the result of the next dispatch
+
+```
+const logger = store => logger => action => {
+    let result = next(action)
+    // ...
+    return result
+}
+```
+
+**Thunk** is a middleware that lets you dispatch a function instead of an action (gets `dispatch` and `getState` as arguments)
+
+```
+const thunk = store => next => action =>
+  typeof action === 'function'
+    ? action(store.dispatch, store.getState)
+    : next(action)
+```
+
 ## ESLint and Prettier
 
 Prettier is for formatting rules. ESLint is for code quality rules.
