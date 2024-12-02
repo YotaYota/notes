@@ -65,4 +65,5 @@
 - [Vocabulary](vocabulary.md)
 - [Work Stratrgy](work_strategy.md)
 - [Project](project.md)
+- [eduMEET](edumeet.md)
 
