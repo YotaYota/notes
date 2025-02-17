@@ -155,8 +155,8 @@ Packets: data and header.
 
 ||||
 |-|-|-|
-|Application|Biderectional reliable byte stream between two applications|HTTP, SMTP, SSH, FTP|
-|Transport|Guarentees correct, in-order delivery of data end-to-end. Controls congestion|TCP, UDP, RTP|
+|Application|Biderectional reliable byte stream between two applications|HTTP, SMTP, SSH, FTP, DNS|
+|Transport|Guarentees correct, in-order delivery of data end-to-end. Controls congestion. Corresponds to port number|TCP, UDP, RTP|
 |Network|Delivers datagrams end-to-end. Best-effor - no guarantees|Must use IP|
 |Link|Delivers data over a single link|Ethernet. WiFi, DSL, 3G|
 
