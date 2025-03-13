@@ -126,7 +126,7 @@ function MyComponent() {
 - Selector `f: (state) --> any value`
     - `createSelector` (memoized)
 - Action `createAction()`, `{ type: domain/eventName, payload: data }`
-    - Action Creator
+    - Action Creator, a factory function that returns an action
 - Dispatch `store.dispatch(action)`
 - Thunk let's you dispatch functions instead of an action, that can dispatch actions over time.
     - `createAsyncThunk` `f: (ActionTypeString, (f: () --> Promise)) --> ?`
