@@ -114,7 +114,7 @@ All variables in the current scope (including global variables) are passed to te
             └── some_template.erb
 ```
 
-```puppet
+```pp
 # manifests/site.pp
 node default {
   include mymod
