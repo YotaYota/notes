@@ -23,7 +23,7 @@ iproute2 collection contains the following command-line utilities:
 - `tipc`
 - `vdpa`
 
-# ip
+## `ip`
 
 `ip link show`: information about network interface device. Shows information on **OSI layer 2** ("data link layer").
 
@@ -39,10 +39,17 @@ A default gateway needs to be on the same network.
 
 The lower the metric, the higher the priority for that network interface.
 
-## Output Options
+### Output Options
 
 - `-br (--brief)`
 - `-o (--oneline)`
 - `-j (--json)`
 - `-p (--pretty)`
+
+## `bridge`
+
+A Linux Bridge is a kernel module that behaves like a network switch.
+It forwards packets between interfaces that are connected to it.
+
+"Virtual Bridge Interface" ("bridging interfaces")
 
