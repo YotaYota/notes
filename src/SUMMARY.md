@@ -23,7 +23,7 @@
   - [Static Website](./aws/static_website.md)
   - [IAM](./aws/iam.md)
   - [Lambda](./aws/lambda.md)
-- [Computer](./comp/compdocs.md)
+- [Computer](./comp/main.md)
   - [Computer Build](./comp/compbuild.md)
   - [RAID](./comp/raid.md)
 - [Linux](./linux/linux.md)
