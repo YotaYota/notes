@@ -10,6 +10,7 @@
   - [react](./js/react.md)
   - [jest](./js/jest.md)
   - [OPFS](./js/opfs.md)
+  - [WebGL](./js/webgl.md)
 - [Python](./python/main.md)
   - [dist](./python/dist.md)
   - [Flask](./python/flask.md)
