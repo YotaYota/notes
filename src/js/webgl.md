@@ -1,5 +1,7 @@
 # WebGL
 
+WebGL is a rasterization API.
+
 **clip space**: `{ (x, y) | -1 <= x <= 1, -1 <= y <= 1 }`
 
 **shader**: a program that runs on the GPU.
@@ -157,5 +159,29 @@ Bind to inform which set of buffers to use and how to pull data out of those buf
 
 ```js
 gl.bindVertexArray(vao);
+```
+
+## Textures
+
+Pass texture coordinates from the vertex shader to the fragment shader in a varying `v_texcoord`
+
+```
+in vec2 a_texcoord;
+out vec2 v_texcoord;
+void main() {
+  v_texcoord = a_texcoord;
+}
+```
+
+- In the fragment shader, declare a `uniform sampler2D` which lets us reference a texture.
+- call `texture` to look up color from that texture.
+
+```
+in vec2 v_texcoord;
+uniform sampler2D u_texture;
+out vec4 outColor;
+void main() {
+  outColor = texture(u_texture, v_texcoord);
+}
 ```
 
