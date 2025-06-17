@@ -1,5 +1,7 @@
 # Log
 
+syslog.service sends all mesages to system logger and puts it in `/var/log/syslog`, except auth messages.
+
 systemd-journald.service listens for all messages on the system by way of the *syslog protocol*.
 
 `journalctl` aggregates all the different sources into one journal.
@@ -20,6 +22,8 @@ mail.err                 /var/mail/log.err
 kern.*                   /var/log/kern.log
 *lpr.*                   /var/log/lpr.log
 ```
+
+**gelf**.
 
 ## Files
 
