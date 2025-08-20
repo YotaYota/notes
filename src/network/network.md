@@ -263,6 +263,10 @@ The *default* route is the least specific match.
 
 Hosts needs to keep a mapping between MAC address and IP address.
 
+An ARP request is a broadcast that asks the device with a certain IP address to respond with its MAC address.
+
+Each NIC, has its own unique MAC address.
+
 ### TCP
 
 3-way-handshake:
@@ -390,7 +394,7 @@ Networks in general uses 3 different error detection algorithms:
     - combines the message with some secret information to generate a value
     - robust to malicious modifications
     - any 2 messages have 2^(-c) chance of having the same code
-    - Ceyptographically strong; not good for detection errors
+    - Cryptographically strong; not good for detection errors
 
 ### Finite State Machine (FSM)
 

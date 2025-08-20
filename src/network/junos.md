@@ -21,11 +21,23 @@ Ethernet uses *Carrier Sense Multiple Access with Collision Detection* (`CSMA/CD
 
 Data sent over ethernet must reach its destination within a maximum timeframe, this imposes restrictions on cable lengths, eg for fibres it's about 10km, and Gigabit ethernets it's about 100m.
 
+Ethernet trailer is a *Frame Check Sequencenumber* (FCS).
+
+|IEEE Standards|Name used by engineers|Speed/Frequency|
+|:--|:--|:--|
+|IEEE 802.3|Ethernet|10 Mbps|
+|IEEE 802.3u|Fast Ethernet|100 Mbps|
+|IEEE 802.3z or IEEE 802.3ab|Gigabit Ethernet|1000 Mbps|
+|IEEE 802.3ae|10 Gigabit Ethernet|10 Gbps|
+|IEEE 802.3ba|100 Gigabit Ethernet|100 Gbps|
+|IEEE 802.3bs and IEEE 802.3cm|400 Gigabit Ethernet|400 Gbps|
+|IEEE 802.11|Wireless|2.4 GHz, 5 GHz, and many more|
+
 #### CSMA/CD (IEEE 802.3)
 
 `CSMA/CD` allows a device to recieve or transmit data, but not both simultaneously. This is called `Half-duplex` data transmission (like a walkie-talkie) (cf `Full-duplex`.) 
 
-In half-duplex ethernet networks, there is a `Collision Domain`. When data is sent, device listens toa duplicated response as a confirmation. If the response is not the same, it assmes there has been a collission, and transmitting devices send a `jam signal` indicating other listening devices should disregard previous message, and makes other transmitting devices to set a random transmission timer.
+In half-duplex ethernet networks, there is a `Collision Domain`. When data is sent, device listens to a duplicated response as a confirmation. If the response is not the same, it assmes there has been a collission, and transmitting devices send a `jam signal` indicating other listening devices should disregard previous message, and makes other transmitting devices to set a random transmission timer.
 
 More devices on a Network Segment increases risk of collision, thereby degrading performance.
 
@@ -49,4 +61,24 @@ Sending Ethernet frame to one Recieving device:
 4. Strips off the ethernet frame and forwards the data to the upper layer protocol.
 
 If device wants to send an Ethernet frame to many Recieving device it uses the broadcast address, known as `group addess` or `multicast MAC address`.
+
+#### Copper Wire
+
+4 twisted pairs, connected to an RJ45 connector.
+
+
+### MAC - Media Access Control
+
+Uniquely defines a network interface on the network.
+
+Hexadecimal
+
+```
+00:00:00:00:00:00
+```
+
+The first 3 uniquely identifies the manufacturer.
+
+An ARP request is a broadcast that asks the device with a certain IP address to respond with its MAC address.
+
 

@@ -1,9 +1,10 @@
 # Summary
 
 - [Network](./network/network.md)
-  - [Letsencrypt](./network/letsencrypy.md)
+  - [TLS](./network/tls.md)
+  - [Let's encrypt](./network/letsencrypy.md)
   - [NETConf YANG](./network/netconf_yang.md)
-  - [letsencrypt](./network/letsencrypy.md)
+  - [Junos](./network/junos.md)
 - [Javascript](./js/js.md)
   - [Angular](./js/angular.md)
   - [Jest](./js/jest.md)
