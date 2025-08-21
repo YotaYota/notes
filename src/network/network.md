@@ -10,20 +10,21 @@ Default gateway is know throught the word **via** in the output.
 
 ## OSI
 
-|||
-|-|-|
-|**Userspace**||
-|Layer 7|Application|
-|Layer 6|Presentation|
-|Layer 5|Session|
-|**Kernel**||
-|Layer 4|Transport|
-|Layer 3|Network|
-|Layer 2|Data Link|
-|**Physical**||
-|Layer 1|Physical|
+||||
+|-|-|-|
+|**Userspace**|||
+|Layer 7|Application|HTTP, SMTP, SSH, FTP, DNS|
+|Layer 6|Presentation||
+|Layer 5|Session||
+|**Kernel**|||
+|Layer 4|Transport|TCP, UDP, RTP|
+|Layer 3|Network|IP|
+|Layer 2|Data Link|Ethernet. WiFi, DSL, 3G|
+|**Physical**|||
+|Layer 1|Physical||
 
-The 7 layer model is outdated, in preference of the 4 layer model. The only important legacy is the numbering system.
+
+The 7 layer model is outdated, in preference of the 4 layer model (Application, Transport, Network, Link). The only important legacy is the numbering system.
 
 ## Routing Table
 
