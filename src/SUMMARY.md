@@ -1,10 +1,10 @@
 # Summary
 
 - [Network](./network/network.md)
-  - [TLS](./network/tls.md)
+  - [Junos](./network/junos.md)
   - [Let's encrypt](./network/letsencrypy.md)
   - [NETConf YANG](./network/netconf_yang.md)
-  - [Junos](./network/junos.md)
+  - [TLS](./network/tls.md)
 - [Javascript](./js/js.md)
   - [Angular](./js/angular.md)
   - [Jest](./js/jest.md)
@@ -15,8 +15,8 @@
 - [Python](./python/main.md)
   - [Dist](./python/dist.md)
   - [Flask](./python/flask.md)
+  - [Pydantic](./python/pydantic.md)
   - [Pytest](./python/pytest.md)
-  - [Pytest](./python/pydantic.md)
 - [AWS](./aws/aws.md)
   - [API Gateway](./aws/api_gateway.md)
   - [CCP](./aws/ccp.md)
