@@ -140,6 +140,21 @@ The first of theese `lo` (loopback) represents the linux host itself.
 - ICMP
 - BGP for updating routing tables (Bird)
 
+## VXLAN
+
+[RFC 7348](https://datatracker.ietf.org/doc/html/rfc7348).
+
+A VXLAN tunnel carries Ethernet frames across an IP network. Ie, it tunnels layer 2 frames in layer 4 UDP datagrams.
+VXLAN endpoints, which terminate VXLAN tunnels and may be either virtual or physical switch ports, are known as *VXLAN tunnel endpoints* (**VTEPs**).
+
+**VNI** VXLAN Network Identifier (or VXLAN Segment ID).
+
+VXLAN is essentially Ethernet over UDP/IP.
+
+- IP packet with SRC and DST to VTEPs.
+- UDP with DST port 4789
+- VXLAN header with VNI
+
 ---
 
 ## CS144
