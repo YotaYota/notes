@@ -42,7 +42,7 @@ class User(BaseModel):
 
 def validate(data: dict[str, Any]):
     try:
-        user = User.model_validate(date)
+        user = User.model_validate(data)
         print(user)
     except ValidationError as e:
         print("User is invalid")
