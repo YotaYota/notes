@@ -1,5 +1,18 @@
 # Python
 
+10 nice std libs
+
+- dataclass
+- pathlib (over os.Path)
+- functools
+- tomllib
+- graphlib
+- heapq
+- secrets
+- shutil
+- textwrap
+- itertools
+
 ## `python -m module_name`
 
 Does 2 things:
