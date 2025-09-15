@@ -7,6 +7,11 @@
 
 Default gateway is know throught the word **via** in the output.
 
+## Troubleshooting
+
+Go bottom-up or top-down in the OSI model.
+
+For connectivity issues; `ping` target host, use `ip route get` to see packets are sent to the correct interface. Use `tcpdump` to see that the packet enters and leaves the interface. Jump to next host on repeat.
 
 ## OSI
 
