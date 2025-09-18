@@ -386,3 +386,8 @@ formatting
 npx prettier . --write
 npx eslint . --fix
 ```
+
+# MUI
+
+- `sx` prop is not as efficient as it calculates CSS inline. It's more efficient to define a `styled` component up front.
+
