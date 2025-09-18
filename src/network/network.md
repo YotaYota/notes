@@ -13,6 +13,16 @@ Go bottom-up or top-down in the OSI model.
 
 For connectivity issues; `ping` target host, use `ip route get` to see packets are sent to the correct interface. Use `tcpdump` to see that the packet enters and leaves the interface. Jump to next host on repeat.
 
+Use `nft` to trace packets with somethings like
+
+```bash
+# Mark packets from 192.0.2.10 for tracing
+sudo nft add rule inet filter input ip saddr 192.0.2.10 meta nftrace set 1
+
+# Now monitor packet traces
+sudo nft monitor trace
+```
+
 ## OSI
 
 ||||

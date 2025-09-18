@@ -21,7 +21,12 @@ Ethernet uses *Carrier Sense Multiple Access with Collision Detection* (`CSMA/CD
 
 Data sent over ethernet must reach its destination within a maximum timeframe, this imposes restrictions on cable lengths, eg for fibres it's about 10km, and Gigabit ethernets it's about 100m.
 
-Ethernet trailer is a *Frame Check Sequencenumber* (FCS).
+
+- DST address 6 bytes
+- SRC address 6 bytes
+- EtherType 2 bytes
+- Payload
+- Ethernet trailer is a *Frame Check Sequencenumber* (FCS) - 32 Bit.
 
 |IEEE Standards|Name used by engineers|Speed/Frequency|
 |:--|:--|:--|
@@ -32,6 +37,13 @@ Ethernet trailer is a *Frame Check Sequencenumber* (FCS).
 |IEEE 802.3ba|100 Gigabit Ethernet|100 Gbps|
 |IEEE 802.3bs and IEEE 802.3cm|400 Gigabit Ethernet|400 Gbps|
 |IEEE 802.11|Wireless|2.4 GHz, 5 GHz, and many more|
+
+#### Error Control
+
+Two types of action destination can take
+
+1. Error detection or
+2. Error correction.
 
 #### CSMA/CD (IEEE 802.3)
 
@@ -81,4 +93,14 @@ The first 3 uniquely identifies the manufacturer.
 
 An ARP request is a broadcast that asks the device with a certain IP address to respond with its MAC address.
 
+---
+
+## Modern Ethernet LANs
+
+Switches' primary benefit is high-speed connectivity.
+
+It saves MAC addresses in the **Ethernet Switching Table**. Saved in RAM memory.
+
+
+**Next**: Switch operation in modern ethernet
 
