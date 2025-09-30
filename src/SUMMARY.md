@@ -12,7 +12,6 @@
   - [Js](./web/js.md)
   - [OPFS](./web/opfs.md)
   - [React](./web/react.md)
-  - [Web](./web/web.md)
   - [WebGL](./web/webgl.md)
 - [Python](./python/main.md)
   - [Dist](./python/dist.md)

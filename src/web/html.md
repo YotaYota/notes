@@ -2,11 +2,43 @@
 
 Hyper Text Markup Language
 
+[web.dev HTML](https://web.dev/learn/html/welcome)
+
 ## Elements
 
 There are two types of elements: **replaced** and **non-replaced**.
 
-## MouseEvents
+Non-replaced elements have opening and (sometimes optional) closing tags that surround them and may include text and other tags as sub-elements.
+
+Replaced elements are replaced by objects. Most form controls are replaced with graphical user interface (UI) widget, most images are replaced by a raster or scalable image file. Being replaced by objects, each comes with a default appearance. Depending on the type of object and the browser, the applicable styles are limited. 
+
+Void elements cannot contain text content or nested elements. Most replaced elements are void elements, but not all. Most void elements are replaced, but not all.
+
+**Note**: mark up your HTML using lowercase letters.
+
+**Note**: HTML should be used to structure content, not to define the content's appearance.
+
+## Attributes
+
+Attributes define the behavior, linkages, and functionality of elements. Attributes only appear in the opening tag. The opening tag always starts with the element type. The type can be followed by zero or more attributes, separated by one or more spaces. Most attribute names are followed by an equal sign equating it with the attribute value, wrapped with opening and closing quotation marks.
+
+Some attributes are global and can appear within any element's opening tag. Some apply only to several elements but not all, and others are element-specific.
+
+```HTML
+<a href="#register" _target="self">Registration</a>
+```
+
+**Note**: quoting is always recommended.
+
+## DOM
+
+The Document Object Model (DOM) is the data representation of the structure and content of the HTML document. As the browser parses HTML, it creates a JavaScript object for every element and section of text encountered. These objects are called nodes-element nodes and text nodes, respectively.
+
+The [HTML DOM API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API) provides access to and control of every HTML element via the DOM, providing interfaces for the HTML element and all the HTML classes that inherit from it. The [HTMLElement interface](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) represents the HTML element and all of its descendant nodes. Every other element implements it via an interface that inherits from it.
+
+## Events
+
+### MouseEvents
 
 - onMouseOver and onMouseOut
 
