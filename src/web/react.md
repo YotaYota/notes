@@ -85,6 +85,13 @@ const [something, setSomething] = useState(<INITIAL STATE>)
 
 **Note**: State variable `something` is not updated until next render. Ie, the new value is not directly present in the current snapshot of the component after `setSomething()`.
 
+To update from the *pending state* instead, you can use an **updater function**, ie
+
+```js
+setSomething(a => a + 1)
+setSomething(a => a + 1)
+```
+
 ## Context
 
 Contexts are global and have no JSX.
