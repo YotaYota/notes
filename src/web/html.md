@@ -79,6 +79,8 @@ viewport settings content are width, zoom and scalability. zoom and scalability 
 <link rel="icon" sizes="16x16 32x32 48x48" type="image/png" href="/images/mlwicon.png" />
 ```
 
+The `target` attribute, valid on `<base>` as well as on links and forms, sets where those links should open.
+
 #### CSS
 
 Styles should be in the head for performance reasons.
@@ -91,19 +93,34 @@ To import external style sheet styles to be within a cascade layer but you don't
 <style>
   @import "styles.css" layer(firstLayer);
 </style>
-
 ```
 
 ## Tags
 
-The `link` element is used to create relationships between the HTML document and external resources. Some of these resources may be downloaded, others are informational. The type of relationship is defined by the value of the rel attribute. There are currently 25 available values for the rel attribute that can be used with `<link>`, `<a>` and `<area>`, or `<form>`
+### `<link>`
+
+The `link` element is used to create relationships between the HTML document and external resources, eg downloads or informational. The type of relationship is defined by the value of the `rel` attribute. There are currently 25 available values for the `rel` attribute that can be used with `<link>`, `<a>` and `<area>`, or `<form>`
+
+Eg, using `alternate` for a translation, then `hreflang` attribute must be set.
 
 ```html
 <link rel="alternate" href="https://www.machinelearningworkshop.com/fr/" hreflang="fr-FR" />
 <link rel="alternate" href="https://www.machinelearningworkshop.com/pt/" hreflang="pt-BR" />
 ```
 
-When using `alternate` for a translation, the `hreflang` attribute must be set.
+### `<script>`
+
+The `<script>` tag is used to include scripts; default type is JavaScript. For any other scripting language, include the `type` attribute with the mime type, or `type="module"` if it
+s a JavaScript module. Only JavaScript and JavaScript modules get parsed and executed.
+
+`<script>` tags can be used to encapsulate your code or to download an external file.
+
+JavaScript is not only render-blocking, but the browser stops downloading all assets when scripts are downloaded and doesn't resume downloading other assets until the JavaScript has finished execution. For this reason, you will often find JavaScript requests at the end of the document rather than in the head.
+
+There are two attributes that can reduce the blocking nature of JavaScript download and execution:
+
+- `defer`: HTML rendering is not blocked during the download, and the JavaScript only executes after the document has otherwise finished rendering
+- `async`: rendering isn't blocked during the download either, but once the script has finished downloading, the rendering is paused while the JavaScript is executed.
 
 ## Events
 

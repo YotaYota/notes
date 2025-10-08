@@ -5,7 +5,7 @@
   - [Let's encrypt](./network/letsencrypy.md)
   - [NETConf YANG](./network/netconf_yang.md)
   - [TLS](./network/tls.md)
-- [Javascript](./web/js.md)
+- [Web](./web/html.md)
   - [Angular](./web/angular.md)
   - [HTML](./web/html.md)
   - [Jest](./web/jest.md)
