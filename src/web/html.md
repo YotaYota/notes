@@ -24,7 +24,7 @@ Attributes define the behavior, linkages, and functionality of elements. Attribu
 
 Some attributes are global and can appear within any element's opening tag. Some apply only to several elements but not all, and others are element-specific.
 
-```HTML
+```html
 <a href="#register" _target="self">Registration</a>
 ```
 
@@ -38,13 +38,19 @@ The [HTML DOM API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API
 
 ## Structure
 
-```
-<!DOCTYPE html> <-- tells browser to use standards mode. If omitted *quirks mode* will be used instead.
-<html lang="en-US">
-    <head>
-    </head>
-    <body>
-    </body>
+```html
+<!DOCTYPE html> <!-- tells browser to use "standards mode" instead of "quirks mode" -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+  </head>
+  <body>
+
+  </body>
 </html>
 ```
 
@@ -75,6 +81,7 @@ viewport settings content are width, zoom and scalability. zoom and scalability 
 `<meta name="viewport" content="width=device-width" />`
 
 **Note**: If you don't declare a favicon, the browser will look for a file named favicon.ico in the top-level directory (the website's root folder). You can use a different file name and location like this
+
 ```html
 <link rel="icon" sizes="16x16 32x32 48x48" type="image/png" href="/images/mlwicon.png" />
 ```
