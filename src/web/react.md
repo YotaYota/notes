@@ -79,6 +79,8 @@ useEffect(() => {
 
 ## useState hook
 
+Causes a re-render.
+
 ```js
 const [something, setSomething] = useState(<INITIAL STATE>)
 ```
@@ -90,6 +92,16 @@ To update from the *pending state* instead, you can use an **updater function**,
 ```js
 setSomething(a => a + 1)
 setSomething(a => a + 1)
+```
+
+## useRef hook
+
+Does not cause a re-render.
+
+```js
+const aRef = useRef(<INITIAL VALUE>)
+
+aRef.current = <NEW VALUE>
 ```
 
 ## Context
