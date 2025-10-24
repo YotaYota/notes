@@ -24,6 +24,17 @@ a Peer object represents one edumeet-client out there.
 
 A room server has access to 1 or more media nodes.
 
+### Configure tracker
+
+Need to have a tracker, eg [bittorrent-tracker](https://github.com/webtorrent/bittorrent-tracker).
+Then configure
+
+```
+"tracker": "wss://trackerurl"
+```
+
+under `"defaultRoomSettings"` in config file.
+
 ## edumeet-media-node
 
 Media router. A hub that all connect to. A Producer, eg a video stream, has several Consumers (people recieving the video).
