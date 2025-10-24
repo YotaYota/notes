@@ -42,6 +42,7 @@
   - [Logging](./linux/logging.md)
   - [Lutris](./linux/lutris.md)
   - [Nftables](./linux/nftables.md)
+  - [PipeWire](./linux/pipewire.md)
   - [Screen](./linux/screen.md)
   - [Ssh](./linux/ssh.md)
   - [SystemD](./linux/systemd.md)
