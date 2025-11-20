@@ -81,17 +81,28 @@ If device wants to send an Ethernet frame to many Recieving device it uses the b
 
 ### MAC - Media Access Control
 
-Uniquely defines a network interface on the network.
+Uniquely defines a network interface (NIC) on the network.
 
 Hexadecimal
 
-```
-00:00:00:00:00:00
-```
+`00:90:69:00:00:00`
 
 The first 3 uniquely identifies the manufacturer.
 
-An ARP request is a broadcast that asks the device with a certain IP address to respond with its MAC address.
+A **Unicast** MAC address is an address pointing to a unique NIC.
+- Starts with an even number: `00:`, `02:`, ...
+
+a **broadcast** mac address is a special address for all devices.
+- `FF:FF:FF:FF:FF:FF` targets all on the network, eg ARP.
+
+**Note**: An ARP request is a broadcast that asks the device with a certain ip address to respond with its mac address.
+
+**Note**: It is possible to configure in the switch which ports should belong to a *broadcast domain* (VLAN).
+
+A **Multicast** MAC address is a special address for several devices; a *multicast group*.
+- First bytes are always: `01:00:5E`
+
+**Note**: Broadcast and flooding can cause loops.
 
 ---
 
@@ -101,6 +112,80 @@ Switches' primary benefit is high-speed connectivity.
 
 It saves MAC addresses in the **Ethernet Switching Table**. Saved in RAM memory.
 
+If the switch recieve a frame with a DST MAC that is not in its table, it forwards out the frame out on all interfaces except the one it came in on. This is called **flooding**.
+When the DST MAC responds, the switch will update its table so that it does not need to flood the next time.
 
-**Next**: Switch operation in modern ethernet
+### Spanning Tree (STP)
+
+Allows to connect switches in a loop without causing a broadcast storm. The switches can communicate with each other and temporarly close links between them.
+
+### VLAN
+
+VLAN segments a network at Layer 2.
+
+Creating multiple *broadcast domains* in the switch by creating VLANs. Ie frames with DST MAC `FF:FF:FF:FF:FF:FF` will only be sent to ports in the VLAN.
+
+For a device to communicate from one VLAN to another, the traffic needs to be sent to a router, ie go through Layer 3.
+
+
+### MAC Tables
+
+There are two mechanisms for a switch to remove entries from its switching table:
+- MAV Ageing timer: it removes the entry automatically after a certain period of time (defaults to 300 s)
+- CLI
+- (not recommended) unplugging a cable causes the switch to clear the table of all MAC addresses associated with that port
+
+The ethernet switching table usually contains VLAN information as well.
+
+```junos
+show ethernet-switching table
+```
+
+```junos
+clear ethernet-switching table interface ge-0/0/4.0
+```
+
+### Legacy Networks and Modern Solutions
+
+Shared Bus Network: devices connect to the same network with a Tee connector.
+
+Collission Detection: send a jamming signal and makes everybody stop sending data.
+
+Carrier-Sense: detect if there is a signal on the wire before starting to send.
+
+Half-duplex: Before switches, devices could only speak in Half-duplex. A limitation of this is that you cannot send and recieve data at the same time.
+
+Full-duplex: Additional pair of wires. Switches are called switches because the switch from source device's outgoing cables to destination device's incoming cables.
+
+**Note**: Full-duplex is default. Half-duplex exists for backward compitability.
+
+
+### Repeater, Hubs and Bridges
+
+Repeaters: amplifies signal to be able to reach longer distances. Used in eg Atlantic cables.
+
+**Note**: Switches also repeats signals, so repeaters are not well used.
+
+Hub (legacy): Simply repeats a signal and broadcasts it over all ports. Replaced by switches.
+
+Bridge (legacy): Early version of switch that used half-duplex. It helped limit traffic by placing between hubs.
+
+**Note**: Switches are sometimes called multiport bridges. And switches and bridges are at times used interchangeably.
+
+## Cables
+
+### Copper
+
+Last long (~100 years)
+
+Speed is lowered with distance.
+
+Susceptible to electro-magnetic interference.
+
+### Fiber
+
+
+
+
+**NEXT** UTP and STP
 
