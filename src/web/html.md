@@ -60,13 +60,13 @@ The [HTML DOM API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API
 
 Found in `<head>` are document metadata, including:
 
-- document title
-- character set
-- viewport settings
+- document title `<title>`
+- character set `<meta charset>`
+- viewport settings `<meta name="viewport">`
 - description
-- base URL
-- stylesheet links
-- icons
+- base URL `<base>`
+- stylesheet links `<link rel="stylesheet>`
+- icons `<link rel"icon">`
 
 Always include
 
@@ -75,6 +75,8 @@ Always include
 - viewport settings. helps site responsiveness, enabling content to render well by default
 
 **Note**: The character encoding is inherited into everything in the document, even `<style>` and `<script>`.
+
+**Note**: `charset` is actually a pragma directive. It is a shorthand for `<meta http-equiv="Content-Type" content="text/html; charset=<characterset>" />`.
 
 viewport settings content are width, zoom and scalability. zoom and scalability default to accessible values.
 
@@ -102,6 +104,80 @@ To import external style sheet styles to be within a cascade layer but you don't
 </style>
 ```
 
+#### `<base>`
+
+There can only be one base element in a document. And it should come before aany relative URLs are used (including scripts and stylesheets).
+
+ allows setting a default link URL and target. The href attribute defines the base URL for all relative links.
+
+The target attribute, valid on <base> as well as on links and forms, sets where those links should open. The default of _self opens linked files in the same context as the current document. Other options include _blank, which opens every link in a new window, the _parent of the current content, which may be the same as self if the opener is not an iframe, or _top, which is in the same browser tab, but popped out of any context to take up the entire tab.
+
+#### `<meta>`
+
+Aside from the `charset` exception, all other meta tags defined in the WHATWG HTML specification contain either the `http-equiv` or `name` attribute.
+
+There are two main types of meta tags: pragma directives, with the `http-equiv` attribute, and `name` meta types. Both the `name` and `http-equiv` meta types must include the `content` attribute, which defines the content for the type of metadata listed.
+
+Pragma directives describe how the page should be parsed. Eg:
+
+- `http-equiv="content-language"` (can be set with `<html lang>` instead)
+- `http-equiv="refresh"`
+- `http-equiv="default-style"`
+- `http-equiv="content-type"`
+- `http-equiv="set-cookie"`
+- `http-equiv="x-ua-compatible"`
+- `http-equiv="content-security-policy"`
+
+Named meta tags includes
+
+- `description`
+- `theme-color`
+
+avoid `keywords` since it's not useful anylonger.
+
+`<meta name="robots" content="noindex, nofollow" />` tells robots to not index the site and not follow any links.
+
+If you do need to include more than one type of meta tag to support legacy browsers, the legacy values should come after the newer values, as user agents read successive rules until they find a match.
+
+[Open Graph](https://ogp.me/) protocol can be used to control how social media sites displays links to your content. These meta tags have two attributes: `property` and `content`.
+
+Instead of adding meta tags in the html document, we can create a manifest, generally named `manifest.webmanifest` or `manifest.json`, and add it with
+```html
+<link rel="manifest" href="/manifest.webmanifest" />
+```
+
+### Accessibility Object Model (AOM)
+
+As the browser parses the content received, it builds the document object model (DOM) and the CSS object model (CSSOM). It then also builds an accessibility tree. Assistive devices, such as screen readers, use the AOM to parse and interpret content. The DOM is a tree of all the nodes in the document. The AOM is like a semantic version of the DOM.
+o.
+
+The global `role` attribute (defined in [ARIA sepcification](https://w3c.github.io/aria/#dfn-role)) describes the role an element has in the context of the document.
+
+Interactive elements, such as buttons, links, ranges, and checkboxes, all have implicit roles, all are automatically added to the keyboard tab sequence, and all have default expected user action support.
+
+Using the role attribute, you can give any element a `role`, including a different role than the tag implies. For example, `<button>` has the implicit role of `button`. With `role="button"`, you can turn any element semantically into a button: `<p role="button">Click Me</p>`. While adding `role="button"` to an element informs screen readers that the element is a button, it doesn't change the appearance or functionality of the element. But use the correct semantic tag instead.
+
+Some tags are **landmarks** depending on how they are nested.
+
+- `<header>` implicit role is `banner`. is a landmark depending on how it's nested
+- `<nav>`
+- `<main>`
+- `<article>`
+- `<section>`
+- `<aside>`
+- `<footer>` implicit role is `contentinfo` if it is a landmark.
+
+A layout with a header, two sidebars, and a footer, is known as the [holy grail layout](https://web.dev/patterns/layout/holy-grail), eg
+
+```html
+<body>
+  <header>Header</header>
+  <nav>Nav</nav>
+  <main>Content</main>
+  <aside>Aside</aside>
+  <footer>Footer</footer>
+</body>
+```
 ## Tags
 
 ### `<link>`
@@ -122,12 +198,12 @@ s a JavaScript module. Only JavaScript and JavaScript modules get parsed and exe
 
 `<script>` tags can be used to encapsulate your code or to download an external file.
 
-JavaScript is not only render-blocking, but the browser stops downloading all assets when scripts are downloaded and doesn't resume downloading other assets until the JavaScript has finished execution. For this reason, you will often find JavaScript requests at the end of the document rather than in the head.
+JavaScript is not only render-blocking, but the browser stops downloading all assets when scripts are downloaded and doesn't resume downloading other assets until the JavaScript has finished execution. For this reason, you will often find JavaScript requests at the end of the document rather than in the head. Also, with JavaScript, you don't want to reference an element before it exists.
 
 There are two attributes that can reduce the blocking nature of JavaScript download and execution:
 
 - `defer`: HTML rendering is not blocked during the download, and the JavaScript only executes after the document has otherwise finished rendering
-- `async`: rendering isn't blocked during the download either, but once the script has finished downloading, the rendering is paused while the JavaScript is executed.
+- `async`: rendering isn't blocked during the download, but once the script has finished downloading, the rendering is paused while the JavaScript is executed.
 
 ## Events
 
