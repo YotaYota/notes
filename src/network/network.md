@@ -7,6 +7,15 @@
 
 Default gateway is know throught the word **via** in the output.
 
+## ACL vs Firewall
+
+ACL is **line rate**, thus much faster and generally preferred.
+
+- Firewall is stateful
+- ACL is stateless
+
+For this reason, some rules, eg UDP blocking, is better in a Firewall.
+
 ## Troubleshooting
 
 Go bottom-up or top-down in the OSI model.
