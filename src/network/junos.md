@@ -182,10 +182,25 @@ Speed is lowered with distance.
 
 Susceptible to electro-magnetic interference.
 
+#### UTP and STP
+
+Unshielded vs Shielded.
+
+Shielded is more rigid because of metal that shields from EMI.
+
+#### RJ45
+
+RJ45 has 4 twisted pairs, some are recieve, some transmit. A switch switches from transmit to recieve.
+
+**Note**: **Cross-over cables** is an ugly hack (when no switch is available) to connect one end's transmit directly to the other end's recieve and vice verca.
+
+#### Console Port
+
+Cannot be assigned an IP-address. It is for getting a direct connection into a device.
+
+RJ45 on one end, either DB9 or USB (S is for serial) on the other.
+
 ### Fiber
 
 
-
-
-**NEXT** UTP and STP
-
+**NEXT** Fiber Cables
