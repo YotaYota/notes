@@ -182,6 +182,8 @@ Speed is lowered with distance.
 
 Susceptible to electro-magnetic interference.
 
+Can transfer electical pulse ~100 meters.
+
 #### UTP and STP
 
 Unshielded vs Shielded.
@@ -201,6 +203,27 @@ Cannot be assigned an IP-address. It is for getting a direct connection into a d
 RJ45 on one end, either DB9 or USB (S is for serial) on the other.
 
 ### Fiber
+
+Fiber-Optic cables can transfer data faster and farther than copper cables.
+
+Can transfer light pulse ~100 km.
+
+Not susceptible to electro-magnetic interference.
+
+NW devices rarely comes with built-in fibre ports, but they come with empty slots for **SFPs** (small form-factor pluggable). SFPs comes in different varieties.
+More fragile than copper cables.
+
+- Transmission mode:
+    - Single mode (**yellow**): Longer distances, minimal loss (no edge bouncing; less energy loss). Stronger laser needs more energy.
+    - Multimode (**aqua**): Bigger core, multiple modes for light to travel, shorter distances. Desires less energy for laser.
+- Uses different types of connectors:
+    - SC: square connector
+    - LC: Lucent connector
+    - MPO: Multifiber push-on
+- Bandwith: From 1Gpbs to 800 Gpbs.
+- Color: Can indicate transmission mode.
+- Conditions of use: underground, water, etc.
+- Armoring
 
 
 **NEXT** Fiber Cables
