@@ -2,7 +2,6 @@
 
 - `LAN` Local Area Network
 
-
 ## Module 2: Building Ethernet LANs
 
 - Basic Ethernet Operations
@@ -20,7 +19,6 @@ Ethernet uses *Carrier Sense Multiple Access with Collision Detection* (`CSMA/CD
 `Ethernet II` and `IEEE 802.3` frames differ slightly. Ie, the latter has length and LLC allowing other protocols than IP, where Ethernet II has Type. The former is more widely used.
 
 Data sent over ethernet must reach its destination within a maximum timeframe, this imposes restrictions on cable lengths, eg for fibres it's about 10km, and Gigabit ethernets it's about 100m.
-
 
 - DST address 6 bytes
 - SRC address 6 bytes
@@ -74,14 +72,9 @@ Sending Ethernet frame to one Recieving device:
 
 If device wants to send an Ethernet frame to many Recieving device it uses the broadcast address, known as `group addess` or `multicast MAC address`.
 
-#### Copper Wire
-
-4 twisted pairs, connected to an RJ45 connector.
-
-
 ### MAC - Media Access Control
 
-Uniquely defines a network interface (NIC) on the network.
+Uniquely defines a network interface (NIC) on the network. Assigned by hardware manufacturers.
 
 Hexadecimal
 
@@ -127,6 +120,7 @@ Creating multiple *broadcast domains* in the switch by creating VLANs. Ie frames
 
 For a device to communicate from one VLAN to another, the traffic needs to be sent to a router, ie go through Layer 3.
 
+VLANS typically map to an IPv4 Network.
 
 ### MAC Tables
 
@@ -175,6 +169,8 @@ Bridge (legacy): Early version of switch that used half-duplex. It helped limit 
 ## Cables
 
 ### Copper
+
+4 twisted pairs, connected to an RJ45 connector.
 
 Last long (~100 years)
 
@@ -225,5 +221,106 @@ More fragile than copper cables.
 - Conditions of use: underground, water, etc.
 - Armoring
 
+## 	IPv4 Addresses and Networks
 
-**NEXT** Fiber Cables
+ARPA creates the world's first WAN in 1960s. By requirement it
+
+- must use packet switching,
+- controll of network must be decentralized,
+- it had to be redundant.
+
+IP protocol (and others) was born from this.
+
+### IP Address Orgination
+
+Each device connected to a network has to have an IP address configured. Two ways: either manual or **DHCP** (Dynamic Host Configuration Protocol).
+
+DHCP server: has a pool of IP-addresses.
+
+1. DHCP client: Broadcast
+2. DHCP server responds with IP form its pool and also with additional config.
+
+### IPv4 Address
+
+32 Bit address, organized in octets separated by dots. Approx 4.3 billion possible addresses, of which approx 3 billion are public.
+
+IP addresses are managed globally by the **IANA** (Internet Assigned Numbers Authority). Under IANA there are 5 **RIRs** (Regional Internet Registries), which in turn assign public IPs to local internet providers.
+
+Local devices usually use private addresses which are **NAT**:ed (Network Address Translation) to the router's public address.
+
+Private ranges are:
+- 10.0.0.0/8
+- 172.16.0.0/16
+- 192.168.0.0/16
+
+### IPv4 Networks
+
+A Network Interface needs 2 addresses to connect to a network: MAC and IP.
+
+An IP address has a **network** portion and a **host** portion.
+
+Networks are defined in either slash notation or decimal notation.
+In slash notation `/x` means that the first `x` bits constitutes the network portion.
+
+If two devices on different networks want to communicate, they must forward their traffic to a router.
+
+Keyword `inet` is related to the IPv4 network family, eg
+
+```junos
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.10.254/24
+```
+
+### IPv4 Data Transmission
+
+Server A looks at the network portion of the DST IP to see if they are on the same subnet.
+If they are, A does an ARP broadcast to discover host B's MAC address.
+After ARP response, layer 2 ethernet encapsulation can be perfomed.
+Now server A can forward traffic to a switch (not a router).
+
+If they are not on the same subnet, A does an ARP broadcast to discover the MAC address of it's default gateway or router.
+After ARP response, layer 2 ethernet encapsulation can be perfomed. And it sends the package to the router's MAC address.
+When the package arrives at the router, the router can perform an ARP broadcast on the correct network.
+
+3 primary values you configure on a device:
+
+- IP address
+- Netmask
+- default gateway
+
+A **Default gateway** is an ip address on the local network the device can use to communicate with devices on other networks.
+
+### Unicast, Multicast and Broadcast
+
+The first address in an IPv4 Network is reserved as the **network address**. Eg 192.16.0.0 in 192.16.0.0/16.
+
+The last address in an IPv4 Network is reserved as the **broadcast address**. Eg 192.16.255.255 in 192.16.0.0/16.
+
+Therefore no device can be assigned the first and last address in an IPv4 network.
+
+Three types of addresses:
+
+- Unicast, one-to-one
+- Broadcast, one-to-all (eg ARP).
+- Multicast, one-to-many
+
+For a broadcast, the MAC address is FF:FF:FF:FF:FF. A switch forwards to all ports, while a router drops.
+
+**Note**: Broadcast traffic is not forwarded outside a network, therefore it's called a **Broadcast Domain**.
+
+Multicast uses a multicast IPv4 address in the range 224.0.0.0 - 239.255.255.255.
+
+A Multicast streamer will inform other host a multicast IPv4 destination that they can request to recieve data for. The hosts will inform the switch that they are interested in the address. The switch will replicate the packages to that IP so it reaches all interested hosts.
+
+
+## ARP
+
+1. ARP Request. IP Broadcast: Who has <IP>? DST IP is broadcast, and DST MAC is F::F.
+2. ARP Reply. Device with matching IP responds with it's MAC and IP.
+3. Device saves IP and MAC in its ARP Table. (has an age) `ip -s neigh`
+
+
+
+
+
+
+**NEXT** Wireshark
