@@ -155,3 +155,44 @@ kern.*                   /var/log/kern.log
 
 **gelf**.
 
+---
+
+## logrotate
+
+Runs through SystemD `logrotate.service` and `logrotate.timer` that runs daily by default.
+
+*/etc/logrotate.conf* is the main configuration file. It can include other files, such as */etc/logrotate.d/*.
+
+```bash
+logrotate --version
+```
+
+Verify it works
+
+```bash
+logrotate --debug /etc/logrotate.conf
+```
+
+settings under /etc/logrotate.d/ ovveride the main settings in /etc/logrotate.conf for specific log files.
+
+Example:
+
+```
+/var/log/rsyslog/*/*.log {
+  rotate 1
+  daily
+  sharedscripts
+  missingok
+  notifempty
+  delaycompress
+  maxsize 50M
+  compress
+  postrotate
+    /usr/lib/rsyslog/rsyslog-rotate
+  endscript
+}
+```
+
+
+Logrotate is often configured system-wide to run once per day via **/etc/cron.daily/logrotate**.
+
