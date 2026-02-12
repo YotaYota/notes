@@ -167,13 +167,13 @@ Runs through SystemD `logrotate.service` and `logrotate.timer` that runs daily b
 logrotate --version
 ```
 
-Verify it works
+To run manually and to verify add `--debug` flag:
 
 ```bash
 logrotate --debug /etc/logrotate.conf
 ```
 
-settings under /etc/logrotate.d/ ovveride the main settings in /etc/logrotate.conf for specific log files.
+Settings under */etc/logrotate.d/* ovveride the main settings in */etc/logrotate.conf* for specific log files.
 
 Example:
 
