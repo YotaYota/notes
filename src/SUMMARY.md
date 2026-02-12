@@ -47,6 +47,7 @@
   - [Screen](./linux/screen.md)
   - [Ssh](./linux/ssh.md)
   - [SystemD](./linux/systemd.md)
+  - [tmux](./linux/tmux.md)
   - [Users and Groups](./linux/users-groups.md)
   - [Wine](./linux/wine.md)
   - [Wireguard](./linux/wireguard.md)
