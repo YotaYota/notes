@@ -363,5 +363,31 @@ The typical size of the header is 20 bytes, but it can be up to 60 bytes if opti
 - **Protocol**: Indicates the protocol of the packet in layer 4, eg TCP (6), UDP (17), ICMP (1).
 - **Options**: Optional field, used for special purposes, eg security, record route, timestamp, etc. If options are used, the header length is greater than 20 bytes.
 
+## IPv4 Network Subnetting
 
-**NEXT** 
+**CIDR** (Classless Inter-Domain Routing) is a method for allocating IP addresses and routing IP packets. It replaces the older system based on classes A, B, and C.
+
+**Note**: CIDR allowed subnetting, you are not limited to the fixed sizes of class A, B, and C networks. You can create subnets of any size.
+
+CIDR introduced **VLSM** (Variable Length Subnet Masking).
+
+The point of subnetting an address range is to use the address space more efficiently.
+
+||||||||||
+|:--|:--|:--|:--|:--|:--|:--|:--|:--|
+|Power|2^7|2^6|2^5|2^4|2^3|2^2|2^1|2^0|
+|Value|128|64|32|16|8|4|2|1|
+
+**Note**: there are 2 subnets of `/n-1` in `/n`.
+
+**Point-to-Point Network**: A network that connects exactly two devices.
+
+    - It can be subnetted with a /30, which allows for 2 usable host addresses (the first and last addresses are reserved for network and broadcast).
+    - Most provders support /31, which allows for 2 usable host addresses without the need for a broadcast address.
+
+
+
+
+
+
+**NEXT** IPv4 Subnetting Task
