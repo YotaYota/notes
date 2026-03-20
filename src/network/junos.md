@@ -1,4 +1,6 @@
 # JNCIA-Junos
+"Networking Technology Foundations" 
+
 
 - `LAN` Local Area Network
 
@@ -221,7 +223,7 @@ More fragile than copper cables.
 - Conditions of use: underground, water, etc.
 - Armoring
 
-## 	IPv4 Addresses and Networks
+## IPv4 Addresses and Networks
 
 ARPA creates the world's first WAN in 1960s. By requirement it
 
@@ -385,9 +387,199 @@ The point of subnetting an address range is to use the address space more effici
     - It can be subnetted with a /30, which allows for 2 usable host addresses (the first and last addresses are reserved for network and broadcast).
     - Most provders support /31, which allows for 2 usable host addresses without the need for a broadcast address.
 
+## IPv6 Addresses
+Consists of 32 Hexadecimal characters. Where 1 hex is 4 binary, so an IPv6 address is like an IPv4 address with 128 bits. That is 2^128  possible addresses.
+
+Divided into 8 groups of 4 hex; a **hextet**.
+
+- Leading 0s can be omitted in a hextet
+- Continous 0s can be abbreviated by `::` once
+
+`2001:db8` are reserved for documentation.
+
+The slash is called a **prefix**.
+
+- Public addresses are called: _Global Unicast Addresses_ (GUA). `2000::/3`
+- Private addresses are called: _Unique Local Addresses_ (ULA). `fc00::/7`
+- Link-local `fe80::/10` range
+- Multicast `ff00::/8` range
+
+There is no need to use NAT with IPv6.
+
+### Link-Local IPv6 Addresses
+Automatically assigned to IPv6-enabled network interfaces. Only use to connect to other devices that are also connected to the same link.
+
+- `fe80::/10` range
+
+They are not broadcasted, nor routed.
+
+### Anycast
+Can be assigned to multiple devices, a router will forward traffic to the nearest device with that address. Eg CDNs.
+
+### Neighbor Discovery Protocol
+IPv6 does not use ARP - it uses Neighbor Discovery Protocol (**NDP**) which is more efficient.
+So if a machine deems an address to be on the same network, it will perform NDP to get its MAC address.
+
+NDP is a collection of 5 ICMPv6 message types used to discover hosts and routers on an IPv6 network:
+
+- _Neighbor Solicitation_ (**NS**). Request MAC from host
+- _Neighbor Advertisment_ (**NA**). Response to NS
+- _Router Solicitation_ (**RS**). Request configuration from router
+- _Router Advertisment_ (**RA**). Router configuration
+- _Redirect_ (**RR**). Informs on better next-hops.
+
+NDP does not use broadcast (it was one of the goals with IPv6 to eliminate broadcast traffic). Instead it uses multicast.
+For NS a host adds the last 6 digits of its IPv6 address to the well-known group `ff02::1:ff00:0/104`, to get its multicast group ip-address.
+
+**Example**: A device with IP `2001:db8:0:10::2`  would add it's last 6 digits `...0000:02` to `ff02:::1:ff00:0000/104` to get the address `ff02::1:ff00:2/104`.
+
+**Note**: `ff02:::1:ff00:0000/104` is called _Solicited-Node Multicast Address_.
+
+Devices can figure out other device's multicast group IP-addresses as well.
+
+For layer 2 encapsulation in NS (MAC is not known yet), the sender calculates the multicast MAC destination address in a similar way; it adds the 6 last digits of the destination device's IP to `33-33-FF`.
+
+Multicast Organisationally Unique Identifiers range (OUI): `33-33-00` to `33-33-FF`.
+
+When IPv6 is operational on a host, it sends a RS Message to the link-local well-known multicast "all-routers" group `ff02::2`. The router responds with a RA message (with eg default gateway and router MAC).
+
+**Note**: `ff02::2`, all-routers, is a multicast address which represents all IPv6 routers on the local link.
+
+IPv6 maintains a Neighbors table (similar to IPv4 ARP table).
+
+### IPv6 Header
+IPv6 Header has a fixed length of 40 bytes.
+```
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |Version| Traffic Class |           Flow Label                  |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |         Payload Length        |  Next Header  |   Hop Limit   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   +                                                               +
+   |                                                               |
+   +                         Source Address                        +
+   |                                                               |
+   +                                                               +
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   +                                                               +
+   |                                                               |
+   +                      Destination Address                      +
+   |                                                               |
+   +                                                               +
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   ```
+source: [RFC 8200](https://datatracker.ietf.org/doc/html/rfc8200)
+
+- Payload Length
+- Hop Limit: same as TTL in IPv6
+- Flow Label: added by source device, enables routers to quickly classify and manage traffic flows
+- Next Header: Identifies the type of header immediately following the IPv6 header.
+
+Extension headers examples:
+
+- Hop-by-Hop Options
+- Routing
+- Fragment
+- Authentication Header (AH)
+- Exncapsulation Security Payload (ESP)
+- Mobility
+- Host Identity Protocol
+- Shim6 Protocol
+
+**Note**: Extension headers enables the possibility to extend IPv6 capablity over time.
+
+Comparison with IPv4:
+
+- Header Length not exist; IPv6 header is fixed size.
+- Header Checksum is omitted
+- Options are replaced with extension headers.
+- Identification, Flags and Fragment Offset: There is an extension to the IPv6 header that enables fragmentation.
+
+#### IPv6 Fragmentation (path MTU dicovery - PMTUD)
+If a packet is larger than the MTU, it needs to be fragmented. But in IPv6 only the source device can perform fragmentation. If a device along the chain is limited by MTU it sends back an **ICMP Unreachable** to the sender with its MTU. The end result is that the sender fragments according to the lowest MTU on the path; which is more efficient.
+
+## Subnetting IPv6 Networks
+Each hexadecimal number can be represented in 4 bits - also called a _nibble_ (a half-byte).
+
+### Hex to Binary
+|  Hex Char |  Dec Value |  Binary Value |
+|---|---|---|
+|  B |  11 = 8 + 2 + 1 |  1011 |
+|  A |  10 = 8 + 2 |  1010 |
+|  D |  13 = 8 + 4 + 1 |  1101 |
+|  3 |  3 = 2 + 1 |  0011 |
+
+Common Subnet Sizes:
+
+- ISP /48
+- LAN /64
+
+- **SLAAC**: StateLess Address Auto-Configuration.
+    - EUI-64, uses host's MAC (not recommended).
+    - Privacy Extensions for SLAAC, random and more secure, needs an extra check for uniqueness.
+
+Point-to-Point: /127 [RFC 6164](https://www.rfc-editor.org/rfc/rfc6164). Makes the link safer since noone else can connect and sniff.
+
+### Routers
+The primary role of a router is to forward packets between networks. The router is the "default gateway".
+
+Switches can also forward data, but they recieve frames and consult the dst MAC address and their ethernet switching table - routers consult the dst IP address and their routing table. Many routers can switch, and many switches can route - but they are optimized for their own layer.
+
+All machines know their IP and the LAN's subnet mask. They can calculate if a destination lives outside the subnet.
+
+There are 3 primary methods that routes can use to learn about the networks.
+
+- By default a router only knows about the networks it's directly connected to "**directly connected routes**".
+- Manually added routes to a routers routing table: "**static routes**".
+- Enable routing protocols that allow routers to dynamically communicate information about the routes on the network: "**dynamic routes**".
+
+**Note**: static routes are easy to understand and preferable in very small networks. But they lack flexibility (eg find alternate paths).
+
+Dynamic Routing Protocols, eg
+
+- OSPF
+- IS-IS
+- BGP
+- RIP
+
+#### Routing Tables
+
+A routing table entry consists of:
+- Target network
+- interface
+- next-hop
+
+Routers store all learned routes from all source, and its selects the best routes for forwarding: "active routes". There are two criteria for chosing the active route:
+
+- local preference (lowest)
+- longest prefix match lookup (most number of bits in common)
+
+**Note**: Junos maintains two separate routing tables, **inet.0** (IPv4) and **inet6.0** (IPv6). `show route table inet.0`.
+
+`ip route show` or `ip -6 route show`
+
+Example:
+
+```bash
+$ ip r show
+default via 192.168.10.1 dev wlp0s20f3 proto dhcp src 192.168.10.143 metric 600 
+192.168.10.0/24 dev wlp0s20f3 proto kernel scope link src 192.168.10.143 metric 600
+```
+- `default via 192.168.10.1 dev wlp0s20f3` means it has a default route with a next-hop of `192.168.10.1` and it uses interface `wlp0s20f3`.
+- `proto dhcp` means it was learned by DHCP. `proto static` means it was manually added.
+-  192.168.10.0/24 is a directly connected network. `proto kernel` means route was installed by kernel during interface configuration.
+
+### Troubleshooting Routers
+
+`ping` sends ICMP Echo Request (waiting for ICMP Echo Reply).
+
+`traceroute` sends consecutive number of ICMP messages (increasing TTL as you go). Doesn't show return path (do a traceroute from the other end).
 
 
 
 
-
-**NEXT** IPv4 Subnetting Task
+**NEXT**: 
