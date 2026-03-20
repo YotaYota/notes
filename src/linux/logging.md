@@ -108,6 +108,11 @@ Logs --> [Input] --> [Ruleset] --> [Actions/Outputs]
 
 **Note**: rsyslog executes rules sequentially. The order of actions and included files can change results. Rules in the same file run top to bottom. Files in /etc/rsyslog.d/ are processed in lexical order (e.g., 10-first.conf runs before 50-extra.conf). An earlier rule can discard or modify messages, so later rules may never see them. Eg `stop` prevents further processing of a message.
 
+#### Scopes
+
+An `action(...)` placed directly in the main body of the config applies to the **default ruleset**.
+
+An `action(...)` inside a `ruleset(...)` applies only to messages processed by that ruleset.
 
 ### Configure rsyslog server
 
@@ -117,16 +122,59 @@ Logs --> [Input] --> [Ruleset] --> [Actions/Outputs]
 # Load UDP input
 module(load="imudp")
 
+# -- templates --
+#   name=tmpl_gelf
+template(name="tmpl_gelf" type="list") {
+    constant(value="{\"version\":\"1.1\",")
+    constant(value="\"host\":\"")
+    property(name="hostname")
+    constant(value="\",\"short_message\":\"")
+    property(name="msg" format="json")
+    constant(value="\",\"timestamp\":")
+    property(name="timegenerated" dateformat="unixtimestamp")
+    constant(value=",\"level\":")
+    property(name="syslogseverity")
+    constant(value=",\"facility\":\"")
+    property(name="syslogfacility-text")
+    constant(value="\",\"application_name\":\"")
+    property(name="programname")
+    constant(value="\",\"_tag\":\"")
+    constant(value="fwlog")
+    constant(value="\"}")
+}
+
+# Dynamic log file template: /var/log/rsyslog/<hostname>/<hostname>-<date>.log
+#   name=tmpl_dynfile
+template(name="tmpl_dynfile" type="string"
+    string="/var/log/rsyslog/%FROMHOST%/%FROMHOST%-%$YEAR%%$MONTH%%$DAY%.log")
+
+# -- rulesets --
 # A ruleset just for messages received via this UDP listener
+#   name=rs-from-udp
 ruleset(name="rs-from-udp") {
-    action(type="omfile" file="/var/log/rsyslog/remote.log")
+    # Forward to remote syslog server in GELF format (Graylog Extended Log Format)
+    action(
+        type="omfwd"
+        target="syslog.sunet.se"
+        port="12201"
+        protocol="udp"
+        template="tmpl_gelf")
+
     # This ruleset is used only for the UDP input below.
+    action(
+        type="omfile"
+        file="/var/log/rsyslog/remote.log"
+        template="tmpl_dynfile")
     # Local system logs continue to use the default distro config.
 }
 
-# Assign the UDP input to the ruleset above
+# -- inputs --
+# Assign the UDP input to the ruleset
+#   imudp -> rs-from-udp
 input(type="imudp" port="514" ruleset="rs-from-udp")
 ```
+
+**Note**: The actions are only applied to the scope of the ruleset `rs-from-udp`. Messages flow to this ruleset by merit of the `input(...)` statement at the end. Local system messages are unaffected and continue to be processed by the default ruleset.
 
 The restart rsyslog
 
