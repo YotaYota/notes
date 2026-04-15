@@ -23,7 +23,7 @@ Other top-level directories will not be included in the production build.
     - initial: React uses `appendChild()`
     - re-render: React applies minimal nevessary operation calculated from *Rendering* phase.
 
-**Note**: React only changes the DOM nodes if there is a difference between renders.
+**Note**: React only changes the DOM nodes if there is a difference between renders. To override the default behavior and force a component to reset its state you can pass a different `key` prop, like `<Chat key={email} />`. This tells React it should be considered a _different_ Chat component that needs to be re-created from scratch with the new data.
 
 After these steps, the browser will repaint the screen.
 
