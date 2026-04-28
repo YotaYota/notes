@@ -1,5 +1,9 @@
 # FastAPI
 
+FastAPI is an ASGI framework.
+
+## Minimal Start
+
 ```bash
 uv add "fastapi[standard]"
 ```
@@ -20,7 +24,7 @@ async def read_item(item_id: int):
 
 ## Request Variables
 
-General pattern is: `Annotated[str | None, Cookie()] = None`, where `Cookie()` can be any of `Path()`, `Body()`, `Header()`, `Cookie()`, `Query()`. Thses are functions that return special classes.
+General pattern is: `Annotated[MyPydanticModel, Cookie()] = None`, where `Cookie()` can be any of `Path()`, `Body()`, `Header()`, `Cookie()`, `Query()`. Thses are functions that return special classes.
 
 - path operation
 - path parameter
@@ -30,8 +34,7 @@ General pattern is: `Annotated[str | None, Cookie()] = None`, where `Cookie()` c
     - Can be optional, eg `: str | None = None`
     - Can be `bool` with automatic conversion
     - validation with `Query()`
-- request bodies are defined with pydantic `BaseModel`
-    - use standard python for all attributes
+- request bodies are defined with pydantic models
     - optional values has default values
     - can be validated with `Body()`
     - if there are multiple pydantic models, fastapi will treat them as **keys** in the request body.
@@ -39,14 +42,14 @@ General pattern is: `Annotated[str | None, Cookie()] = None`, where `Cookie()` c
     - cannot be set easily with JS, docs will not be able to set them
 - cookies use `Header()` (will otherwise be interpreted as query param)
     - converts parameter names characters from underscore (_) to hyphen (-) to extract and document the headers.
-    - use `Annotated[list[str] | None, Header()]` to allow multiple headers with same name.
-- response model use a pydantic model `-> MyModel`
+    - use `list` eg `Annotated[list[str] | None, Header()]` to allow multiple headers with same name.
+- response model use a pydantic model `-> MyModel` or `response_model`
     - fastapi will return server error instead of incorrect data
     - automatically serializes data
     - limits and filters output data to what is in the model
     - you can use `response_model` in path operations, eg `@app.get("/items/, response_model=list[Item])`
 - response status eg `status_code=status.HTTP_201_CREATED`
-- forms uses `Form()` is a class that inherits directly from Body.
+- forms uses `Form()`, a class that inherits directly from Body.
     - requires `uv add python-multipart`
     - eg `username: Annotated[str, Form()], password: Annotated[str, Form()]` (or create pydantic model as type)
 - files use `File`
@@ -188,4 +191,7 @@ Also `response_model_include` and `response_model_exclude`.
 
 **Note**: It's recommended to use multiple classes over using these response_model parameters.
 
+## Error Handling
 
+- `HTTPException`, eg `raise HTTPException(status_code=404, detail="Item not found")`
+- `detail` can contain anything value that can be converted to json, eg `dict` or `list`
