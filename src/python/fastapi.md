@@ -195,3 +195,40 @@ Also `response_model_include` and `response_model_exclude`.
 
 - `HTTPException`, eg `raise HTTPException(status_code=404, detail="Item not found")`
 - `detail` can contain anything value that can be converted to json, eg `dict` or `list`
+- global listener to specific exceptions with `@app.exception_handler(X)` that will handle raised exception of type `X`
+- can also ovveride built-in handlers, eg `@app.exception_handler(RequestValidationError)`
+- FastAPI's `HTTPException` error class inherits from Starlette's `HTTPException`, where FastAPI subclass accepts any JSON-able data for the detail field
+- If you register an exception handler, you should register it for Starlette's `HTTPException` (so you can catch Starlett internal errors).
+
+```py
+from fastapi import FastAPI, HTTPException
+from fastapi.exception_handlers import (
+    http_exception_handler,
+    request_validation_exception_handler,
+)
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+app = FastAPI()
+
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request, exc):
+    print(f"OMG! An HTTP error!: {repr(exc)}")
+    return await http_exception_handler(request, exc)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    print(f"OMG! The client sent invalid data!: {exc}")
+    return await request_validation_exception_handler(request, exc)
+```
+
+## Path Operation Config
+
+- `status_code`
+- `tags` for OpenAPI docs
+- `summary`
+- `description` (or use docstring)
+- `response_description`
+- `deprecated`
