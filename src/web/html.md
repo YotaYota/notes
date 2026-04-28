@@ -161,10 +161,10 @@ Some tags are **landmarks** depending on how they are nested.
 
 - `<header>` implicit role is `banner`. is a landmark depending on how it's nested
 - `<nav>`
-- `<main>`
+- `<main>` there should only be one per page
 - `<article>`
 - `<section>`
-- `<aside>`
+- `<aside>` inderectly related to main
 - `<footer>` implicit role is `contentinfo` if it is a landmark.
 
 A layout with a header, two sidebars, and a footer, is known as the [holy grail layout](https://web.dev/patterns/layout/holy-grail), eg
