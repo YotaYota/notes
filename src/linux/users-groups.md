@@ -25,7 +25,7 @@
 ### *password hash*
 
 - If starts with ! it denotes that the account is locked
-- If it is onlt an asterix \* it means the user cannot be logged into with a password
+- If it is only an asterix \* it means the user cannot be logged into with a password
 
 ## Users
 
