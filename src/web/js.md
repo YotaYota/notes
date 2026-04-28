@@ -1,5 +1,10 @@
 # Javascript
 
+## SPA project parts
+
+- Babel: JavaScript transcompiler. Converting ES6+ code into backwards-compatible JS code.
+- WebPack: minifies JS files and bundles them into one for providing to browsers (can also transform)
+
 ## Operators
 
 - `&&` **Logical AND**. returns the value of the *first falsey operand* or the value of the last operand (if all are truthy).
