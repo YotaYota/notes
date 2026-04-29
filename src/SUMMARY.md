@@ -32,6 +32,7 @@
   - [JS](./web/js.md)
   - [OPFS](./web/opfs.md)
   - [React](./web/react.md)
+  - [Redux](./web/redux.md)
   - [WebGL](./web/webgl.md)
 - [Computer](./comp/main.md)
   - [Computer Build](./comp/compbuild.md)
