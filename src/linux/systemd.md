@@ -59,3 +59,17 @@ journalctl -fu <service name> --since "2025.01.13 12:00:00"
 ```
 
 where `-f` is short for `--follow`.
+
+## Mount
+
+Mount is a type of unit.
+
+For local mounts, use `sudo blkid /dev/<device>` to get the UUID.
+
+```bash
+systemd-escape -p --suffix=mount /path/to/mount/point
+```
+
+`sudo systemctl daemon-reload`
+
+`df -h` to check the mount point.
