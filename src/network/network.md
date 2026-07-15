@@ -34,21 +34,29 @@ sudo nft monitor trace
 
 ## OSI
 
-||||
-|-|-|-|
-|**Userspace**|||
-|Layer 7|Application|HTTP, SMTP, SSH, FTP, DNS|
-|Layer 6|Presentation||
-|Layer 5|Session||
-|**Kernel**|||
-|Layer 4|Transport|TCP, UDP, RTP|
-|Layer 3|Network|IP|
-|Layer 2|Data Link|Ethernet. WiFi, DSL, 3G|
-|**Physical**|||
-|Layer 1|Physical||
+|OSI|||  |
+|-|-|-|--|
+|**Userspace**||| **Responsibility** |
+|Layer 7|Application|HTTP, SMTP, SSH, FTP, DNS| Provide serives to end user applications |
+|Layer 6|Presentation|| Data representation, encryption & decryption, compression & decompression |
+|Layer 5|Session|| Session establishment, management & control, termination  |
+|**Kernel**|||  |
+|Layer 4|Transport|TCP, UDP, RTP| Segmentation, sequencing, retransmission, flow control |
+|Layer 3|Network|IP| End-to-end addressing, path selection (routing) |
+|Layer 2|Data Link|Ethernet. WiFi, DSL, 3G| Hop-to-hop addressing, error correction |
+|**Physical**|||  |
+|  Layer 1|Physical||  |
 
+**Note**: Only layer 2, 3, 4 and 7 add headers.
 
-The 7 layer model is outdated, in preference of the 4 layer model (Application, Transport, Network, Link). The only important legacy is the numbering system.
+The 7 layer model is outdated in preference of the 4 layer model called the "TCP/IP" model. The only important legacy is the numbering system.
+
+|TCP/IP|||  |
+|-|-|-|--|
+|Layer 7|Application|Data|Layer 7, 6, 5 in OSI|
+|Layer 4|Transport|Segments|Layer 4 in OSI|
+|Layer 3|Internet|Packets|Layer 3 in OSI|
+|Layer 2|Network Access|Frames|Layer 1, 2 in OSI|
 
 ## Routing Table
 
@@ -101,19 +109,11 @@ Similar for IPv6 is [RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193).
 
 loopback 127.0.0.1 address is so that the system can talk to itself and do self diagnostics.
 
-## Random commands
-
-```
-sudo ss -nltpu
-```
-
-```
-nstat
-```
-
 ## DHCP
 
 UDP, then Port 67 and 68 unicast.
+
+**DORA**:
 
 1. DHCP Discover (broadcast)
 2. DHCP Offer (broadcast beacuse no ip assigned yet): network information such as client ip, subnet mask, default gateway ip, dns ip, ip lease time, dhcp server ip
@@ -276,7 +276,7 @@ Layering creates
 
 ### Principle: Encapsulation
 
-When combining layering and packet switching.
+When combining layering and packet switching. The sender encapsulates through the layers, while the reciever deencapsulates through the layers in reverse order.
 
 ### Endianess
 
@@ -559,3 +559,47 @@ FIN means the sender has no more data to send. But the connection is not closed 
 3. ACKs the fin
 
 To avoid problems if either the final ACK gets lost or the same port pair is reused, the active closer goes into **TIME WAIT**. It keeps the socket for twice the "maximum segment lifetime".
+
+## Spanning Tree Protocol (STP)
+
+Layer 2 protocol that closes ports to avoid broadcast storms, MAC table instability and duplicate frames. 802.1D (Obsoleted by RSTP).
+An Ethernet network functions properly when there is only one active path between any 2 hosts. 
+
+STP Algorithm:
+
+1. Switches generate **BPDU**s with priority and MAC.
+2. Switches sends BPDUs to multicast address `01:80:C2:00:00:00` (reserved for BPDUs)
+3. Elect **Root Switch**. Root's ports become **Designated Ports**, that are never blocked.
+    1. lowest priority
+    2. lowest MAC
+4. Non-root switches elect **Root Port**.
+    1. lowest cost to root
+    2. connection to lowest switch id
+    3. lowest port id
+5. Non-root switch elect Designate Port (which is always forwarding). Same election grounds as above.
+6. Define blocked ports.
+
+Port state
+```
+Disabled
+    |
+    v
+Listening --> Blocking
+    |
+    v
+Learning
+    |
+    v
+Forwarding
+```
+
+- STP (802.1D) ~50s to convergence.
+- Rapid STP (RSTP, 802.1w)  ~1-2s to convergence.
+- Multiple STP (MSTP, 802.1s) Supports multiple VLAN instances. Default on Arista switch.
+
+Enhancements:
+- portfast
+- bpduguard
+- bpdufilter
+- guard root
+- guard loop

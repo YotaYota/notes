@@ -105,7 +105,9 @@ A **Multicast** MAC address is a special address for several devices; a *multica
 
 Switches' primary benefit is high-speed connectivity.
 
-It saves MAC addresses in the **Ethernet Switching Table**. Saved in RAM memory.
+It saves MAC addresses in the **Ethernet Switching Table**. Saved in RAM memory. It is a table that maps MAC to port.
+
+**Note**: A switch learns entries in its MAC address table through SRC MAC in messages recieved.
 
 If the switch recieve a frame with a DST MAC that is not in its table, it forwards out the frame out on all interfaces except the one it came in on. This is called **flooding**.
 When the DST MAC responds, the switch will update its table so that it does not need to flood the next time.
@@ -202,13 +204,13 @@ RJ45 on one end, either DB9 or USB (S is for serial) on the other.
 
 ### Fiber
 
-Fiber-Optic cables can transfer data faster and farther than copper cables.
+Fiber-Optic cables can transfer data faster and farther than copper cables. With fiber, the bottleneck is not the cable, but how fast electrical signals can be converted from and to light.
 
 Can transfer light pulse ~100 km.
 
 Not susceptible to electro-magnetic interference.
 
-NW devices rarely comes with built-in fibre ports, but they come with empty slots for **SFPs** (small form-factor pluggable). SFPs comes in different varieties.
+NW devices rarely comes with built-in fibre ports, but they come with empty slots for **SFPs** (small form-factor pluggable). SFPs comes in different varieties. **DAC** are prebuilt cable and connector.
 More fragile than copper cables.
 
 - Transmission mode:
