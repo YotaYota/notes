@@ -561,41 +561,47 @@ FIN means the sender has no more data to send. But the connection is not closed 
 To avoid problems if either the final ACK gets lost or the same port pair is reused, the active closer goes into **TIME WAIT**. It keeps the socket for twice the "maximum segment lifetime".
 
 ## Spanning Tree Protocol (STP)
+Works on switchports.
 
-Layer 2 protocol that closes ports to avoid broadcast storms, MAC table instability and duplicate frames. 802.1D (Obsoleted by RSTP).
+Layer 2 protocol that closes ports to avoid broadcast storms (L2 loops), MAC table instability and duplicate frames. 802.1d (Obsoleted by RSTP).
 An Ethernet network functions properly when there is only one active path between any 2 hosts. 
 
 STP Algorithm:
 
-1. Switches generate **BPDU**s with priority and MAC.
-2. Switches sends BPDUs to multicast address `01:80:C2:00:00:00` (reserved for BPDUs)
-3. Elect **Root Switch**. Root's ports become **Designated Ports**, that are never blocked.
-    1. lowest priority
-    2. lowest MAC
-4. Non-root switches elect **Root Port**.
-    1. lowest cost to root
-    2. connection to lowest switch id
+1. Generate (at startup). Switches generate **BPDU** (Bridge Port Data Unit) containing Priority (0-65536, default 32768) and System MAC.
+2. BPDU Flooding. Switches sends BPDUs to multicast address `01:80:C2:00:00:00` (reserved for BPDUs)
+3. Elect **Root Switch**. Root's ports become **Designated Ports** (never blocked). Root is the switch with least BPDU ID.
+Further steps on non-root switches:
+4. Elect **Root Port**, RP.
+    1. lowest cost to root (bandwitdth)
+    2. connection to lowest BPDU ID
     3. lowest port id
-5. Non-root switch elect Designate Port (which is always forwarding). Same election grounds as above.
+5. Elect Designated Ports, DP (which is always forwarding). Same election grounds as above.
 6. Define blocked ports.
 
-Port state
+After STP Algotithm, it is the root switch that keeps sending BPDUs (every 2 sec). If switches does not recieve BPDUs after a timeout they will stop STP.
+
+Port states
 ```
 Disabled
     |
     v
-Listening --> Blocking
+Listening (15 sec, LED amber) --> Blocking
+    |
+ (RP, DP)
     |
     v
-Learning
+Learning (15 sec, LED amber)
     |
     v
-Forwarding
+Forwarding (LED green)
 ```
-
-- STP (802.1D) ~50s to convergence.
-- Rapid STP (RSTP, 802.1w)  ~1-2s to convergence.
-- Multiple STP (MSTP, 802.1s) Supports multiple VLAN instances. Default on Arista switch.
+Improvements:
+- STP (802.1d) ~50s to convergence.
+- Rapid STP (RSTP, 802.1w)  ~20s to convergence. ("alternate ports" does pre-listening and pre-learning)
+- PVST (Root switch per vlan)
+- Rapid PVST (introduce "alternate ports" for faster convergence)
+    - Multiple STP (MSTP, 802.1s) Group multiple VLANs into an "instance" with a single root (less BPDUs). Default on Arista switch.
 
 Enhancements:
 - portfast
@@ -603,3 +609,17 @@ Enhancements:
 - bpdufilter
 - guard root
 - guard loop
+
+## Link Aggregation (LAG)
+A feature that allows to group several physical links into one logical port, "Port-Channel".
+Load balancing, failover, loop prevention. LAG tricks STP so that the ports included in a port-channel appear as only 1.
+
+LAG
+- 1-to-1
+- ports needs to have same settings (speed, duplex, trunk/access settings, STP settings)
+
+Configuration modes:
+- on (static) `channel-group 66 mode on`
+- LACP (dynamic). Active or passive mode (use only active) `channel-group 66 mode active`
+
+`show port-channel dense`
