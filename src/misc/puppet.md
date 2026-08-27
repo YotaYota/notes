@@ -124,3 +124,62 @@ node default {
 ```sh
 puppet apply --modulepath=./modules manifests/site.pp
 ```
+
+## Stab at structure
+
+- [PDK](https://forge.puppet.com/resources/pdk) is commercial, so use [Vox Pupuli](https://voxpupuli.org/) instead for puppet-lint and puppet-syntax.
+- Gemfile for dependencies, eg
+```ruby
+source 'https://rubygems.org'
+
+gem 'puppet', '~> 8.4'
+gem 'puppet-lint', '~> 5.0'
+# Pinned to 5.x: puppet-syntax 6.0 switched its dependency from
+# 'puppet' to 'openvox', which would pull in a second engine.
+gem 'puppet-syntax', '~> 5.0'
+gem 'rspec-puppet'                # unit-test manifests
+gem 'puppetlabs_spec_helper'      # rspec-puppet glue + rake tasks
+```
+- Rakefile for testing, eg
+```ruby
+# Rakefile for puppet-lint and puppet-syntax
+# Run:
+#   bundle exec rake lint
+#   bundle exec rake lint:fix
+#   bundle exec rake syntax
+#
+# Lint check config (disabled checks) lives in .puppet-lint.rc so that the
+# CLI, this Rakefile, the editor LSP, and `puppet-lint --fix` all share it.
+
+require 'puppet-lint/tasks/puppet-lint'
+require 'puppet-syntax/tasks/puppet-syntax'
+require 'puppetlabs_spec_helper/rake_tasks'
+
+PuppetLint.configuration.with_filename = true
+
+# `rake lint:fix` auto-corrects the fixable style issues (quoting, # ${} interpolation, trailing whitespace) in place.
+PuppetLint::RakeTask.new :'lint:fix' do |config|
+  config.fix = true
+end
+```
+- `.puppet-lint.rc` single source of truth for CLI, editor LSP, and --fix
+```
+# `--relative` — keeps the autoloader_layout check active.
+--relative
+# Don't check for documentation in manifests.
+--no-documentation-check
+```
+- use `bundle exec rake syntax` to check syntax, `bundle exec rake lint` to check style, and `bundle exec rake lint:fix` to fix style issues.
+- `bundle config set --local path vendor/bundle` so gems install into vendor/ instead of system Ruby (Debian blocks global gem installs).
+- `rspec-puppet` for unit testing manifests [puppetlabs_spec_helper](https://github.com/puppetlabs/puppetlabs_spec_helper), eg
+```ruby
+# spec/spec_helper.rb
+require 'puppetlabs_spec_helper/module_spec_helper'
+```
+and an example test for eg manifests/globals.pp (class nagioscfg::globals). The test file would be spec/classes/globals_spec.rb:
+```ruby
+require 'spec_helper'
+
+describe 'nagioscfg::globals' do
+  it { is_expected.to compile }
+end
